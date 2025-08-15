@@ -339,9 +339,20 @@
 
     function parseDateLike(value) {
       if (!value) return 0;
-      const d = new Date(value);
-      const t = d.getTime();
-      return Number.isFinite(t) ? t : 0;
+      try {
+        if (typeof value === 'object' && value !== null) {
+          if (typeof value.toDate === 'function') {
+            const t = value.toDate().getTime();
+            return Number.isFinite(t) ? t : 0;
+          }
+        }
+        if (typeof value === 'number') {
+          return Number.isFinite(value) ? value : 0;
+        }
+        const d = new Date(value);
+        const t = d.getTime();
+        return Number.isFinite(t) ? t : 0;
+      } catch (_) { return 0; }
     }
 
     // Load grantee dashboard
@@ -446,12 +457,21 @@
       if (term.includes('@')) {
         try {
           const c = collection(db, 'Scholarship');
-          let q1 = query(c, where('Applicant Email','==', term.toLowerCase()));
-          let r1 = await getDocs(q1);
-          if (!r1.empty) { r1.forEach(d => ids.push(d.id)); }
-          if (ids.length === 0) {
-            const q2 = query(c, where('Email Address','==', term.toLowerCase()));
-            const r2 = await getDocs(q2); r2.forEach(d => ids.push(d.id));
+          const raw = term.trim();
+          const lc = raw.toLowerCase();
+          const attempts = [
+            ['Applicant Email', raw], ['Applicant Email', lc],
+            ['Email Address', raw], ['Email Address', lc],
+            ['applicantEmail', raw], ['applicantEmail', lc],
+            ['email', raw], ['email', lc]
+          ];
+          for (const [field, val] of attempts) {
+            try {
+              const qx = query(c, where(field, '==', val));
+              const rx = await getDocs(qx);
+              rx.forEach(d => { if (!ids.includes(d.id)) ids.push(d.id); });
+              if (ids.length > 0) break;
+            } catch (_) { /* ignore per-field errors */ }
           }
         } catch(e) { console.warn(e); }
       } else {
