@@ -1,0 +1,510 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Finn Wardman Fund — Portal</title>
+
+<!-- Minimal modern UI styles -->
+<style>
+  :root{
+    --bg:#0b1220;--panel:#071022;--muted:#9aa6b2;--text:#e6eef6;--accent1:#06b6d4;--accent2:#3b82f6;
+    --card:#081426;--glass: rgba(255,255,255,0.03);
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;background:linear-gradient(180deg,#041026,#071022);color:var(--text);min-height:100vh}
+  .app{max-width:1200px;margin:28px auto;padding:20px}
+  header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:18px}
+  .brand{display:flex;gap:12px;align-items:center}
+  .logo{width:48px;height:48px;border-radius:10px;background:linear-gradient(135deg,var(--accent1),var(--accent2));box-shadow:0 6px 22px rgba(0,0,0,.45)}
+  h1{margin:0;font-size:18px;font-weight:700}
+  .chip{padding:8px 12px;border-radius:999px;background:var(--glass);font-size:13px;color:var(--muted)}
+  .card{background:linear-gradient(180deg,var(--card),#071224);padding:20px;border-radius:14px;border:1px solid rgba(255,255,255,.03);box-shadow:0 10px 30px rgba(2,6,23,.6)}
+  .muted{color:var(--muted)}
+  .row{display:flex;gap:12px;align-items:center}
+  input,select,textarea{padding:10px;border-radius:10px;border:1px solid rgba(255,255,255,.04);background:transparent;color:var(--text);outline:none;width:100%}
+  button{background:linear-gradient(180deg,var(--accent1),var(--accent2));border:0;color:#012;padding:10px 14px;border-radius:10px;cursor:pointer;font-weight:700}
+  button.ghost{background:transparent;border:1px solid rgba(255,255,255,.05);color:var(--text)}
+  .hidden{display:none!important}
+  .grid{display:grid;gap:14px}
+  .grid.cols-3{grid-template-columns:repeat(3,1fr)}
+  table{width:100%;border-collapse:separate;border-spacing:0 8px;margin-top:12px}
+  th{font-size:12px;color:var(--muted);text-align:left;padding:8px}
+  td{background:#071726;padding:10px;border-radius:8px}
+  .small{font-size:13px;color:var(--muted)}
+  .err{color:#ff9b9b;margin-top:8px}
+  .link{background:transparent;border:0;color:var(--muted);text-decoration:underline;cursor:pointer;padding:0}
+  .actions{display:flex;gap:10px;flex-wrap:wrap}
+  @media (max-width:900px){ .grid.cols-3{grid-template-columns:1fr} header{flex-direction:column;align-items:flex-start} }
+  @media print { header, .no-print { display:none!important } body{background:#fff;color:#000} .card{box-shadow:none;border:0} }
+</style>
+</head>
+<body>
+  <div class="app">
+    <header>
+      <div class="brand">
+        <div class="logo" aria-hidden></div>
+        <div>
+          <h1>Finn Wardman Fund</h1>
+          <div class="small muted">Grantee & Admin Portal</div>
+        </div>
+      </div>
+      <div id="userChip" class="chip hidden"></div>
+    </header>
+
+    <!-- AUTH CARD -->
+    <section id="auth" class="card">
+      <div style="display:grid;grid-template-columns:1fr 360px;gap:18px">
+        <div>
+          <h2 id="authTitle" style="margin:0 0 6px 0">Sign in</h2>
+          <div class="small muted" style="margin-bottom:12px" id="authSubtitle">Sign in with Google (recommended) or Email/Password.</div>
+
+          <div style="max-width:700px">
+            <label class="small muted">Email</label>
+            <input id="inputEmail" type="email" placeholder="you@example.com" autocomplete="email" />
+            <div style="height:10px"></div>
+            <label class="small muted">Password</label>
+            <input id="inputPassword" type="password" placeholder="Password" autocomplete="current-password" />
+            <div style="height:12px"></div>
+            <div class="actions">
+              <button id="btnPrimary">Sign in</button>
+              <button id="btnGoogle" class="ghost">Sign in with Google</button>
+              <button id="btnForgot" class="link" type="button">Forgot password?</button>
+            </div>
+
+            <div class="small muted" style="margin-top:8px">
+              <span id="toggleText">Don't have an account?</span>
+              <button id="btnToggleMode" class="link" type="button">Create one</button>
+            </div>
+
+            <div id="authError" class="err" role="alert"></div>
+          </div>
+        </div>
+
+        <div>
+          <div style="font-weight:700;margin-bottom:8px">Quick notes</div>
+          <ul class="small muted" style="padding-left:16px;margin:0;line-height:1.6">
+            <li>Add <code>localhost</code> and your hosting domain(s) to Firebase Console → Authentication → Authorized domains.</li>
+            <li>Google provider must be enabled in Firebase Console → Authentication → Sign-in method.</li>
+            <li>Portal reads Firestore collections <code>Scholarship</code> & <code>Disbursements</code>, synced from your Sheets.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- GRANTEE DASHBOARD -->
+    <section id="grantee" class="card hidden" style="margin-top:16px">
+      <div style="display:flex;justify-content:space-between;align-items:center" class="no-print">
+        <div class="chip">Grantee Dashboard</div>
+        <div style="display:flex;gap:8px;align-items:center">
+          <button id="btnPrint" class="ghost">Print</button>
+          <button id="btnSignOut" class="ghost">Sign Out</button>
+        </div>
+      </div>
+
+      <div style="margin-top:14px" class="grid cols-3">
+        <div><div class="small muted">Awarded Amount</div><div id="valAwarded" style="font-weight:800;font-size:20px;margin-top:6px">—</div></div>
+        <div><div class="small muted">Total Spent</div><div id="valSpent" style="font-weight:800;font-size:20px;margin-top:6px">—</div></div>
+        <div><div class="small muted">Remaining</div><div id="valRemaining" style="font-weight:800;font-size:20px;margin-top:6px">—</div></div>
+      </div>
+
+      <div style="margin-top:16px">
+        <h3 style="margin:0 0 6px 0">Disbursements</h3>
+        <table><thead><tr><th>Date</th><th>Description</th><th>Category</th><th style="text-align:right">Amount</th></tr></thead>
+        <tbody id="tblDisb"></tbody></table>
+      </div>
+    </section>
+
+    <!-- ADMIN DASHBOARD -->
+    <section id="admin" class="card hidden" style="margin-top:16px">
+      <div style="display:flex;justify-content:space-between;align-items:center" class="no-print">
+        <div class="chip">Admin Dashboard</div>
+        <div style="display:flex;gap:8px;align-items:center">
+          <input id="search" placeholder="Search by email or Grantee ID" style="width:260px;padding:8px;border-radius:8px;border:1px solid rgba(255,255,255,.04);background:transparent;color:var(--text)">
+          <button id="btnSearch" class="ghost">Search</button>
+          <button id="btnLoadAll">Load all</button>
+          <button id="btnSignOut2" class="ghost">Sign Out</button>
+        </div>
+      </div>
+
+      <div style="margin-top:12px" class="grid cols-3">
+        <div><div class="small muted">Total Grantees</div><div id="totGrantees" style="font-weight:800;font-size:18px;margin-top:6px">—</div></div>
+        <div><div class="small muted">Total Awarded</div><div id="totAwarded" style="font-weight:800;font-size:18px;margin-top:6px">—</div></div>
+        <div><div class="small muted">Total Disbursed</div><div id="totDisbursed" style="font-weight:800;font-size:18px;margin-top:6px">—</div></div>
+      </div>
+
+      <div style="margin-top:12px">
+        <h3 style="margin:0 0 6px 0">Grantees</h3>
+        <table><thead><tr><th>Grantee ID</th><th>Name</th><th>Email</th><th>Awarded</th><th>Disbursed</th><th>Remaining</th></tr></thead>
+        <tbody id="tblGrantees"></tbody></table>
+      </div>
+    </section>
+  </div>
+
+  <!-- Firebase (ES modules). Uses your provided config. -->
+  <script type="module">
+    // ---------- Firebase SDK imports ----------
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
+    import { getAuth, GoogleAuthProvider, signInWithPopup, signInWithRedirect, getRedirectResult, signInWithEmailAndPassword, createUserWithEmailAndPassword, sendPasswordResetEmail, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js";
+    import { getFirestore, doc, getDoc, setDoc, collection, getDocs, query, where, orderBy } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-firestore.js";
+
+    // ---------- Your Firebase config ----------
+    const firebaseConfig = {
+      apiKey: "AIzaSyC2YS6SIZnZ0-vy-ouiW6CT7v7pQkxaKo8",
+      authDomain: "finn-wardman-fund.firebaseapp.com",
+      projectId: "finn-wardman-fund",
+      storageBucket: "finn-wardman-fund.appspot.com",
+      messagingSenderId: "490574462391",
+      appId: "1:490574462391:web:b215c78bd81a7e821c3c32"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    auth.useDeviceLanguage();
+    const db = getFirestore(app);
+    const gProvider = new GoogleAuthProvider();
+    gProvider.setCustomParameters({ prompt: 'select_account' });
+
+    // UI helpers
+    const $ = id => document.getElementById(id);
+    const show = el => el && el.classList.remove('hidden');
+    const hide = el => el && el.classList.add('hidden');
+    const fmtMoney = n => (Number(n || 0)).toLocaleString(undefined, { style:'currency', currency:'USD' });
+
+    // UI refs
+    const authError = $('authError'), userChip = $('userChip');
+    const authCard = $('auth'), granteeCard = $('grantee'), adminCard = $('admin');
+    const btnPrimary = $('btnPrimary');
+    const btnGoogle = $('btnGoogle');
+    const btnToggleMode = $('btnToggleMode');
+    const btnForgot = $('btnForgot');
+    const inputEmail = $('inputEmail');
+    const inputPassword = $('inputPassword');
+    const authTitle = $('authTitle');
+    const authSubtitle = $('authSubtitle');
+    const toggleText = $('toggleText');
+
+    let isSignUpMode = false;
+
+    function setLoading(isLoading) {
+      [btnPrimary, btnGoogle].forEach(b => { if (!b) return; b.disabled = isLoading; b.style.opacity = isLoading ? 0.7 : 1; });
+    }
+
+    function setAuthMode(signUp) {
+      isSignUpMode = !!signUp;
+      authError.textContent = '';
+      if (isSignUpMode) {
+        authTitle.textContent = 'Create account';
+        authSubtitle.textContent = 'Create an account with Email/Password or continue with Google.';
+        btnPrimary.textContent = 'Create account';
+        toggleText.textContent = 'Already have an account?';
+        btnToggleMode.textContent = 'Sign in';
+        inputPassword.placeholder = 'Create a password';
+      } else {
+        authTitle.textContent = 'Sign in';
+        authSubtitle.textContent = 'Sign in with Google (recommended) or Email/Password.';
+        btnPrimary.textContent = 'Sign in';
+        toggleText.textContent = "Don't have an account?";
+        btnToggleMode.textContent = 'Create one';
+        inputPassword.placeholder = 'Password';
+      }
+    }
+
+    setAuthMode(false);
+
+    // Event handlers
+    btnGoogle.addEventListener('click', async () => {
+      authError.textContent = '';
+      setLoading(true);
+      try {
+        await signInWithPopup(auth, gProvider);
+      } catch (e) {
+        // Fallback to redirect if popup blocked
+        if (e && (e.code === 'auth/popup-blocked' || e.code === 'auth/popup-closed-by-user')) {
+          try { await signInWithRedirect(auth, gProvider); return; } catch (e2) { console.error(e2); }
+        }
+        console.error(e);
+        if (e.code === 'auth/unauthorized-domain') authError.textContent = 'Unauthorized domain — add finn-wardman-fund.web.app (and localhost) in Firebase Console → Authentication → Authorized domains.';
+        else if (e.code === 'auth/operation-not-allowed') authError.textContent = 'Google sign-in not enabled in Firebase Console.';
+        else authError.textContent = e.message || 'Google sign-in failed.';
+      } finally { setLoading(false); }
+    });
+
+    // Handle post-redirect result (in case popup fallback redirected)
+    getRedirectResult(auth).catch(e => console.warn('redirect result', e));
+
+    btnPrimary.addEventListener('click', async () => {
+      authError.textContent = '';
+      const email = (inputEmail.value || '').trim();
+      const password = inputPassword.value || '';
+      if (!email || !password) { authError.textContent = 'Email and password are required.'; return; }
+      setLoading(true);
+      try {
+        if (isSignUpMode) {
+          const cred = await createUserWithEmailAndPassword(auth, email, password);
+          await ensureUser(cred.user.uid, cred.user.email, cred.user.displayName);
+        } else {
+          await signInWithEmailAndPassword(auth, email, password);
+        }
+      } catch (e) {
+        console.error(e);
+        const map = {
+          'auth/email-already-in-use': 'An account already exists for this email. Try signing in.',
+          'auth/invalid-email': 'Invalid email address.',
+          'auth/invalid-credential': 'Invalid email or password.',
+          'auth/user-not-found': 'No account found with that email.',
+          'auth/wrong-password': 'Incorrect password.',
+          'auth/too-many-requests': 'Too many attempts. Please try again later.'
+        };
+        authError.textContent = map[e.code] || e.message || 'Authentication error.';
+      } finally { setLoading(false); }
+    });
+
+    btnForgot.addEventListener('click', async () => {
+      authError.textContent = '';
+      const email = (inputEmail.value || '').trim();
+      if (!email) { authError.textContent = 'Enter your email first, then click Forgot password.'; return; }
+      try {
+        await sendPasswordResetEmail(auth, email);
+        authError.style.color = '#9fe2a1';
+        authError.textContent = 'Password reset email sent.';
+        setTimeout(() => { authError.textContent = ''; authError.style.color = ''; }, 4000);
+      } catch (e) { authError.textContent = e.message || 'Failed to send reset email.'; }
+    });
+
+    btnToggleMode.addEventListener('click', () => setAuthMode(!isSignUpMode));
+
+    $('btnSignOut').addEventListener('click', () => signOut(auth));
+    $('btnSignOut2').addEventListener('click', () => signOut(auth));
+    $('btnPrint').addEventListener('click', () => window.print());
+    $('btnLoadAll').addEventListener('click', loadAllGrantees);
+    $('btnSearch').addEventListener('click', () => searchGrantee($('search').value.trim()));
+
+    // Ensure users/{uid} exists and return role (creates default grantee)
+    async function ensureUser(uid, email, name) {
+      const uref = doc(db, 'users', uid);
+      const snap = await getDoc(uref);
+      if (!snap.exists()) {
+        await setDoc(uref, { role: 'grantee', email: email || '', name: name || '' }, { merge: true });
+        return 'grantee';
+      }
+      return snap.data()?.role || 'grantee';
+    }
+
+    // Map a signed-in user to Scholarship doc:
+    // first try match by Applicant Email (case-insensitive), else by Grantee ID matching user.uid
+    async function findScholarshipDocForUser(user) {
+      if (!user) return null;
+      const emailRaw = user.email || '';
+      const emailLc = emailRaw.toLowerCase();
+      const scholarships = collection(db, 'Scholarship');
+      try {
+        // Try both raw and lowercase for common field variants
+        const attempts = [
+          ['Applicant Email', emailRaw], ['Applicant Email', emailLc],
+          ['applicantEmail', emailRaw], ['applicantEmail', emailLc],
+          ['Email Address', emailRaw], ['Email Address', emailLc],
+          ['email', emailRaw], ['email', emailLc]
+        ];
+        for (const [field, val] of attempts) {
+          try {
+            const qx = query(scholarships, where(field, '==', val));
+            const rx = await getDocs(qx);
+            if (!rx.empty) return { id: rx.docs[0].id, data: rx.docs[0].data() };
+          } catch (_) { /* ignore per-field errors */ }
+        }
+      } catch (err) {
+        console.warn('Query by Applicant Email failed (field may not exist)', err);
+      }
+
+      try {
+        const snap = await getDoc(doc(db, 'Scholarship', user.uid));
+        if (snap.exists()) return { id: snap.id, data: snap.data() };
+      } catch(e) { console.warn(e); }
+
+      try {
+        const all = await getDocs(scholarships);
+        for (const d of all.docs) {
+          const dat = d.data();
+          const possible = [dat['Applicant Email'], dat['ApplicantEmail'], dat['Email Address'], dat['email'], dat['emailAddress']];
+          for (const p of possible) {
+            if (!p) continue;
+            if (String(p).toLowerCase() === email) return { id: d.id, data: dat };
+          }
+        }
+      } catch(e) { console.warn('fallback scan failed', e); }
+
+      return null;
+    }
+
+    function parseDateLike(value) {
+      if (!value) return 0;
+      try {
+        if (typeof value === 'object' && value !== null) {
+          if (typeof value.toDate === 'function') {
+            const t = value.toDate().getTime();
+            return Number.isFinite(t) ? t : 0;
+          }
+        }
+        if (typeof value === 'number') {
+          return Number.isFinite(value) ? value : 0;
+        }
+        const d = new Date(value);
+        const t = d.getTime();
+        return Number.isFinite(t) ? t : 0;
+      } catch (_) { return 0; }
+    }
+
+    // Load grantee dashboard
+    async function loadGrantee(uid, scholarshipId, scholarshipData) {
+      let data = scholarshipData;
+      if (!data) {
+        const snap = await getDoc(doc(db,'Scholarship', scholarshipId || uid));
+        if (!snap.exists()) { console.warn('No scholarship doc'); data = {}; }
+        else data = snap.data();
+      }
+
+      const awarded = Number(data['Awarded Amount'] ?? data.awardedAmount ?? data.awarded ?? 0);
+
+      const disbCol = collection(db, 'Disbursements');
+      let ds;
+      let disbRows = [];
+      try {
+        const qx = query(disbCol, where('Grantee ID','==', (data['Grantee ID'] || data.granteeId || uid)), orderBy('Date of Disbursement','desc'));
+        ds = await getDocs(qx);
+      } catch (e) {
+        // Likely missing index, fallback without orderBy and sort on client
+        console.warn('Index missing for where+orderBy; falling back to client sort', e);
+        const qx = query(disbCol, where('Grantee ID','==', (data['Grantee ID'] || data.granteeId || uid)));
+        ds = await getDocs(qx);
+      }
+
+      let totalSpent = 0;
+      ds.forEach(docu => {
+        const r = docu.data();
+        const amount = Number(r['Disbursed Amount'] ?? r.disbursedAmount ?? r.amount ?? 0);
+        totalSpent += amount;
+        disbRows.push({
+          date: r['Date of Disbursement'] ?? r.date ?? (r['Date'] || ''),
+          description: r['Description'] ?? r.description ?? '-',
+          category: r['Category'] ?? r.category ?? '-',
+          amount
+        });
+      });
+
+      // Client-side sort desc by date if needed
+      disbRows.sort((a,b) => parseDateLike(b.date) - parseDateLike(a.date));
+
+      $('valAwarded').textContent = fmtMoney(awarded);
+      $('valSpent').textContent = fmtMoney(totalSpent);
+      $('valRemaining').textContent = fmtMoney(Math.max(awarded - totalSpent, 0));
+      userChip.textContent = `${(data['Applicant Name'] || data['Full Name'] || data.name || uid)} • grantee`; show(userChip);
+
+      const tbody = $('tblDisb'); tbody.innerHTML = '';
+      disbRows.forEach(r => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `<td>${r.date}</td><td>${r.description}</td><td>${r.category}</td><td style="text-align:right">${fmtMoney(r.amount)}</td>`;
+        tbody.appendChild(tr);
+      });
+
+      hide(authCard); hide(adminCard); show(granteeCard);
+    }
+
+    // Admin helpers: compute totals per scholarship doc id
+    async function computeForId(id) {
+      const sSnap = await getDoc(doc(db,'Scholarship', id));
+      if (!sSnap.exists()) return null;
+      const d = sSnap.data();
+      const awarded = Number(d['Awarded Amount'] ?? d.awardedAmount ?? d.awarded ?? 0);
+      const granteeId = d['Grantee ID'] ?? d.granteeId ?? id;
+      let totalDisb = 0;
+      try {
+        const qx = query(collection(db,'Disbursements'), where('Grantee ID','==', granteeId));
+        const ds = await getDocs(qx);
+        ds.forEach(x => totalDisb += Number(x.data()['Disbursed Amount'] ?? x.data().disbursedAmount ?? x.data().amount ?? 0));
+      } catch(e) { console.warn(e); }
+      return { id, name: d['Applicant Name'] ?? d['Full Name'] ?? d.name ?? '-', email: d['Applicant Email'] ?? d['Email Address'] ?? d.email ?? '-', awarded, disbursed: totalDisb, remaining: Math.max(awarded - totalDisb, 0) };
+    }
+
+    async function loadAllGrantees() {
+      const col = collection(db,'Scholarship');
+      const all = await getDocs(col);
+      const results = [];
+      for (const docu of all.docs) {
+        const r = await computeForId(docu.id);
+        if (r) results.push(r);
+      }
+      renderAdmin(results);
+    }
+
+    function renderAdmin(rows) {
+      const tbody = $('tblGrantees'); tbody.innerHTML = '';
+      let totalG = 0, totAward=0, totDis=0;
+      rows.forEach(r => {
+        totalG++; totAward += r.awarded; totDis += r.disbursed;
+        const tr = document.createElement('tr');
+        tr.innerHTML = `<td>${r.id}</td><td>${r.name}</td><td>${r.email}</td><td>${fmtMoney(r.awarded)}</td><td>${fmtMoney(r.disbursed)}</td><td>${fmtMoney(r.remaining)}</td>`;
+        tbody.appendChild(tr);
+      });
+      $('totGrantees').textContent = totalG; $('totAwarded').textContent = fmtMoney(totAward); $('totDisbursed').textContent = fmtMoney(totDis);
+      hide(authCard); hide(granteeCard); show(adminCard);
+    }
+
+    // Search by email or id
+    async function searchGrantee(term) {
+      if (!term) return loadAllGrantees();
+      const ids = [];
+      if (term.includes('@')) {
+        try {
+          const c = collection(db, 'Scholarship');
+          const raw = term.trim();
+          const lc = raw.toLowerCase();
+          const attempts = [
+            ['Applicant Email', raw], ['Applicant Email', lc],
+            ['Email Address', raw], ['Email Address', lc],
+            ['applicantEmail', raw], ['applicantEmail', lc],
+            ['email', raw], ['email', lc]
+          ];
+          for (const [field, val] of attempts) {
+            try {
+              const qx = query(c, where(field, '==', val));
+              const rx = await getDocs(qx);
+              rx.forEach(d => { if (!ids.includes(d.id)) ids.push(d.id); });
+              if (ids.length > 0) break;
+            } catch (_) { /* ignore per-field errors */ }
+          }
+        } catch(e) { console.warn(e); }
+      } else {
+        const snap = await getDoc(doc(db,'Scholarship', term));
+        if (snap.exists()) ids.push(snap.id);
+      }
+      const final = [];
+      for (const id of ids) {
+        const r = await computeForId(id);
+        if (r) final.push(r);
+      }
+      renderAdmin(final);
+    }
+
+    // Auth state: when user signs in, ensure users/{uid} exists and route
+    onAuthStateChanged(auth, async (user) => {
+      if (!user) {
+        hide(userChip); hide(adminCard); hide(granteeCard); show(authCard);
+        return;
+      }
+      const role = await ensureUser(user.uid, user.email, user.displayName);
+      if (role === 'admin') {
+        userChip.textContent = `${user.email} • admin`; show(userChip);
+        await loadAllGrantees(); return;
+      }
+      const found = await findScholarshipDocForUser(user);
+      if (found) {
+        await loadGrantee(user.uid, found.id, found.data);
+      } else {
+        authError.textContent = 'No scholarship record found for this account. Please contact admin.';
+        hide(adminCard); hide(granteeCard); show(authCard);
+      }
+    });
+  </script>
+</body>
+</html>
