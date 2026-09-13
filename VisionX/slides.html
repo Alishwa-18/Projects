@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VisionX — Presentation Slides</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#07070f;--bg2:#0e0e1c;
+  --p:#7c3aed;--p2:#a78bfa;
+  --c:#06b6d4;--c2:#67e8f9;
+  --g:#10b981;--r:#ef4444;--a:#f59e0b;
+  --t:#e2e8f0;--t2:#94a3b8;--t3:#475569;
+  --bd:rgba(255,255,255,.09);
+}
+html,body{height:100%;overflow:hidden;background:#000;font-family:'Inter',sans-serif}
+
+/* ── DECK ── */
+.deck{width:100vw;height:100vh;position:relative}
+
+/* ── SLIDE ── */
+.slide{
+  position:absolute;inset:0;
+  background:var(--bg);color:var(--t);
+  display:none;flex-direction:column;
+  padding:60px 80px;overflow:hidden;
+}
+.slide.active{display:flex}
+
+/* shared bg grid */
+.slide::before{
+  content:'';position:absolute;inset:0;
+  background-image:
+    linear-gradient(rgba(124,58,237,.04) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(124,58,237,.04) 1px,transparent 1px);
+  background-size:52px 52px;pointer-events:none;z-index:0;
+}
+.slide>*{position:relative;z-index:1}
+
+/* orbs */
+.orb{
+  position:absolute;border-radius:50%;
+  filter:blur(90px);pointer-events:none;z-index:0;
+  transition:all 1s ease;
+}
+
+/* ── NAV ── */
+.nav{
+  position:fixed;bottom:32px;left:50%;transform:translateX(-50%);
+  z-index:999;display:flex;align-items:center;gap:12px;
+  background:rgba(7,7,15,.85);backdrop-filter:blur(20px);
+  border:1px solid var(--bd);border-radius:100px;
+  padding:10px 20px;
+}
+.nav-btn{
+  width:36px;height:36px;border-radius:50%;
+  background:rgba(255,255,255,.06);border:1px solid var(--bd);
+  color:var(--t2);font-size:16px;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  transition:all .2s;
+}
+.nav-btn:hover{background:rgba(124,58,237,.2);color:var(--p2);border-color:rgba(124,58,237,.4)}
+.slide-counter{font-size:.8rem;color:var(--t3);min-width:60px;text-align:center}
+.dot-row{display:flex;gap:6px;align-items:center}
+.nav-dot{
+  width:7px;height:7px;border-radius:50%;
+  background:rgba(255,255,255,.15);cursor:pointer;transition:all .3s;
+}
+.nav-dot.active{background:var(--p);box-shadow:0 0 8px rgba(124,58,237,.6);width:20px;border-radius:4px}
+
+/* ── SHARED COMPONENTS ── */
+.chip{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:5px 14px;border-radius:100px;
+  font-size:.72rem;font-weight:700;letter-spacing:.1em;
+  border:1px solid;margin-bottom:20px;
+}
+.chip.p{background:rgba(124,58,237,.12);border-color:rgba(124,58,237,.3);color:var(--p2)}
+.chip.c{background:rgba(6,182,212,.12);border-color:rgba(6,182,212,.3);color:var(--c2)}
+.chip.g{background:rgba(16,185,129,.12);border-color:rgba(16,185,129,.3);color:#6ee7b7}
+
+.h1{font-size:3.8rem;font-weight:900;letter-spacing:-.04em;line-height:1.05}
+.h2{font-size:2.4rem;font-weight:800;letter-spacing:-.03em;line-height:1.1}
+.h3{font-size:1.4rem;font-weight:700;letter-spacing:-.01em}
+.body{font-size:1rem;color:var(--t2);line-height:1.75}
+.lead{font-size:1.25rem;color:var(--t2);line-height:1.65;max-width:700px}
+
+.grad-p{background:linear-gradient(135deg,var(--p2),var(--c2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.grad-c{background:linear-gradient(135deg,var(--c),var(--g));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.grad-3{background:linear-gradient(135deg,#f59e0b,#ef4444,var(--p2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+
+.tag{
+  display:inline-block;padding:3px 10px;border-radius:6px;
+  font-size:.7rem;font-weight:700;letter-spacing:.08em;
+}
+.tag.p{background:rgba(124,58,237,.15);color:var(--p2)}
+.tag.c{background:rgba(6,182,212,.15);color:var(--c2)}
+.tag.g{background:rgba(16,185,129,.15);color:#6ee7b7}
+.tag.r{background:rgba(239,68,68,.15);color:#fca5a5}
+.tag.a{background:rgba(245,158,11,.15);color:#fcd34d}
+
+.card{
+  background:rgba(255,255,255,.04);
+  border:1px solid var(--bd);
+  border-radius:16px;padding:24px;
+}
+.card.glow-p{box-shadow:0 0 30px rgba(124,58,237,.12)}
+.card.glow-c{box-shadow:0 0 30px rgba(6,182,212,.12)}
+.card.glow-g{box-shadow:0 0 30px rgba(16,185,129,.1)}
+
+.divider{height:1px;background:var(--bd);margin:24px 0}
+
+.bullet{display:flex;align-items:flex-start;gap:10px;margin-bottom:14px;font-size:.95rem;color:var(--t2)}
+.bullet::before{
+  content:'';display:block;width:6px;height:6px;border-radius:50%;
+  background:var(--p);margin-top:9px;flex-shrink:0;
+}
+
+.num-stat{text-align:center}
+.num-big{font-size:3rem;font-weight:900;color:var(--p)}
+.num-lbl{font-size:.8rem;color:var(--t3);margin-top:4px}
+
+/* section label */
+.sec-label{
+  font-size:.7rem;font-weight:700;letter-spacing:.15em;
+  text-transform:uppercase;color:var(--t3);
+  margin-bottom:10px;
+}
+
+/* ══════════════════════════════════════
+   SLIDE 1 — COVER
+══════════════════════════════════════ */
+#s1{justify-content:center}
+#s1 .orb1{width:600px;height:600px;background:rgba(124,58,237,.15);top:-200px;left:-150px}
+#s1 .orb2{width:500px;height:500px;background:rgba(6,182,212,.1);bottom:-150px;right:-100px}
+.logo-huge{
+  font-size:6.5rem;font-weight:900;letter-spacing:-.05em;
+  line-height:1;margin-bottom:16px;
+}
+.logo-huge .br{color:var(--p);text-shadow:0 0 40px rgba(124,58,237,.7)}
+.logo-huge .x{color:var(--c);text-shadow:0 0 40px rgba(6,182,212,.7)}
+.tagline-big{font-size:1.4rem;color:var(--t2);margin-bottom:40px}
+.tagline-big strong{color:var(--t)}
+.cover-pills{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:50px}
+.c-pill{
+  padding:8px 18px;border-radius:100px;border:1px solid var(--bd);
+  font-size:.85rem;color:var(--t2);background:rgba(255,255,255,.04);
+}
+.cover-meta{display:flex;gap:40px;border-top:1px solid var(--bd);padding-top:30px}
+.meta-item .label{font-size:.72rem;color:var(--t3);letter-spacing:.08em;margin-bottom:4px}
+.meta-item .val{font-size:.95rem;font-weight:600;color:var(--t)}
+
+/* ══════════════════════════════════════
+   SLIDE 2 — PROBLEM
+══════════════════════════════════════ */
+#s2 .orb1{width:500px;height:500px;background:rgba(239,68,68,.07);top:-100px;right:-100px}
+.problem-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:32px}
+.prob-card{
+  background:rgba(239,68,68,.05);
+  border:1px solid rgba(239,68,68,.18);
+  border-radius:14px;padding:22px;
+}
+.prob-icon{font-size:2rem;margin-bottom:12px}
+.prob-title{font-size:1rem;font-weight:700;color:var(--t);margin-bottom:6px}
+.prob-body{font-size:.88rem;color:var(--t2);line-height:1.65}
+
+/* ══════════════════════════════════════
+   SLIDE 3 — SOLUTION OVERVIEW
+══════════════════════════════════════ */
+#s3 .orb1{width:600px;height:400px;background:rgba(124,58,237,.12);top:-100px;left:-100px}
+.three-col{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:32px}
+.sol-card{
+  border-radius:16px;padding:28px 24px;
+  border:1px solid var(--bd);
+  background:var(--bg2);
+  display:flex;flex-direction:column;
+}
+.sol-icon{font-size:3rem;margin-bottom:16px}
+.sol-title{font-size:1.1rem;font-weight:800;margin-bottom:10px}
+.sol-body{font-size:.88rem;color:var(--t2);line-height:1.7;flex:1}
+.sol-tags{margin-top:16px;display:flex;flex-wrap:wrap;gap:6px}
+
+/* ══════════════════════════════════════
+   SLIDE 4 — GESTURE MODULE
+══════════════════════════════════════ */
+#s4 .orb1{width:500px;height:500px;background:rgba(124,58,237,.15);bottom:-100px;right:-100px}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:32px;margin-top:28px;align-items:start}
+.gest-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.gest-item{
+  display:flex;align-items:center;gap:8px;
+  padding:9px 12px;border-radius:9px;
+  background:rgba(255,255,255,.04);border:1px solid var(--bd);
+  font-size:.88rem;color:var(--t2);
+}
+.gest-item span{font-size:1.2rem}
+.lm-diagram{
+  background:rgba(124,58,237,.06);border:1px solid rgba(124,58,237,.2);
+  border-radius:14px;padding:24px;text-align:center;
+}
+.landmark-vis{
+  display:inline-grid;grid-template-columns:repeat(5,1fr);
+  gap:8px;margin:20px 0;
+}
+.lm-dot{
+  width:12px;height:12px;border-radius:50%;
+  background:rgba(124,58,237,.4);border:1px solid rgba(124,58,237,.6);
+  margin:auto;
+}
+.lm-dot.tip{background:var(--c);border-color:var(--c2)}
+.lm-dot.wrist{background:var(--p);border-color:var(--p2);width:16px;height:16px}
+.algo-step{
+  display:flex;align-items:center;gap:12px;
+  padding:10px 14px;border-radius:10px;
+  background:rgba(255,255,255,.03);border:1px solid var(--bd);
+  margin-bottom:8px;font-size:.88rem;
+}
+.algo-n{
+  width:24px;height:24px;border-radius:50%;
+  background:var(--p);color:#fff;font-size:.75rem;font-weight:700;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+}
+
+/* ══════════════════════════════════════
+   SLIDE 5 — COLOR MODULE
+══════════════════════════════════════ */
+#s5 .orb1{width:500px;height:500px;background:rgba(6,182,212,.12);top:-100px;right:-50px}
+.color-demo{margin-top:28px;display:grid;grid-template-columns:1fr 1fr;gap:32px}
+.palette-preview{display:flex;flex-direction:column;gap:12px}
+.pal-row{display:flex;align-items:center;gap:12px}
+.pal-swatch{
+  width:56px;height:40px;border-radius:10px;
+  border:1px solid rgba(255,255,255,.1);flex-shrink:0;
+}
+.pal-info .name{font-size:.92rem;font-weight:600}
+.pal-info .hex{font-size:.75rem;color:var(--t3);font-family:monospace}
+.pal-pct{margin-left:auto;font-size:.82rem;color:var(--t3)}
+.metrics-list{display:flex;flex-direction:column;gap:10px}
+.metric-row{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:11px 16px;border-radius:10px;
+  background:rgba(6,182,212,.05);border:1px solid rgba(6,182,212,.15);
+  font-size:.9rem;
+}
+.metric-key{color:var(--t2)}
+.metric-val{font-weight:700;color:var(--c2)}
+
+/* ══════════════════════════════════════
+   SLIDE 6 — FACE MODULE
+══════════════════════════════════════ */
+#s6 .orb1{width:500px;height:500px;background:rgba(16,185,129,.1);bottom:-100px;left:-50px}
+.face-layout{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-top:28px}
+.emo-preview{display:flex;flex-direction:column;gap:9px}
+.emo-bar-row{display:flex;align-items:center;gap:10px;font-size:.85rem}
+.emo-name{width:90px;color:var(--t2)}
+.emo-track{flex:1;height:8px;background:rgba(255,255,255,.08);border-radius:4px;overflow:hidden}
+.emo-fill{height:100%;border-radius:4px}
+.emo-val{width:36px;text-align:right;color:var(--t3);font-size:.78rem}
+.face-stats{display:flex;flex-direction:column;gap:10px}
+.fs-row{
+  display:flex;justify-content:space-between;
+  padding:12px 16px;border-radius:10px;
+  background:rgba(16,185,129,.05);border:1px solid rgba(16,185,129,.15);
+  font-size:.9rem;
+}
+.fs-key{color:var(--t2)}
+.fs-val{font-weight:700;color:#6ee7b7}
+
+/* ══════════════════════════════════════
+   SLIDE 7 — ARCHITECTURE
+══════════════════════════════════════ */
+#s7 .orb1{width:600px;height:300px;background:rgba(245,158,11,.07);top:50%;left:-100px;transform:translateY(-50%)}
+.arch-diagram{
+  margin-top:28px;
+  display:flex;flex-direction:column;gap:16px;
+}
+.arch-row{display:flex;align-items:center;gap:12px}
+.arch-box{
+  flex:1;padding:14px 18px;border-radius:12px;
+  text-align:center;font-size:.85rem;font-weight:600;
+}
+.arch-box.input{background:rgba(6,182,212,.1);border:1px solid rgba(6,182,212,.25);color:var(--c2)}
+.arch-box.process{background:rgba(124,58,237,.1);border:1px solid rgba(124,58,237,.25);color:var(--p2)}
+.arch-box.output{background:rgba(16,185,129,.1);border:1px solid rgba(16,185,129,.25);color:#6ee7b7}
+.arch-arrow{font-size:1.2rem;color:var(--t3);flex-shrink:0}
+.arch-split{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.tech-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
+.tech-tag{
+  padding:6px 14px;border-radius:8px;
+  font-size:.78rem;font-weight:600;
+  background:rgba(255,255,255,.05);border:1px solid var(--bd);color:var(--t2);
+}
+
+/* ══════════════════════════════════════
+   SLIDE 8 — DEMO
+══════════════════════════════════════ */
+#s8{justify-content:center;align-items:center;text-align:center}
+#s8 .orb1{width:700px;height:700px;background:rgba(124,58,237,.15);top:50%;left:50%;transform:translate(-50%,-50%)}
+#s8 .orb2{width:400px;height:400px;background:rgba(6,182,212,.1);top:50%;left:50%;transform:translate(-50%,-50%)}
+.demo-icon{font-size:6rem;margin-bottom:20px;display:block}
+.demo-steps{
+  display:flex;gap:24px;justify-content:center;margin-top:36px;
+}
+.demo-step{
+  background:rgba(255,255,255,.04);border:1px solid var(--bd);
+  border-radius:14px;padding:20px 24px;text-align:center;
+  min-width:160px;
+}
+.ds-icon{font-size:2rem;margin-bottom:8px}
+.ds-txt{font-size:.88rem;color:var(--t2)}
+
+/* ══════════════════════════════════════
+   SLIDE 9 — RESULTS
+══════════════════════════════════════ */
+#s9 .orb1{width:500px;height:400px;background:rgba(16,185,129,.1);top:-50px;right:-80px}
+.results-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:28px}
+.res-card{
+  border-radius:14px;padding:28px 20px;text-align:center;
+  border:1px solid var(--bd);background:var(--bg2);
+}
+.res-num{font-size:3rem;font-weight:900;line-height:1;margin-bottom:8px}
+.res-lbl{font-size:.88rem;color:var(--t2);line-height:1.5}
+.res-sub{font-size:.75rem;color:var(--t3);margin-top:6px}
+.kpi-row{
+  display:flex;gap:16px;margin-top:16px;
+}
+.kpi-item{
+  flex:1;padding:14px;border-radius:12px;text-align:center;
+  background:rgba(255,255,255,.03);border:1px solid var(--bd);
+}
+.kpi-n{font-size:1.6rem;font-weight:800;color:var(--g)}
+.kpi-l{font-size:.75rem;color:var(--t3);margin-top:4px}
+
+/* ══════════════════════════════════════
+   SLIDE 10 — THANK YOU
+══════════════════════════════════════ */
+#s10{justify-content:center;align-items:center;text-align:center}
+#s10 .orb1{width:800px;height:500px;background:rgba(124,58,237,.12);top:50%;left:50%;transform:translate(-50%,-60%)}
+#s10 .orb2{width:400px;height:400px;background:rgba(6,182,212,.08);bottom:-50px;right:-50px}
+.team-cards{display:flex;gap:20px;justify-content:center;margin-top:36px}
+.t-card{
+  background:rgba(255,255,255,.04);border:1px solid var(--bd);
+  border-radius:14px;padding:24px 28px;text-align:center;min-width:180px;
+}
+.t-avatar{
+  width:60px;height:60px;border-radius:50%;
+  background:linear-gradient(135deg,var(--p),var(--c));
+  display:flex;align-items:center;justify-content:center;
+  margin:0 auto 12px;font-size:26px;
+}
+.t-name{font-size:.95rem;font-weight:700}
+.t-role{font-size:.78rem;color:var(--t3);margin-top:4px}
+</style>
+</head>
+<body>
+<div class="deck">
+
+<!-- ══ SLIDE 1: COVER ══ -->
+<div class="slide active" id="s1">
+  <div class="orb orb1"></div>
+  <div class="orb orb2"></div>
+  <div class="chip p">● CS-504 · DIGITAL IMAGE PROCESSING · FINAL PROJECT</div>
+  <div class="logo-huge">
+    VISION<span class="br">[</span><span class="x">X</span><span class="br">]</span>
+  </div>
+  <div class="tagline-big">A <strong>Real-Time AI Vision Lab</strong> in the Browser</div>
+  <div class="cover-pills">
+    <div class="c-pill">🤚 Hand Gesture Recognition</div>
+    <div class="c-pill">🎨 Live Color Analysis</div>
+    <div class="c-pill">👤 Face & Emotion Detection</div>
+    <div class="c-pill">⚡ 30 FPS · No Server Needed</div>
+  </div>
+  <div class="cover-meta">
+    <div class="meta-item"><div class="label">COURSE</div><div class="val">CS-504 Digital Image Processing</div></div>
+    <div class="meta-item"><div class="label">SEMESTER</div><div class="val">Fall 2025</div></div>
+    <div class="meta-item"><div class="label">TEAM</div><div class="val">Student 1 · Student 2 · Student 3</div></div>
+    <div class="meta-item"><div class="label">TECHNOLOGY</div><div class="val">MediaPipe · face-api.js · Canvas API</div></div>
+  </div>
+</div>
+
+<!-- ══ SLIDE 2: PROBLEM ══ -->
+<div class="slide" id="s2">
+  <div class="orb orb1"></div>
+  <div class="chip p">● THE PROBLEM</div>
+  <div class="h2">Why do we need <span class="grad-p">real-time</span><br>computer vision in the browser?</div>
+  <div class="problem-grid">
+    <div class="prob-card">
+      <div class="prob-icon">📡</div>
+      <div class="prob-title">Server Dependency</div>
+      <div class="prob-body">Traditional vision systems upload frames to a backend server for processing — introducing latency, bandwidth costs, and privacy risks. Not feasible for real-time interactions.</div>
+    </div>
+    <div class="prob-card">
+      <div class="prob-icon">⏳</div>
+      <div class="prob-title">High Latency</div>
+      <div class="prob-body">Round-trip network calls add 200–500ms of delay, making real-time applications like gesture control, live AR, or interactive analytics feel sluggish and unresponsive.</div>
+    </div>
+    <div class="prob-card">
+      <div class="prob-icon">🔒</div>
+      <div class="prob-title">Privacy Concerns</div>
+      <div class="prob-body">Sending webcam frames to cloud servers raises serious privacy and data security concerns, especially for facial analysis applications in educational or medical contexts.</div>
+    </div>
+    <div class="prob-card">
+      <div class="prob-icon">💸</div>
+      <div class="prob-title">Deployment Complexity</div>
+      <div class="prob-body">Existing vision tools require Python environments, GPU servers, Docker, and complex APIs — creating a barrier for students, educators, and small-scale developers.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ SLIDE 3: SOLUTION ══ -->
+<div class="slide" id="s3">
+  <div class="orb orb1"></div>
+  <div class="chip p">● OUR SOLUTION</div>
+  <div class="h2">VisionX — Three powerful<br><span class="grad-p">vision modules</span> in one app</div>
+  <div class="three-col">
+    <div class="sol-card" style="border-color:rgba(124,58,237,.3)">
+      <div class="sol-icon">🤚</div>
+      <div class="sol-title" style="color:var(--p2)">Gesture Lab</div>
+      <div class="sol-body">Detects and classifies 12+ hand gestures live using MediaPipe's 21-landmark model. Displays gesture name, emoji, confidence, finger status, and a gesture history trail.</div>
+      <div class="sol-tags">
+        <span class="tag p">MediaPipe</span>
+        <span class="tag p">WASM</span>
+      </div>
+    </div>
+    <div class="sol-card" style="border-color:rgba(6,182,212,.3)">
+      <div class="sol-icon">🎨</div>
+      <div class="sol-title" style="color:var(--c2)">Color Analyzer</div>
+      <div class="sol-body">Extracts dominant colors from the live webcam feed every 180ms using pixel-level quantization. Shows named colors, HSL metrics, brightness, saturation, and color temperature.</div>
+      <div class="sol-tags">
+        <span class="tag c">Canvas API</span>
+        <span class="tag c">Pixel Math</span>
+      </div>
+    </div>
+    <div class="sol-card" style="border-color:rgba(16,185,129,.3)">
+      <div class="sol-icon">👤</div>
+      <div class="sol-title" style="color:#6ee7b7">Face Analyzer</div>
+      <div class="sol-body">Detects faces with TinyFaceDetector, overlays 68 facial landmarks, and predicts age, gender, and 7 emotional states (happy, sad, angry, surprised, and more) in real-time.</div>
+      <div class="sol-tags">
+        <span class="tag g">face-api.js</span>
+        <span class="tag g">TF.js</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ SLIDE 4: GESTURE MODULE ══ -->
+<div class="slide" id="s4">
+  <div class="orb orb1"></div>
+  <div class="chip p">● MODULE 1 · GESTURE RECOGNITION</div>
+  <div class="h2">21 Hand Landmarks →<br><span class="grad-p">12+ Classified Gestures</span></div>
+  <div class="two-col">
+    <div>
+      <div class="sec-label" style="margin-top:16px">Algorithm Steps</div>
+      <div class="algo-step"><div class="algo-n">1</div><span>Capture video frame via MediaPipe Camera</span></div>
+      <div class="algo-step"><div class="algo-n">2</div><span>Run Hand Landmark Detection (21 points, 3D)</span></div>
+      <div class="algo-step"><div class="algo-n">3</div><span>Extract TIP and PIP joint y-coordinates per finger</span></div>
+      <div class="algo-step"><div class="algo-n">4</div><span>Determine finger up/down state (TIP.y &lt; PIP.y)</span></div>
+      <div class="algo-step"><div class="algo-n">5</div><span>Map 5-bit finger vector → Gesture class</span></div>
+      <div class="algo-step"><div class="algo-n">6</div><span>Draw skeleton overlay + emoji label on canvas</span></div>
+      <div style="margin-top:16px">
+        <span class="tag p">2 hands simultaneously</span>&nbsp;
+        <span class="tag c">~3ms per frame</span>&nbsp;
+        <span class="tag g">WebGL accelerated</span>
+      </div>
+    </div>
+    <div>
+      <div class="sec-label" style="margin-top:16px">Recognizable Gestures</div>
+      <div class="gest-grid">
+        <div class="gest-item"><span>👍</span> Thumbs Up</div>
+        <div class="gest-item"><span>👎</span> Thumbs Down</div>
+        <div class="gest-item"><span>✌️</span> Peace / V</div>
+        <div class="gest-item"><span>🤟</span> Rock On</div>
+        <div class="gest-item"><span>✊</span> Fist</div>
+        <div class="gest-item"><span>🖐️</span> Open Hand</div>
+        <div class="gest-item"><span>👆</span> Point Up</div>
+        <div class="gest-item"><span>🤙</span> Shaka</div>
+        <div class="gest-item"><span>👌</span> OK Sign</div>
+        <div class="gest-item"><span>🤞</span> Fingers Crossed</div>
+        <div class="gest-item"><span>🖖</span> Vulcan</div>
+        <div class="gest-item"><span>🤌</span> Chef's Kiss</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ SLIDE 5: COLOR MODULE ══ -->
+<div class="slide" id="s5">
+  <div class="orb orb1"></div>
+  <div class="chip c">● MODULE 2 · COLOR ANALYZER</div>
+  <div class="h2">Pixel Quantization →<br><span class="grad-c">Live Color Intelligence</span></div>
+  <div class="color-demo">
+    <div>
+      <div class="sec-label" style="margin-top:16px">How Color Extraction Works</div>
+      <div class="algo-step"><div class="algo-n">1</div><span>Downscale frame to 160×120 for performance</span></div>
+      <div class="algo-step"><div class="algo-n">2</div><span>Sample every 4th pixel → ~1,200 color samples</span></div>
+      <div class="algo-step"><div class="algo-n">3</div><span>Bit-shift quantization: R&gt;&gt;5, G&gt;&gt;5, B&gt;&gt;5 (bucket)</span></div>
+      <div class="algo-step"><div class="algo-n">4</div><span>Sort buckets by frequency → top 6 dominant colors</span></div>
+      <div class="algo-step"><div class="algo-n">5</div><span>Match to 45-color named database (Euclidean distance)</span></div>
+      <div class="algo-step"><div class="algo-n">6</div><span>Compute HSL, brightness, temperature, variance</span></div>
+      <div style="margin-top:12px">
+        <div class="body" style="font-size:.82rem">🎨 Color temperature = (avgR − avgB + 255) / 510</div>
+        <div class="body" style="font-size:.82rem;margin-top:4px">💡 Brightness = 0.299R + 0.587G + 0.114B (Luma)</div>
+      </div>
+    </div>
+    <div>
+      <div class="sec-label" style="margin-top:16px">Live Output Example</div>
+      <div class="palette-preview" style="margin-bottom:16px">
+        <div class="pal-row"><div class="pal-swatch" style="background:#7c3aed"></div><div class="pal-info"><div class="name" style="color:#a78bfa">Violet</div><div class="hex">#7C3AED</div></div><div class="pal-pct">34%</div></div>
+        <div class="pal-row"><div class="pal-swatch" style="background:#06b6d4"></div><div class="pal-info"><div class="name" style="color:#67e8f9">Cyan</div><div class="hex">#06B6D4</div></div><div class="pal-pct">22%</div></div>
+        <div class="pal-row"><div class="pal-swatch" style="background:#1e1b4b"></div><div class="pal-info"><div class="name" style="color:#818cf8">Dark Indigo</div><div class="hex">#1E1B4B</div></div><div class="pal-pct">19%</div></div>
+        <div class="pal-row"><div class="pal-swatch" style="background:#10b981"></div><div class="pal-info"><div class="name" style="color:#6ee7b7">Emerald</div><div class="hex">#10B981</div></div><div class="pal-pct">14%</div></div>
+      </div>
+      <div class="metrics-list">
+        <div class="metric-row"><span class="metric-key">Brightness</span><span class="metric-val">142/255 (Medium)</span></div>
+        <div class="metric-row"><span class="metric-key">Saturation</span><span class="metric-val">78%</span></div>
+        <div class="metric-row"><span class="metric-key">Temperature</span><span class="metric-val">Cool (Blue-toned)</span></div>
+        <div class="metric-row"><span class="metric-key">Variance (σ)</span><span class="metric-val">64.2</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ SLIDE 6: FACE MODULE ══ -->
+<div class="slide" id="s6">
+  <div class="orb orb1"></div>
+  <div class="chip g">● MODULE 3 · FACE ANALYZER</div>
+  <div class="h2">Deep Learning →<br><span class="grad-c">Age · Gender · 7 Emotions</span></div>
+  <div class="face-layout">
+    <div>
+      <div class="sec-label" style="margin-top:16px">Neural Network Models Used</div>
+      <div class="algo-step"><div class="algo-n">①</div><span><strong>TinyFaceDetector</strong> — Fast SSD face localization</span></div>
+      <div class="algo-step"><div class="algo-n">②</div><span><strong>FaceLandmark68TinyNet</strong> — 68 facial keypoints</span></div>
+      <div class="algo-step"><div class="algo-n">③</div><span><strong>AgeGenderNet</strong> — Regression for age, classification for gender</span></div>
+      <div class="algo-step"><div class="algo-n">④</div><span><strong>FaceExpressionNet</strong> — 7-class softmax emotion output</span></div>
+      <div style="margin-top:14px">
+        <span class="tag g">Multi-face support</span>&nbsp;
+        <span class="tag c">68 landmarks/face</span>&nbsp;
+        <span class="tag a">~120ms inference</span>
+      </div>
+      <div class="face-stats" style="margin-top:16px">
+        <div class="fs-row"><span class="fs-key">Detected Faces</span><span class="fs-val">1–N (no limit)</span></div>
+        <div class="fs-row"><span class="fs-key">Age Output</span><span class="fs-val">Regression (0–100yr)</span></div>
+        <div class="fs-row"><span class="fs-key">Gender</span><span class="fs-val">Binary + Probability %</span></div>
+      </div>
+    </div>
+    <div>
+      <div class="sec-label" style="margin-top:16px">Emotion Detection Output</div>
+      <div class="emo-preview">
+        <div class="emo-bar-row"><div class="emo-name">😊 happy</div><div class="emo-track"><div class="emo-fill" style="width:78%;background:#10b981"></div></div><div class="emo-val">78%</div></div>
+        <div class="emo-bar-row"><div class="emo-name">😐 neutral</div><div class="emo-track"><div class="emo-fill" style="width:14%;background:#6366f1"></div></div><div class="emo-val">14%</div></div>
+        <div class="emo-bar-row"><div class="emo-name">😲 surprised</div><div class="emo-track"><div class="emo-fill" style="width:5%;background:#06b6d4"></div></div><div class="emo-val">5%</div></div>
+        <div class="emo-bar-row"><div class="emo-name">😢 sad</div><div class="emo-track"><div class="emo-fill" style="width:2%;background:#3b82f6"></div></div><div class="emo-val">2%</div></div>
+        <div class="emo-bar-row"><div class="emo-name">😠 angry</div><div class="emo-track"><div class="emo-fill" style="width:1%;background:#ef4444"></div></div><div class="emo-val">1%</div></div>
+        <div class="emo-bar-row"><div class="emo-name">😨 fearful</div><div class="emo-track"><div class="emo-fill" style="width:0%;background:#f59e0b"></div></div><div class="emo-val">0%</div></div>
+        <div class="emo-bar-row"><div class="emo-name">🤢 disgusted</div><div class="emo-track"><div class="emo-fill" style="width:0%;background:#8b5cf6"></div></div><div class="emo-val">0%</div></div>
+      </div>
+      <div class="card" style="margin-top:16px;background:rgba(16,185,129,.05);border-color:rgba(16,185,129,.2)">
+        <div style="font-size:.88rem;color:var(--t2);line-height:1.7">
+          🧠 All 4 neural networks are loaded once from jsDelivr CDN, cached locally by the browser, then run entirely on-device using <strong style="color:var(--t)">TensorFlow.js + WebGL</strong>. Zero server calls during inference.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ SLIDE 7: ARCHITECTURE ══ -->
+<div class="slide" id="s7">
+  <div class="orb orb1"></div>
+  <div class="chip p">● SYSTEM ARCHITECTURE</div>
+  <div class="h2">Single HTML file —<br><span class="grad-p">Everything runs in the browser</span></div>
+  <div class="arch-diagram">
+    <div class="arch-row">
+      <div class="arch-box input">📷 Webcam<br><small>getUserMedia API</small></div>
+      <div class="arch-arrow">→</div>
+      <div class="arch-box input">🎬 Video Element<br><small>HTML5 &lt;video&gt;</small></div>
+      <div class="arch-arrow">→</div>
+      <div class="arch-box process">🔀 Mode Router<br><small>JS Event Loop</small></div>
+    </div>
+    <div class="arch-row" style="margin-left:180px">
+      <div class="arch-arrow" style="transform:rotate(90deg)">→</div>
+    </div>
+    <div class="arch-row">
+      <div class="arch-box process" style="flex:none;width:200px">🤚 Gesture<br><small>MediaPipe Hands WASM</small></div>
+      <div class="arch-arrow" style="flex:none">·</div>
+      <div class="arch-box process" style="flex:none;width:200px">🎨 Color<br><small>Canvas 2D Pixel Math</small></div>
+      <div class="arch-arrow" style="flex:none">·</div>
+      <div class="arch-box process" style="flex:none;width:200px">👤 Face<br><small>TF.js + face-api.js</small></div>
+    </div>
+    <div class="arch-row">
+      <div class="arch-box output" style="flex:2">🖼️ Canvas Overlay — Landmark Drawing · Bounding Boxes · Labels</div>
+      <div class="arch-arrow">→</div>
+      <div class="arch-box output" style="flex:2">📊 Analysis Panel — Live Stats · Emotion Bars · Color Palette</div>
+    </div>
+  </div>
+  <div class="tech-row" style="margin-top:20px">
+    <div class="tech-tag">MediaPipe Hands v0.4</div>
+    <div class="tech-tag">face-api.js v1.7</div>
+    <div class="tech-tag">TensorFlow.js</div>
+    <div class="tech-tag">WebAssembly</div>
+    <div class="tech-tag">WebGL 2.0</div>
+    <div class="tech-tag">Canvas 2D API</div>
+    <div class="tech-tag">requestAnimationFrame</div>
+    <div class="tech-tag">getUserMedia API</div>
+    <div class="tech-tag">HTML5 · CSS3 · Vanilla JS</div>
+  </div>
+</div>
+
+<!-- ══ SLIDE 8: LIVE DEMO ══ -->
+<div class="slide" id="s8">
+  <div class="orb orb1"></div>
+  <div class="orb orb2"></div>
+  <div class="chip p" style="margin:0 auto 20px">● LIVE DEMONSTRATION</div>
+  <div class="h1" style="text-align:center"><span class="grad-p">Live Demo</span> Time! 🎉</div>
+  <div class="lead" style="margin:16px auto;text-align:center">Open <strong style="color:var(--p2)">index.html</strong> in any modern browser<br>and click <strong style="color:var(--c2)">Start Camera</strong></div>
+  <div class="demo-steps">
+    <div class="demo-step">
+      <div class="ds-icon">🤚</div>
+      <div class="ds-txt"><strong>Tab 1</strong><br>Gesture Lab<br>Try: 👍 ✌️ 🤙 🤟</div>
+    </div>
+    <div class="demo-step">
+      <div class="ds-icon">🎨</div>
+      <div class="ds-txt"><strong>Tab 2</strong><br>Color Analyzer<br>Point at objects</div>
+    </div>
+    <div class="demo-step">
+      <div class="ds-icon">👤</div>
+      <div class="ds-txt"><strong>Tab 3</strong><br>Face Analyzer<br>Smile or look surprised!</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ SLIDE 9: RESULTS ══ -->
+<div class="slide" id="s9">
+  <div class="orb orb1"></div>
+  <div class="chip g">● RESULTS & PERFORMANCE</div>
+  <div class="h2">What we achieved with<br><span class="grad-c">zero backend, zero upload</span></div>
+  <div class="results-grid">
+    <div class="res-card" style="border-color:rgba(124,58,237,.3)">
+      <div class="res-num grad-p">12+</div>
+      <div class="res-lbl">Gestures Classified</div>
+      <div class="res-sub">Rule-based classifier on 21 landmark vectors</div>
+    </div>
+    <div class="res-card" style="border-color:rgba(6,182,212,.3)">
+      <div class="res-num grad-c">30 FPS</div>
+      <div class="res-lbl">Real-Time Processing</div>
+      <div class="res-sub">Gesture mode on modern hardware</div>
+    </div>
+    <div class="res-card" style="border-color:rgba(16,185,129,.3)">
+      <div class="res-num" style="color:var(--g)">7</div>
+      <div class="res-lbl">Emotions Detected</div>
+      <div class="res-sub">Softmax probability for each class</div>
+    </div>
+    <div class="res-card" style="border-color:rgba(239,68,68,.3)">
+      <div class="res-num" style="color:var(--r)">0ms</div>
+      <div class="res-lbl">Network Latency</div>
+      <div class="res-sub">All inference is fully local</div>
+    </div>
+    <div class="res-card" style="border-color:rgba(245,158,11,.3)">
+      <div class="res-num" style="color:var(--a)">68</div>
+      <div class="res-lbl">Facial Landmarks</div>
+      <div class="res-sub">Per face, per frame overlay</div>
+    </div>
+    <div class="res-card" style="border-color:rgba(236,72,153,.3)">
+      <div class="res-num" style="color:#f9a8d4">1</div>
+      <div class="res-lbl">HTML File</div>
+      <div class="res-sub">No framework, no server, no install</div>
+    </div>
+  </div>
+  <div class="kpi-row">
+    <div class="kpi-item"><div class="kpi-n">45+</div><div class="kpi-l">Named colors in database</div></div>
+    <div class="kpi-item"><div class="kpi-n">~120ms</div><div class="kpi-l">Face inference time</div></div>
+    <div class="kpi-item"><div class="kpi-n">2 hands</div><div class="kpi-l">Simultaneous detection</div></div>
+    <div class="kpi-item"><div class="kpi-n">100%</div><div class="kpi-l">Privacy — no data upload</div></div>
+  </div>
+</div>
+
+<!-- ══ SLIDE 10: THANK YOU ══ -->
+<div class="slide" id="s10">
+  <div class="orb orb1"></div>
+  <div class="orb orb2"></div>
+  <div class="chip p" style="margin:0 auto 24px">● CS-504 · DIGITAL IMAGE PROCESSING</div>
+  <div class="h1" style="text-align:center;margin-bottom:8px">Thank You! 🙏</div>
+  <div class="lead" style="text-align:center;margin:0 auto">
+    <strong>VisionX</strong> — Real-Time AI Vision Lab<br>
+    <span style="font-size:1rem;color:var(--t3)">Built with MediaPipe · face-api.js · Canvas API · Pure Browser Tech</span>
+  </div>
+  <div class="team-cards">
+    <div class="t-card">
+      <div class="t-avatar">👨‍💻</div>
+      <div class="t-name">Student Name 1</div>
+      <div class="t-role">Gesture Module</div>
+    </div>
+    <div class="t-card">
+      <div class="t-avatar">👩‍💻</div>
+      <div class="t-name">Student Name 2</div>
+      <div class="t-role">Color Analysis</div>
+    </div>
+    <div class="t-card">
+      <div class="t-avatar">🧑‍💻</div>
+      <div class="t-name">Student Name 3</div>
+      <div class="t-role">Face Analysis</div>
+    </div>
+  </div>
+  <div style="margin-top:28px;text-align:center;color:var(--t3);font-size:.88rem">
+    Questions? &nbsp;·&nbsp; Open <strong style="color:var(--t2)">index.html</strong> for live demo &nbsp;·&nbsp; CS-504 Fall 2025
+  </div>
+</div>
+
+</div><!-- end deck -->
+
+<!-- ── NAVIGATION ── -->
+<div class="nav">
+  <button class="nav-btn" onclick="go(-1)">←</button>
+  <div class="dot-row" id="dots"></div>
+  <div class="slide-counter" id="counter">1 / 10</div>
+  <button class="nav-btn" onclick="go(1)">→</button>
+</div>
+
+<script>
+const slides = document.querySelectorAll('.slide');
+const total = slides.length;
+let cur = 0;
+
+// Build dots
+const dotRow = document.getElementById('dots');
+slides.forEach((_,i) => {
+  const d = document.createElement('div');
+  d.className = 'nav-dot' + (i===0?' active':'');
+  d.onclick = () => goTo(i);
+  dotRow.appendChild(d);
+});
+
+function goTo(n) {
+  slides[cur].classList.remove('active');
+  dotRow.children[cur].classList.remove('active');
+  cur = (n + total) % total;
+  slides[cur].classList.add('active');
+  dotRow.children[cur].classList.add('active');
+  document.getElementById('counter').textContent = `${cur+1} / ${total}`;
+}
+
+function go(dir) { goTo(cur + dir); }
+
+// Keyboard
+document.addEventListener('keydown', e => {
+  if (e.key==='ArrowRight'||e.key===' '||e.key==='ArrowDown') go(1);
+  if (e.key==='ArrowLeft'||e.key==='ArrowUp') go(-1);
+});
+</script>
+</body>
+</html>

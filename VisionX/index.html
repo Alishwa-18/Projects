@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VisionX — AI Vision Lab</title>
+<script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands@0.4.1646424915/hands.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils@0.3.1620248257/drawing_utils.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@vladmandic/face-api@1.7.14/dist/face-api.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#060609;--bg2:#0e0e1a;--bg3:#16162a;
+  --accent:#7c3aed;--accent2:#06b6d4;--accent3:#10b981;
+  --red:#ef4444;--amber:#f59e0b;
+  --text:#e2e8f0;--text2:#94a3b8;
+  --card:rgba(255,255,255,0.04);--border:rgba(255,255,255,0.09);
+}
+body{
+  background:var(--bg);color:var(--text);
+  font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  min-height:100vh;overflow-x:hidden;
+}
+body::before{
+  content:'';position:fixed;inset:0;
+  background-image:linear-gradient(rgba(124,58,237,.04) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(124,58,237,.04) 1px,transparent 1px);
+  background-size:56px 56px;pointer-events:none;z-index:0;
+}
+
+/* ── HEADER ── */
+header{
+  position:sticky;top:0;z-index:100;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:1rem 2rem;
+  background:rgba(6,6,9,.85);backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border);
+}
+.logo{font-size:1.6rem;font-weight:900;letter-spacing:-.03em}
+.logo .bracket{color:var(--accent);text-shadow:0 0 18px rgba(124,58,237,.7)}
+.logo .x{color:var(--accent2);text-shadow:0 0 18px rgba(6,182,212,.7)}
+.logo .sub{
+  font-size:.65rem;font-weight:500;letter-spacing:.15em;
+  color:var(--text2);display:block;margin-top:.1rem;
+}
+.badge-row{display:flex;align-items:center;gap:.75rem}
+.status-pill{
+  display:flex;align-items:center;gap:.5rem;
+  padding:.4rem .9rem;background:var(--card);
+  border:1px solid var(--border);border-radius:100px;
+  font-size:.8rem;color:var(--text2);
+}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--red);transition:background .3s}
+.dot.on{background:var(--accent3);box-shadow:0 0 8px rgba(16,185,129,.7);animation:blink 2s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.4}}
+
+/* ── TABS ── */
+nav{
+  position:relative;z-index:10;
+  display:flex;gap:.25rem;padding:.75rem 2rem;
+  background:rgba(6,6,9,.6);border-bottom:1px solid var(--border);
+}
+.tab{
+  display:flex;align-items:center;gap:.5rem;
+  padding:.6rem 1.25rem;border-radius:10px;
+  background:transparent;border:1px solid transparent;
+  color:var(--text2);font-size:.9rem;font-weight:500;cursor:pointer;
+  transition:all .25s;
+}
+.tab:hover{color:var(--text);background:var(--card)}
+.tab.active{
+  color:var(--accent);border-color:rgba(124,58,237,.35);
+  background:rgba(124,58,237,.1);
+  box-shadow:0 0 18px rgba(124,58,237,.12);
+}
+
+/* ── LAYOUT ── */
+main{
+  position:relative;z-index:5;
+  display:grid;grid-template-columns:1fr 370px;
+  gap:1.5rem;padding:1.5rem 2rem;
+  max-width:1440px;margin:0 auto;
+}
+
+/* ── VIDEO SECTION ── */
+.video-wrap{position:relative}
+.video-box{
+  position:relative;border-radius:18px;overflow:hidden;
+  border:1px solid var(--border);background:#000;
+  aspect-ratio:4/3;
+}
+video{width:100%;height:100%;object-fit:cover;transform:scaleX(-1);display:block}
+#overlay{
+  position:absolute;inset:0;
+  width:100%;height:100%;transform:scaleX(-1);
+}
+/* scan line */
+.video-box::after{
+  content:'';position:absolute;inset:0;top:-100%;
+  height:4px;left:0;right:0;
+  background:linear-gradient(90deg,transparent,rgba(6,182,212,.6),transparent);
+  animation:scan 3.5s linear infinite;pointer-events:none;
+}
+@keyframes scan{from{top:-5%}to{top:105%}}
+/* hud corners */
+.corner{position:absolute;width:22px;height:22px}
+.c-tl{top:14px;left:14px;border-top:2px solid var(--accent2);border-left:2px solid var(--accent2)}
+.c-tr{top:14px;right:14px;border-top:2px solid var(--accent2);border-right:2px solid var(--accent2)}
+.c-bl{bottom:14px;left:14px;border-bottom:2px solid var(--accent2);border-left:2px solid var(--accent2)}
+.c-br{bottom:14px;right:14px;border-bottom:2px solid var(--accent2);border-right:2px solid var(--accent2)}
+/* hud badges */
+.hud{position:absolute;top:16px;left:16px;display:flex;flex-direction:column;gap:.4rem}
+.hud-badge{
+  padding:.25rem .7rem;background:rgba(0,0,0,.7);
+  border:1px solid rgba(255,255,255,.1);border-radius:6px;
+  font-size:.72rem;font-weight:700;letter-spacing:.07em;
+  color:var(--accent2);backdrop-filter:blur(10px);
+}
+/* loading */
+.loading{
+  position:absolute;inset:0;
+  background:rgba(6,6,9,.94);display:none;
+  flex-direction:column;align-items:center;justify-content:center;gap:1rem;
+}
+.spin{
+  width:46px;height:46px;border-radius:50%;
+  border:3px solid var(--border);border-top-color:var(--accent);
+  animation:spin .7s linear infinite;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+.load-msg{font-size:.85rem;color:var(--text2)}
+/* cam button */
+.cam-btn{
+  width:100%;margin-top:1rem;padding:.85rem;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  border:none;border-radius:13px;color:#fff;
+  font-size:.95rem;font-weight:700;cursor:pointer;
+  box-shadow:0 4px 24px rgba(124,58,237,.35);transition:all .3s;
+}
+.cam-btn:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(124,58,237,.5)}
+
+/* ── PANEL ── */
+.panel{display:flex;flex-direction:column;gap:1rem}
+.mode-panel{display:none;flex-direction:column;gap:1rem}
+.mode-panel.active{display:flex}
+.card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:16px;padding:1.2rem;
+}
+.card-title{
+  font-size:.72rem;font-weight:700;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--text2);
+  margin-bottom:.9rem;display:flex;align-items:center;gap:.5rem;
+}
+.card-title::before{
+  content:'';display:block;width:3px;height:12px;
+  background:var(--accent);border-radius:2px;
+}
+.no-data{
+  text-align:center;padding:1.5rem;
+  color:var(--text2);font-size:.85rem;line-height:1.8;
+}
+
+/* ── GESTURE ── */
+.gesture-big{text-align:center;padding:.75rem 0}
+.g-emoji{
+  font-size:4.5rem;display:block;margin-bottom:.4rem;
+  filter:drop-shadow(0 0 18px rgba(124,58,237,.5));
+  transition:all .3s cubic-bezier(.34,1.56,.64,1);
+}
+.g-name{font-size:1.4rem;font-weight:800;color:var(--accent)}
+.g-desc{font-size:.82rem;color:var(--text2);margin-top:.25rem}
+.conf{margin-top:.9rem}
+.conf-row{display:flex;justify-content:space-between;font-size:.78rem;color:var(--text2);margin-bottom:.4rem}
+.bar{height:6px;background:rgba(255,255,255,.08);border-radius:3px;overflow:hidden}
+.bar-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:3px;transition:width .35s}
+.fingers{display:grid;grid-template-columns:repeat(5,1fr);gap:.4rem;margin-top:1rem;text-align:center}
+.finger-item{font-size:.7rem;color:var(--text2)}
+.finger-item span{display:block;font-size:1.1rem;margin-bottom:.2rem}
+.history{display:flex;gap:.4rem;flex-wrap:wrap;min-height:2rem}
+.h-item{font-size:1.4rem;animation:pop .3s cubic-bezier(.34,1.56,.64,1)}
+@keyframes pop{from{opacity:0;transform:scale(0)}to{opacity:1;transform:scale(1)}}
+.guide-grid{display:grid;grid-template-columns:1fr 1fr;gap:.5rem .75rem;font-size:.82rem;color:var(--text2)}
+
+/* ── COLOR ── */
+.color-list{display:flex;flex-direction:column;gap:.7rem}
+.color-row{display:flex;align-items:center;gap:.75rem}
+.swatch{width:50px;height:34px;border-radius:8px;border:1px solid var(--border);flex-shrink:0}
+.c-name{font-size:.88rem;font-weight:600}
+.c-hex{font-size:.73rem;color:var(--text2);font-family:monospace}
+.c-pct{font-size:.78rem;color:var(--text2);margin-left:auto}
+.temp-track{
+  height:10px;border-radius:5px;margin-top:.5rem;
+  background:linear-gradient(90deg,#3b82f6,#fff,#ef4444);
+  position:relative;
+}
+.temp-pin{
+  position:absolute;top:50%;transform:translate(-50%,-50%);
+  width:14px;height:14px;border-radius:50%;background:#fff;
+  border:2px solid #000;transition:left .4s;
+}
+.stat-row{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:.55rem 0;border-bottom:1px solid var(--border);
+  font-size:.85rem;
+}
+.stat-row:last-child{border-bottom:none}
+.stat-label{color:var(--text2)}
+.stat-val{font-weight:700;color:var(--accent2)}
+.tip{
+  padding:.7rem .9rem;background:rgba(6,182,212,.06);
+  border:1px solid rgba(6,182,212,.15);border-radius:10px;
+  font-size:.8rem;color:var(--text2);line-height:1.7;
+}
+
+/* ── FACE ── */
+.emotion-list{display:flex;flex-direction:column;gap:.55rem}
+.emo-row{display:flex;align-items:center;gap:.7rem}
+.emo-label{font-size:.78rem;color:var(--text2);width:78px;text-transform:capitalize}
+.emo-bar{flex:1;height:6px;background:rgba(255,255,255,.08);border-radius:3px;overflow:hidden}
+.emo-fill{height:100%;border-radius:3px;transition:width .45s ease}
+.emo-pct{font-size:.73rem;color:var(--text2);width:32px;text-align:right}
+.hand-pill{
+  display:inline-flex;padding:.3rem .75rem;
+  background:rgba(124,58,237,.1);border:1px solid rgba(124,58,237,.3);
+  border-radius:100px;font-size:.78rem;color:var(--accent);margin:.2rem;
+}
+
+/* ── RESPONSIVE ── */
+@media(max-width:900px){
+  main{grid-template-columns:1fr}
+  .panel{flex-direction:row;flex-wrap:wrap}
+  .card{flex:1 1 280px}
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div>
+    <div class="logo">
+      VISION<span class="bracket">[</span><span class="x">X</span><span class="bracket">]</span>
+      <span class="sub">AI · REAL-TIME VISION LAB · CS-504 DIP</span>
+    </div>
+  </div>
+  <div class="badge-row">
+    <div class="status-pill"><div class="dot" id="dot"></div><span id="dotTxt">Camera Off</span></div>
+    <div class="status-pill" id="fpsPill">0 FPS</div>
+  </div>
+</header>
+
+<!-- TABS -->
+<nav>
+  <button class="tab active" onclick="setTab('gesture',this)">🤚 Gesture Lab</button>
+  <button class="tab" onclick="setTab('color',this)">🎨 Color Analyzer</button>
+  <button class="tab" onclick="setTab('face',this)">👤 Face Analyzer</button>
+</nav>
+
+<!-- MAIN -->
+<main>
+
+  <!-- LEFT: VIDEO -->
+  <div class="video-wrap">
+    <div class="video-box">
+      <video id="vid" playsinline autoplay muted></video>
+      <canvas id="overlay"></canvas>
+      <div class="corner c-tl"></div><div class="corner c-tr"></div>
+      <div class="corner c-bl"></div><div class="corner c-br"></div>
+      <div class="hud">
+        <div class="hud-badge" id="modeBadge">◉ GESTURE MODE</div>
+        <div class="hud-badge" id="resBadge">— × —</div>
+      </div>
+      <div class="loading" id="loading">
+        <div class="spin"></div>
+        <div class="load-msg" id="loadMsg">Loading AI models…</div>
+      </div>
+    </div>
+    <button class="cam-btn" id="camBtn" onclick="toggleCam()">📷 Start Camera</button>
+  </div>
+
+  <!-- RIGHT: PANEL -->
+  <div class="panel">
+
+    <!-- GESTURE -->
+    <div class="mode-panel active" id="gesture-panel">
+      <div class="card">
+        <div class="card-title">Detected Gesture</div>
+        <div class="gesture-big">
+          <span class="g-emoji" id="gEmoji">🤲</span>
+          <div class="g-name" id="gName">Waiting…</div>
+          <div class="g-desc" id="gDesc">Show your hand to the camera</div>
+        </div>
+        <div class="conf">
+          <div class="conf-row"><span>Confidence</span><span id="confPct">0%</span></div>
+          <div class="bar"><div class="bar-fill" id="confBar" style="width:0%"></div></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Finger Status</div>
+        <div id="handPills"></div>
+        <div class="fingers" id="fingers"></div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Gesture Trail</div>
+        <div class="history" id="history"></div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Gesture Guide</div>
+        <div class="guide-grid">
+          <div>👍 Thumbs Up</div><div>👎 Thumbs Down</div>
+          <div>✌️ Peace / V</div><div>🤟 Rock On</div>
+          <div>✊ Fist</div><div>🖐️ Open Hand</div>
+          <div>👆 Point Up</div><div>🤙 Shaka</div>
+          <div>👌 OK Sign</div><div>🤞 Fingers Crossed</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- COLOR -->
+    <div class="mode-panel" id="color-panel">
+      <div class="card">
+        <div class="card-title">Dominant Colors</div>
+        <div class="color-list" id="colorList"><div class="no-data">Start camera to analyze</div></div>
+      </div>
+      <div class="card">
+        <div class="card-title">Color Temperature</div>
+        <div style="display:flex;justify-content:space-between;font-size:.78rem;color:var(--text2)">
+          <span>❄️ Cool</span><span>🔥 Warm</span>
+        </div>
+        <div class="temp-track"><div class="temp-pin" id="tempPin" style="left:50%"></div></div>
+        <div style="text-align:center;margin-top:.6rem;font-size:.85rem;color:var(--accent2)" id="tempLbl">Neutral</div>
+      </div>
+      <div class="card">
+        <div class="card-title">Frame Stats</div>
+        <div class="stat-row"><span class="stat-label">Brightness</span><span class="stat-val" id="cBright">—</span></div>
+        <div class="stat-row"><span class="stat-label">Saturation</span><span class="stat-val" id="cSat">—</span></div>
+        <div class="stat-row"><span class="stat-label">Hue Range</span><span class="stat-val" id="cHue">—</span></div>
+        <div class="stat-row"><span class="stat-label">Pixel Variance</span><span class="stat-val" id="cVar">—</span></div>
+      </div>
+      <div class="tip">💡 Point at faces, objects, or scenes. Colors extracted in real-time using pixel clustering.</div>
+    </div>
+
+    <!-- FACE -->
+    <div class="mode-panel" id="face-panel">
+      <div class="card">
+        <div class="card-title">Person Details</div>
+        <div id="faceStats"><div class="no-data">No face detected<br>Look at the camera</div></div>
+      </div>
+      <div class="card">
+        <div class="card-title">Emotion Analysis</div>
+        <div class="emotion-list" id="emoList"><div class="no-data">Waiting for face…</div></div>
+      </div>
+      <div class="card">
+        <div class="card-title">Scene Info</div>
+        <div class="stat-row"><span class="stat-label">Faces Detected</span><span class="stat-val" id="fCount">0</span></div>
+        <div class="stat-row"><span class="stat-label">Inference Time</span><span class="stat-val" id="fTime">—</span></div>
+        <div class="stat-row"><span class="stat-label">Model</span><span class="stat-val">TinyFace + Age/Gender</span></div>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<script>
+// ═══════════════════════════════════════════
+//  STATE
+// ═══════════════════════════════════════════
+const vid = document.getElementById('vid');
+const cvs = document.getElementById('overlay');
+const ctx = cvs.getContext('2d');
+
+let mode = 'gesture';
+let running = false;
+let stream = null;
+let raf = null;
+let handsReady = false;
+let handsModel = null;
+let faceReady = false;
+let faceLooping = false;
+let colorTimer = null;
+
+let fps = 0, fpsAcc = 0, fpsLast = performance.now();
+let history = [];
+let lastGesture = '';
+
+// ═══════════════════════════════════════════
+//  TABS
+// ═══════════════════════════════════════════
+function setTab(m, btn) {
+  mode = m;
+  document.querySelectorAll('.tab').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.mode-panel').forEach(p => p.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById(m + '-panel').classList.add('active');
+  const labels = { gesture:'◉ GESTURE MODE', color:'◉ COLOR MODE', face:'◉ FACE MODE' };
+  document.getElementById('modeBadge').textContent = labels[m];
+  ctx.clearRect(0,0,cvs.width,cvs.height);
+  if (m === 'face' && running && !faceReady) loadFaceModels();
+  if (m === 'face' && running && faceReady && !faceLooping) runFaceLoop();
+}
+
+// ═══════════════════════════════════════════
+//  CAMERA
+// ═══════════════════════════════════════════
+async function toggleCam() {
+  running ? stopCam() : await startCam();
+}
+
+async function startCam() {
+  try {
+    stream = await navigator.mediaDevices.getUserMedia({
+      video: { width:{ ideal:1280 }, height:{ ideal:720 }, facingMode:'user' },
+      audio: false
+    });
+    vid.srcObject = stream;
+    await new Promise(r => vid.onloadedmetadata = r);
+    vid.play();
+    cvs.width = vid.videoWidth;
+    cvs.height = vid.videoHeight;
+    document.getElementById('resBadge').textContent = `${cvs.width} × ${cvs.height}`;
+
+    running = true;
+    document.getElementById('camBtn').textContent = '⏹ Stop Camera';
+    document.getElementById('dot').classList.add('on');
+    document.getElementById('dotTxt').textContent = 'Live';
+
+    initHands();
+    startFpsTick();
+    startColorLoop();
+    if (mode === 'face') loadFaceModels();
+  } catch(e) {
+    alert('Camera access denied. Please allow camera permissions and refresh.');
+  }
+}
+
+function stopCam() {
+  if (stream) stream.getTracks().forEach(t => t.stop());
+  if (raf) cancelAnimationFrame(raf);
+  if (colorTimer) clearInterval(colorTimer);
+  stream = null; running = false; faceLooping = false;
+  document.getElementById('camBtn').textContent = '📷 Start Camera';
+  document.getElementById('dot').classList.remove('on');
+  document.getElementById('dotTxt').textContent = 'Camera Off';
+  ctx.clearRect(0,0,cvs.width,cvs.height);
+}
+
+function startFpsTick() {
+  setInterval(() => {
+    const now = performance.now();
+    fps = Math.round(fpsAcc / ((now - fpsLast) / 1000));
+    document.getElementById('fpsPill').textContent = fps + ' FPS';
+    fpsAcc = 0; fpsLast = now;
+  }, 1000);
+}
+
+// ═══════════════════════════════════════════
+//  GESTURE MODE — MediaPipe Hands
+// ═══════════════════════════════════════════
+function initHands() {
+  if (handsReady) { startGestureLoop(); return; }
+
+  handsModel = new Hands({
+    locateFile: f => `https://cdn.jsdelivr.net/npm/@mediapipe/hands@0.4.1646424915/${f}`
+  });
+  handsModel.setOptions({
+    maxNumHands: 2,
+    modelComplexity: 1,
+    minDetectionConfidence: 0.72,
+    minTrackingConfidence: 0.6
+  });
+  handsModel.onResults(onHands);
+  handsModel.initialize().then(() => {
+    handsReady = true;
+    startGestureLoop();
+  });
+}
+
+function startGestureLoop() {
+  const loop = async () => {
+    if (!running) return;
+    if (mode === 'gesture' && handsReady) {
+      await handsModel.send({ image: vid });
+      fpsAcc++;
+    }
+    raf = requestAnimationFrame(loop);
+  };
+  loop();
+}
+
+// MediaPipe result handler
+function onHands(res) {
+  ctx.clearRect(0,0,cvs.width,cvs.height);
+  if (!res.multiHandLandmarks?.length) {
+    setGesture('🤲','No Hand','Show your hand to the camera',0);
+    document.getElementById('handPills').innerHTML = '';
+    document.getElementById('fingers').innerHTML = '';
+    return;
+  }
+
+  const pills = [];
+  res.multiHandLandmarks.forEach((lm, i) => {
+    const hand = res.multiHandedness[i].label;
+    const conf = res.multiHandedness[i].score;
+    const gest = classify(lm);
+    pills.push({ hand, gest, conf });
+
+    // Draw skeleton
+    drawConnectors(ctx, lm, HAND_CONNECTIONS, { color:'rgba(124,58,237,.55)', lineWidth:2 });
+    drawLandmarks(ctx, lm, { color:'#06b6d4', radius:3.5, lineWidth:1 });
+
+    // Label above wrist (mirrored canvas)
+    const wx = (1 - lm[0].x) * cvs.width;
+    const wy = lm[0].y * cvs.height;
+    ctx.fillStyle = 'rgba(0,0,0,.65)';
+    roundRect(ctx, wx-52, wy+18, 104, 26, 6);
+    ctx.fill();
+    ctx.fillStyle = '#7c3aed';
+    ctx.font = 'bold 13px system-ui';
+    ctx.textAlign = 'center';
+    ctx.fillText(gest.name, wx, wy+36);
+
+    if (i === 0) {
+      setGesture(gest.emoji, gest.name, gest.desc, conf * 100);
+      if (gest.name !== lastGesture) { lastGesture = gest.name; pushHistory(gest.emoji); }
+      renderFingers(lm);
+    }
+  });
+
+  document.getElementById('handPills').innerHTML =
+    pills.map(p => `<span class="hand-pill">${p.hand}: ${p.gest.emoji} ${p.gest.name}</span>`).join('');
+}
+
+function roundRect(c, x, y, w, h, r) {
+  c.beginPath();
+  c.moveTo(x+r,y);c.lineTo(x+w-r,y);c.quadraticCurveTo(x+w,y,x+w,y+r);
+  c.lineTo(x+w,y+h-r);c.quadraticCurveTo(x+w,y+h,x+w-r,y+h);
+  c.lineTo(x+r,y+h);c.quadraticCurveTo(x,y+h,x,y+h-r);
+  c.lineTo(x,y+r);c.quadraticCurveTo(x,y,x+r,y);c.closePath();
+}
+
+// Finger up/down detection
+function fingerUp(lm, f) {
+  const tips  = [4,8,12,16,20];
+  const pips  = [3,6,10,14,18];
+  if (f === 0) return lm[4].x < lm[3].x; // thumb
+  return lm[tips[f]].y < lm[pips[f]].y;
+}
+
+// Gesture classifier
+function classify(lm) {
+  const f = [0,1,2,3,4].map(i => fingerUp(lm,i));
+  const [T,I,M,R,P] = f;
+  const up = f.filter(Boolean).length;
+
+  if (!T&&!I&&!M&&!R&&!P) return {emoji:'✊',name:'Fist',desc:'Power / Strength'};
+  if (up>=4)               return {emoji:'🖐️',name:'Open Hand',desc:'Stop / High Five'};
+
+  if (T&&!I&&!M&&!R&&!P) {
+    return lm[4].y < lm[0].y
+      ? {emoji:'👍',name:'Thumbs Up',desc:'Positive / Like'}
+      : {emoji:'👎',name:'Thumbs Down',desc:'Negative / Dislike'};
+  }
+  if (!T&&I&&!M&&!R&&!P) return {emoji:'👆',name:'Pointing',desc:'Point / Select'};
+  if (!T&&I&&M&&!R&&!P) {
+    const d = Math.hypot(lm[8].x-lm[12].x, lm[8].y-lm[12].y);
+    return d < 0.05
+      ? {emoji:'🤞',name:'Fingers Crossed',desc:'Good Luck!'}
+      : {emoji:'✌️',name:'Peace',desc:'Victory / Peace'};
+  }
+  if (!T&&I&&!M&&!R&&P) return {emoji:'🤟',name:'Rock On',desc:'Rock & Roll 🎸'};
+  if (T&&!I&&!M&&!R&&P)  return {emoji:'🤙',name:'Shaka',desc:'Hang Loose / Call Me'};
+  if (T&&I&&!M&&!R&&!P) {
+    const d = Math.hypot(lm[4].x-lm[8].x, lm[4].y-lm[8].y);
+    if (d < 0.07) return {emoji:'👌',name:'OK Sign',desc:'Perfect / OK'};
+  }
+  if (!T&&I&&M&&R&&!P) return {emoji:'🤟',name:'Three',desc:'Number Three'};
+  if (!T&&I&&M&&R&&P)  return {emoji:'🖖',name:'Vulcan',desc:'Live Long & Prosper'};
+  if (T&&I&&M&&!R&&!P) return {emoji:'🤌',name:'Chef\'s Kiss',desc:'Perfetto!'};
+
+  return {emoji:'🤔',name:'Unknown',desc:'Try a listed gesture'};
+}
+
+function setGesture(emoji, name, desc, conf) {
+  const e = document.getElementById('gEmoji');
+  if (e.textContent !== emoji) {
+    e.style.transform = 'scale(1.3)';
+    setTimeout(() => e.style.transform='', 300);
+  }
+  e.textContent = emoji;
+  document.getElementById('gName').textContent = name;
+  document.getElementById('gDesc').textContent = desc;
+  document.getElementById('confPct').textContent = Math.round(conf) + '%';
+  document.getElementById('confBar').style.width = conf + '%';
+}
+
+function pushHistory(emoji) {
+  history.unshift(emoji);
+  if (history.length > 14) history.pop();
+  document.getElementById('history').innerHTML =
+    history.map(e => `<span class="h-item">${e}</span>`).join('');
+}
+
+const FINGER_NAMES = ['Thumb','Index','Middle','Ring','Pinky'];
+function renderFingers(lm) {
+  const f = [0,1,2,3,4].map(i => fingerUp(lm,i));
+  document.getElementById('fingers').innerHTML = f.map((up,i) => `
+    <div class="finger-item">
+      <span>${up?'☝️':'✊'}</span>
+      <span style="color:${up?'var(--accent3)':'var(--text2)'}">${FINGER_NAMES[i]}</span>
+    </div>
+  `).join('');
+}
+
+// ═══════════════════════════════════════════
+//  COLOR MODE
+// ═══════════════════════════════════════════
+function startColorLoop() {
+  if (colorTimer) clearInterval(colorTimer);
+  colorTimer = setInterval(() => {
+    if (running && mode === 'color') { analyzeColors(); fpsAcc++; }
+  }, 180);
+}
+
+function analyzeColors() {
+  const W=160, H=120;
+  const off = document.createElement('canvas');
+  off.width=W; off.height=H;
+  const oc = off.getContext('2d');
+  oc.drawImage(vid,0,0,W,H);
+  const d = oc.getImageData(0,0,W,H).data;
+
+  let tR=0,tG=0,tB=0,n=0;
+  const buckets={};
+  for (let i=0;i<d.length;i+=12) {
+    const r=d[i],g=d[i+1],b=d[i+2];
+    tR+=r;tG+=g;tB+=b;n++;
+    const k = `${r>>5},${g>>5},${b>>5}`;
+    if (!buckets[k]) buckets[k]={r:0,g:0,b:0,c:0};
+    buckets[k].r+=r; buckets[k].g+=g; buckets[k].b+=b; buckets[k].c++;
+  }
+  const tops = Object.values(buckets)
+    .sort((a,b)=>b.c-a.c).slice(0,6)
+    .map(b=>({r:Math.round(b.r/b.c),g:Math.round(b.g/b.c),b:Math.round(b.b/b.c),pct:Math.round(b.c/n*100)}));
+
+  const avgR=tR/n, avgG=tG/n, avgB=tB/n;
+
+  // Render palette
+  document.getElementById('colorList').innerHTML = tops.map(c=>{
+    const hex=toHex(c.r,c.g,c.b);
+    const name=colorName(c.r,c.g,c.b);
+    return `<div class="color-row">
+      <div class="swatch" style="background:${hex}"></div>
+      <div>
+        <div class="c-name" style="color:${hex};filter:brightness(1.4)">${name}</div>
+        <div class="c-hex">${hex.toUpperCase()}</div>
+      </div>
+      <div class="c-pct">${c.pct}%</div>
+    </div>`;
+  }).join('');
+
+  // Temperature (warmth = R - B normalized)
+  const temp = Math.max(0,Math.min(1,(avgR-avgB+255)/510));
+  document.getElementById('tempPin').style.left = (temp*100)+'%';
+  document.getElementById('tempLbl').textContent = ['Very Cool','Cool','Neutral','Warm','Very Warm'][Math.round(temp*4)];
+
+  // Stats
+  const br = Math.round(avgR*.299+avgG*.587+avgB*.114);
+  const hsl = toHsl(avgR,avgG,avgB);
+  const hueLabel = ['Red','Orange','Yellow','Lime','Green','Teal','Cyan','Azure','Blue','Indigo','Purple','Pink','Red'];
+  document.getElementById('cBright').textContent = br+'/255 ('+(br>180?'Bright':br>90?'Medium':'Dark')+')';
+  document.getElementById('cSat').textContent = hsl.s+'%';
+  document.getElementById('cHue').textContent = hsl.s>10 ? hueLabel[Math.round(hsl.h/30)] : 'Achromatic';
+  // Variance
+  let va=0;
+  for (let i=0;i<d.length;i+=12) {
+    const r=d[i],g=d[i+1],b=d[i+2];
+    va+=(r-avgR)**2+(g-avgG)**2+(b-avgB)**2;
+  }
+  document.getElementById('cVar').textContent = Math.round(Math.sqrt(va/n/3));
+}
+
+function toHex(r,g,b) {
+  return '#'+[r,g,b].map(v=>v.toString(16).padStart(2,'0')).join('');
+}
+function toHsl(r,g,b) {
+  r/=255;g/=255;b/=255;
+  const mx=Math.max(r,g,b),mn=Math.min(r,g,b),d=mx-mn;
+  let h=0,s=0;const l=(mx+mn)/2;
+  if(d){
+    s=d/(l>.5?2-mx-mn:mx+mn);
+    switch(mx){case r:h=((g-b)/d+(g<b?6:0))/6;break;
+    case g:h=((b-r)/d+2)/6;break;default:h=((r-g)/d+4)/6;}
+  }
+  return{h:Math.round(h*360),s:Math.round(s*100),l:Math.round(l*100)};
+}
+const COLOR_DB=[
+  [255,0,0,'Red'],[220,20,60,'Crimson'],[255,99,71,'Tomato'],[255,140,0,'Dark Orange'],
+  [255,165,0,'Orange'],[255,215,0,'Gold'],[255,255,0,'Yellow'],[154,205,50,'Yellow-Green'],
+  [0,128,0,'Green'],[0,255,0,'Lime'],[50,205,50,'Lime Green'],[0,255,127,'Spring Green'],
+  [0,128,128,'Teal'],[0,255,255,'Cyan'],[100,149,237,'Cornflower Blue'],
+  [0,0,255,'Blue'],[0,0,139,'Dark Blue'],[138,43,226,'Blue Violet'],
+  [148,0,211,'Violet'],[128,0,128,'Purple'],[255,0,255,'Magenta'],
+  [255,20,147,'Deep Pink'],[255,105,180,'Hot Pink'],[255,192,203,'Pink'],
+  [255,255,255,'White'],[220,220,220,'Gainsboro'],[192,192,192,'Silver'],
+  [169,169,169,'Dark Gray'],[128,128,128,'Gray'],[105,105,105,'Dim Gray'],
+  [0,0,0,'Black'],[139,69,19,'Saddle Brown'],[160,82,45,'Sienna'],
+  [205,133,63,'Peru'],[210,180,140,'Tan'],[245,222,179,'Wheat'],
+  [255,228,196,'Bisque'],[245,245,220,'Beige'],[255,250,205,'Lemon'],
+  [240,230,140,'Khaki'],[230,230,250,'Lavender'],[216,191,216,'Thistle'],
+  [64,224,208,'Turquoise'],[32,178,170,'Light Sea Green'],[70,130,180,'Steel Blue'],
+  [135,206,235,'Sky Blue'],[176,224,230,'Powder Blue'],[144,238,144,'Light Green'],
+];
+function colorName(r,g,b) {
+  let best='Unknown',dist=Infinity;
+  COLOR_DB.forEach(([cr,cg,cb,n])=>{
+    const d=(r-cr)**2+(g-cg)**2+(b-cb)**2;
+    if(d<dist){dist=d;best=n;}
+  });
+  return best;
+}
+
+// ═══════════════════════════════════════════
+//  FACE MODE — face-api.js
+// ═══════════════════════════════════════════
+async function loadFaceModels() {
+  if (faceReady) { if (!faceLooping) runFaceLoop(); return; }
+  const lo = document.getElementById('loading');
+  lo.style.display='flex';
+  document.getElementById('loadMsg').textContent='Loading Face AI models… (first time takes ~10s)';
+
+  try {
+    const URL = 'https://cdn.jsdelivr.net/npm/@vladmandic/face-api@1.7.14/model';
+    await Promise.all([
+      faceapi.nets.tinyFaceDetector.loadFromUri(URL),
+      faceapi.nets.faceLandmark68TinyNet.loadFromUri(URL),
+      faceapi.nets.faceExpressionNet.loadFromUri(URL),
+      faceapi.nets.ageGenderNet.loadFromUri(URL),
+    ]);
+    faceReady = true;
+    lo.style.display='none';
+    runFaceLoop();
+  } catch(e) {
+    document.getElementById('loadMsg').textContent = '⚠️ Failed to load models — check your internet connection.';
+    console.error(e);
+  }
+}
+
+async function runFaceLoop() {
+  if (faceLooping) return;
+  faceLooping = true;
+
+  const tick = async () => {
+    if (!running || mode !== 'face') { faceLooping=false; return; }
+
+    const t0 = performance.now();
+    try {
+      const dets = await faceapi
+        .detectAllFaces(vid, new faceapi.TinyFaceDetectorOptions({inputSize:320,scoreThreshold:0.5}))
+        .withFaceLandmarks(true)
+        .withFaceExpressions()
+        .withAgeAndGender();
+
+      ctx.clearRect(0,0,cvs.width,cvs.height);
+      const ms = Math.round(performance.now()-t0);
+      document.getElementById('fCount').textContent = dets.length;
+      document.getElementById('fTime').textContent = ms+'ms';
+      fpsAcc++;
+
+      if (!dets.length) {
+        document.getElementById('faceStats').innerHTML = '<div class="no-data">No face detected<br>Look at the camera</div>';
+        document.getElementById('emoList').innerHTML = '<div class="no-data">Waiting for face…</div>';
+      } else {
+        const scaled = faceapi.resizeResults(dets, {width:cvs.width,height:cvs.height});
+        scaled.forEach((det,i) => {
+          const b = det.detection.box;
+          // Draw box (canvas is CSS-mirrored to match video)
+          ctx.strokeStyle='rgba(124,58,237,.9)';
+          ctx.lineWidth=2;
+          ctx.strokeRect(b.x,b.y,b.width,b.height);
+
+          // Label bar
+          const label=`${dets[i].gender} · ${Math.round(dets[i].age)}yr · ${Math.round(dets[i].detection.score*100)}%`;
+          ctx.fillStyle='rgba(124,58,237,.8)';
+          roundRect(ctx,b.x,b.y-30,b.width,30,6);
+          ctx.fill();
+          ctx.fillStyle='#fff';
+          ctx.font='bold 13px system-ui';
+          ctx.textAlign='center';
+          ctx.fillText(label,b.x+b.width/2,b.y-12);
+
+          // Landmarks
+          if (det.landmarks) {
+            ctx.fillStyle='rgba(6,182,212,.7)';
+            det.landmarks.positions.forEach(p=>{
+              ctx.beginPath();
+              ctx.arc(p.x,p.y,2,0,Math.PI*2);
+              ctx.fill();
+            });
+          }
+        });
+        renderFacePanel(dets[0]);
+      }
+    } catch(e){ console.error(e); }
+
+    setTimeout(()=>requestAnimationFrame(tick), 120);
+  };
+  tick();
+}
+
+const EMO_COLORS={happy:'#10b981',sad:'#3b82f6',angry:'#ef4444',fearful:'#f59e0b',disgusted:'#8b5cf6',surprised:'#06b6d4',neutral:'#6366f1'};
+const EMO_ICONS={happy:'😊',sad:'😢',angry:'😠',fearful:'😨',disgusted:'🤢',surprised:'😲',neutral:'😐'};
+
+function renderFacePanel(det) {
+  const age = Math.round(det.age);
+  const group = age<13?'Child 👶':age<18?'Teenager 🧒':age<25?'Young Adult 🧑':age<40?'Adult 🧔':age<60?'Middle-Aged 👨':'Senior 🧓';
+  const gIcon = det.gender==='male'?'👨':'👩';
+  const gPct = Math.round(det.genderProbability*100);
+  const conf = Math.round(det.detection.score*100);
+
+  document.getElementById('faceStats').innerHTML = `
+    <div class="stat-row"><span class="stat-label">Gender</span><span class="stat-val">${gIcon} ${det.gender} (${gPct}%)</span></div>
+    <div class="stat-row"><span class="stat-label">Estimated Age</span><span class="stat-val">~${age} years old</span></div>
+    <div class="stat-row"><span class="stat-label">Age Group</span><span class="stat-val">${group}</span></div>
+    <div class="stat-row"><span class="stat-label">Face Confidence</span><span class="stat-val">${conf}%</span></div>
+  `;
+
+  const sorted = Object.entries(det.expressions).sort((a,b)=>b[1]-a[1]);
+  document.getElementById('emoList').innerHTML = sorted.map(([emo,val])=>`
+    <div class="emo-row">
+      <div class="emo-label">${EMO_ICONS[emo]||''} ${emo}</div>
+      <div class="emo-bar"><div class="emo-fill" style="width:${val*100}%;background:${EMO_COLORS[emo]||'#6366f1'}"></div></div>
+      <div class="emo-pct">${Math.round(val*100)}%</div>
+    </div>
+  `).join('');
+}
+</script>
+</body>
+</html>

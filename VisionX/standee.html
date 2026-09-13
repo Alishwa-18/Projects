@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VisionX — Standee Poster</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+*{margin:0;padding:0;box-sizing:border-box}
+
+body{
+  font-family:'Inter',sans-serif;
+  background:#0a0a12;
+  display:flex;justify-content:center;align-items:flex-start;
+  padding:40px 20px;
+  min-height:100vh;
+}
+
+/* A1 ratio poster — 594 × 841mm → scaled to screen */
+.poster{
+  width:794px;
+  min-height:1123px;
+  background:#070710;
+  position:relative;
+  overflow:hidden;
+  border:1px solid rgba(255,255,255,.08);
+  box-shadow:0 0 80px rgba(124,58,237,.25);
+}
+
+/* ── BACKGROUND GRID ── */
+.poster::before{
+  content:'';position:absolute;inset:0;
+  background-image:
+    linear-gradient(rgba(124,58,237,.055) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(124,58,237,.055) 1px,transparent 1px);
+  background-size:40px 40px;
+  pointer-events:none;
+}
+
+/* ── GLOW ORBS ── */
+.orb{position:absolute;border-radius:50%;filter:blur(80px);pointer-events:none}
+.orb1{width:400px;height:400px;background:rgba(124,58,237,.18);top:-100px;left:-80px}
+.orb2{width:350px;height:350px;background:rgba(6,182,212,.12);top:100px;right:-80px}
+.orb3{width:300px;height:300px;background:rgba(16,185,129,.1);bottom:200px;left:-60px}
+.orb4{width:280px;height:280px;background:rgba(239,68,68,.08);bottom:100px;right:-40px}
+
+/* ── CONTENT ── */
+.content{position:relative;z-index:2;padding:50px 52px 44px}
+
+/* ── HEADER ── */
+.header{
+  display:flex;align-items:flex-start;justify-content:space-between;
+  border-bottom:1px solid rgba(255,255,255,.1);
+  padding-bottom:32px;margin-bottom:36px;
+}
+.logo-block{}
+.course-pill{
+  display:inline-flex;align-items:center;gap:8px;
+  background:rgba(124,58,237,.15);border:1px solid rgba(124,58,237,.35);
+  border-radius:100px;padding:5px 14px;
+  font-size:11px;font-weight:700;letter-spacing:.12em;
+  color:#a78bfa;margin-bottom:14px;
+}
+.course-pill::before{content:'●';color:#7c3aed;font-size:7px}
+.logo-text{
+  font-size:72px;font-weight:900;
+  letter-spacing:-.04em;line-height:1;
+  color:#fff;
+}
+.logo-text .bracket{color:#7c3aed;text-shadow:0 0 30px rgba(124,58,237,.8)}
+.logo-text .x{color:#06b6d4;text-shadow:0 0 30px rgba(6,182,212,.8)}
+.tagline{
+  font-size:15px;color:#94a3b8;margin-top:10px;
+  font-weight:400;letter-spacing:.02em;
+}
+.tagline strong{color:#e2e8f0}
+
+/* Department block */
+.dept-block{text-align:right}
+.uni-name{font-size:13px;font-weight:700;color:#e2e8f0;letter-spacing:.02em}
+.dept-name{font-size:11px;color:#94a3b8;margin-top:4px}
+.course-code{
+  font-size:32px;font-weight:800;color:#7c3aed;
+  margin-top:10px;letter-spacing:-.01em;
+}
+.course-name{font-size:11px;color:#94a3b8;margin-top:4px}
+.year{
+  display:inline-block;margin-top:10px;
+  padding:4px 12px;background:rgba(124,58,237,.12);
+  border:1px solid rgba(124,58,237,.25);border-radius:6px;
+  font-size:11px;font-weight:600;color:#a78bfa;
+}
+
+/* ── ABSTRACT ── */
+.abstract{
+  background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);
+  border-left:3px solid #7c3aed;border-radius:10px;
+  padding:18px 22px;margin-bottom:32px;
+  font-size:13px;line-height:1.75;color:#cbd5e1;
+}
+.abstract strong{color:#e2e8f0}
+
+/* ── FEATURES GRID ── */
+.section-title{
+  font-size:11px;font-weight:700;letter-spacing:.13em;
+  text-transform:uppercase;color:#7c3aed;
+  margin-bottom:18px;
+  display:flex;align-items:center;gap:8px;
+}
+.section-title::after{content:'';flex:1;height:1px;background:rgba(124,58,237,.25)}
+
+.features-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:16px;margin-bottom:32px;
+}
+.feat-card{
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.09);
+  border-radius:14px;padding:22px 18px;
+  transition:all .3s;
+  position:relative;overflow:hidden;
+}
+.feat-card::before{
+  content:'';position:absolute;inset:0;
+  border-radius:14px;
+  background:radial-gradient(circle at top left,var(--glow),transparent 70%);
+  opacity:.5;
+}
+.feat-card.purple{--glow:rgba(124,58,237,.15)}
+.feat-card.cyan{--glow:rgba(6,182,212,.15)}
+.feat-card.green{--glow:rgba(16,185,129,.15)}
+.feat-card.red{--glow:rgba(239,68,68,.12)}
+.feat-card.amber{--glow:rgba(245,158,11,.12)}
+.feat-card.pink{--glow:rgba(236,72,153,.12)}
+
+.feat-icon{
+  font-size:32px;margin-bottom:12px;display:block;
+}
+.feat-title{
+  font-size:14px;font-weight:700;color:#e2e8f0;margin-bottom:6px;
+}
+.feat-desc{font-size:11.5px;color:#94a3b8;line-height:1.65}
+.feat-badge{
+  display:inline-block;margin-top:10px;
+  padding:3px 9px;border-radius:100px;
+  font-size:10px;font-weight:600;letter-spacing:.05em;
+}
+.feat-badge.purple{background:rgba(124,58,237,.15);color:#a78bfa;border:1px solid rgba(124,58,237,.3)}
+.feat-badge.cyan{background:rgba(6,182,212,.15);color:#67e8f9;border:1px solid rgba(6,182,212,.3)}
+.feat-badge.green{background:rgba(16,185,129,.15);color:#6ee7b7;border:1px solid rgba(16,185,129,.3)}
+.feat-badge.red{background:rgba(239,68,68,.15);color:#fca5a5;border:1px solid rgba(239,68,68,.3)}
+.feat-badge.amber{background:rgba(245,158,11,.15);color:#fcd34d;border:1px solid rgba(245,158,11,.3)}
+.feat-badge.pink{background:rgba(236,72,153,.15);color:#f9a8d4;border:1px solid rgba(236,72,153,.3)}
+
+/* ── HOW IT WORKS ── */
+.pipeline{
+  display:flex;align-items:center;gap:0;
+  margin-bottom:32px;
+}
+.pipe-step{
+  flex:1;text-align:center;
+  background:rgba(255,255,255,.03);
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:12px;padding:16px 10px;
+}
+.pipe-icon{font-size:24px;display:block;margin-bottom:8px}
+.pipe-label{font-size:11px;font-weight:700;color:#e2e8f0}
+.pipe-sub{font-size:10px;color:#64748b;margin-top:4px}
+.pipe-arrow{
+  font-size:18px;color:#334155;padding:0 6px;flex-shrink:0;
+}
+
+/* ── TWO COLUMN ── */
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:32px}
+
+/* ── TECH STACK ── */
+.tech-list{display:flex;flex-direction:column;gap:10px}
+.tech-item{
+  display:flex;align-items:center;gap:10px;
+  padding:10px 14px;
+  background:rgba(255,255,255,.03);
+  border:1px solid rgba(255,255,255,.07);
+  border-radius:10px;
+}
+.tech-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.tech-name{font-size:12px;font-weight:600;color:#e2e8f0}
+.tech-role{font-size:10.5px;color:#64748b;margin-top:1px}
+
+/* ── GESTURES TABLE ── */
+.gesture-grid{
+  display:grid;grid-template-columns:repeat(2,1fr);
+  gap:6px;
+}
+.gest-row{
+  display:flex;align-items:center;gap:8px;
+  padding:7px 10px;
+  background:rgba(255,255,255,.03);
+  border:1px solid rgba(255,255,255,.06);
+  border-radius:8px;
+  font-size:11.5px;color:#94a3b8;
+}
+.gest-row span{font-size:16px}
+
+/* ── DIP CONCEPTS ── */
+.dip-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:32px}
+.dip-item{
+  background:rgba(124,58,237,.06);
+  border:1px solid rgba(124,58,237,.18);
+  border-radius:10px;padding:12px 14px;
+  text-align:center;
+}
+.dip-num{font-size:22px;font-weight:800;color:#7c3aed;display:block}
+.dip-label{font-size:10.5px;color:#94a3b8;margin-top:4px}
+
+/* ── TEAM ── */
+.team-row{display:flex;gap:14px}
+.member{
+  flex:1;background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.09);
+  border-radius:12px;padding:16px;text-align:center;
+}
+.avatar{
+  width:52px;height:52px;border-radius:50%;
+  background:linear-gradient(135deg,#7c3aed,#06b6d4);
+  display:flex;align-items:center;justify-content:center;
+  margin:0 auto 10px;font-size:22px;
+}
+.m-name{font-size:13px;font-weight:700;color:#e2e8f0}
+.m-id{font-size:11px;color:#64748b;margin-top:3px}
+.m-role{font-size:10.5px;color:#7c3aed;margin-top:5px;font-weight:600}
+
+/* ── FOOTER ── */
+.footer{
+  margin-top:32px;
+  padding-top:20px;border-top:1px solid rgba(255,255,255,.08);
+  display:flex;align-items:center;justify-content:space-between;
+}
+.footer-left{font-size:11px;color:#475569}
+.footer-left strong{color:#94a3b8}
+.qr-placeholder{
+  width:72px;height:72px;
+  background:rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.12);
+  border-radius:10px;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:4px;font-size:10px;color:#475569;
+}
+.qr-icon{font-size:26px}
+.results-bar{
+  display:flex;gap:24px;
+  background:rgba(124,58,237,.08);
+  border:1px solid rgba(124,58,237,.2);
+  border-radius:12px;padding:14px 20px;
+  margin-bottom:32px;
+}
+.result-item{text-align:center}
+.result-num{font-size:26px;font-weight:800;color:#7c3aed}
+.result-lbl{font-size:10px;color:#64748b;margin-top:3px}
+
+/* print */
+@media print{
+  body{background:#fff;padding:0}
+  .poster{width:100%;box-shadow:none;border:none}
+}
+</style>
+</head>
+<body>
+<div class="poster">
+  <div class="orb orb1"></div>
+  <div class="orb orb2"></div>
+  <div class="orb orb3"></div>
+  <div class="orb orb4"></div>
+
+  <div class="content">
+
+    <!-- HEADER -->
+    <div class="header">
+      <div class="logo-block">
+        <div class="course-pill">CS-504 · DIGITAL IMAGE PROCESSING</div>
+        <div class="logo-text">
+          VISION<span class="bracket">[</span><span class="x">X</span><span class="bracket">]</span>
+        </div>
+        <div class="tagline">A <strong>real-time AI Vision Lab</strong> — Gesture · Color · Face Analysis</div>
+      </div>
+      <div class="dept-block">
+        <div class="uni-name">UNIVERSITY NAME</div>
+        <div class="dept-name">Dept. of Computer Science & Engineering</div>
+        <div class="course-code">CS-504</div>
+        <div class="course-name">Digital Image Processing</div>
+        <div class="year">Fall 2025 · Final Project</div>
+      </div>
+    </div>
+
+    <!-- ABSTRACT -->
+    <div class="abstract">
+      <strong>VisionX</strong> is a browser-based, real-time computer vision application that runs entirely on the client-side — no server, no upload, no delay. It uses <strong>MediaPipe Hands</strong> to detect 21 hand landmarks and classify 12+ gestures live, a custom <strong>pixel-clustering algorithm</strong> to extract dominant colors and compute perceptual metrics, and <strong>face-api.js</strong> with TinyFaceDetector to predict age, gender, and 7 emotional states with landmark overlay. All three vision pipelines run in real-time at 20–30 FPS directly from the webcam inside a single HTML file.
+    </div>
+
+    <!-- RESULT STATS -->
+    <div class="results-bar">
+      <div class="result-item"><div class="result-num">12+</div><div class="result-lbl">Gestures Recognized</div></div>
+      <div class="result-item"><div class="result-num">7</div><div class="result-lbl">Emotions Detected</div></div>
+      <div class="result-item"><div class="result-num">21</div><div class="result-lbl">Hand Landmarks</div></div>
+      <div class="result-item"><div class="result-num">30 FPS</div><div class="result-lbl">Real-Time Processing</div></div>
+      <div class="result-item"><div class="result-num">100%</div><div class="result-lbl">Client-Side · No Upload</div></div>
+    </div>
+
+    <!-- FEATURES -->
+    <div class="section-title">Core Modules</div>
+    <div class="features-grid">
+
+      <div class="feat-card purple">
+        <span class="feat-icon">🤚</span>
+        <div class="feat-title">Hand Gesture Recognition</div>
+        <div class="feat-desc">Tracks 21 hand landmarks in real-time using MediaPipe's ML graph. Custom rule-based classifier detects 12+ gestures including Thumbs Up, Peace, Shaka, Fist, OK, and more.</div>
+        <div class="feat-badge purple">MediaPipe Hands</div>
+      </div>
+
+      <div class="feat-card cyan">
+        <span class="feat-icon">🎨</span>
+        <div class="feat-title">Live Color Analyzer</div>
+        <div class="feat-desc">Extracts dominant colors from the webcam feed every 180ms using pixel quantization (bit-shifting). Shows HSL, brightness, temperature, variance, and named color matching.</div>
+        <div class="feat-badge cyan">Canvas Pixel API</div>
+      </div>
+
+      <div class="feat-card green">
+        <span class="feat-icon">👤</span>
+        <div class="feat-title">Face & Person Analysis</div>
+        <div class="feat-desc">Detects faces with TinyFaceDetector, overlays 68 landmarks, and simultaneously estimates age, gender, and 7 emotional expressions (happy, sad, angry, surprised, etc.).</div>
+        <div class="feat-badge green">face-api.js / TensorFlow.js</div>
+      </div>
+
+      <div class="feat-card red">
+        <span class="feat-icon">⚡</span>
+        <div class="feat-title">Real-Time Processing</div>
+        <div class="feat-desc">All inference runs in the browser using WebAssembly and WebGL. No data ever leaves the device — zero latency, complete privacy, works offline after initial load.</div>
+        <div class="feat-badge red">WebAssembly + WebGL</div>
+      </div>
+
+      <div class="feat-card amber">
+        <span class="feat-icon">🧠</span>
+        <div class="feat-title">Multi-Modal Pipeline</div>
+        <div class="feat-desc">Three independent vision pipelines share the same webcam stream. Switching modes is instant — the system maintains state across all modules simultaneously.</div>
+        <div class="feat-badge amber">Single-Page App</div>
+      </div>
+
+      <div class="feat-card pink">
+        <span class="feat-icon">🖥️</span>
+        <div class="feat-title">Cyber HUD Interface</div>
+        <div class="feat-desc">Custom-designed dark UI with live FPS counter, animated scan-line, HUD corner overlays, gesture history trail, emotion bars, and color swatches with named identification.</div>
+        <div class="feat-badge pink">Pure HTML/CSS/JS</div>
+      </div>
+
+    </div>
+
+    <!-- HOW IT WORKS -->
+    <div class="section-title">Processing Pipeline</div>
+    <div class="pipeline" style="margin-bottom:32px">
+      <div class="pipe-step">
+        <span class="pipe-icon">📷</span>
+        <div class="pipe-label">Webcam Input</div>
+        <div class="pipe-sub">getUserMedia API<br>720p @ 30fps</div>
+      </div>
+      <div class="pipe-arrow">→</div>
+      <div class="pipe-step">
+        <span class="pipe-icon">🖼️</span>
+        <div class="pipe-label">Frame Capture</div>
+        <div class="pipe-sub">HTMLVideoElement<br>RAF / setInterval</div>
+      </div>
+      <div class="pipe-arrow">→</div>
+      <div class="pipe-step">
+        <span class="pipe-icon">🧮</span>
+        <div class="pipe-label">AI Inference</div>
+        <div class="pipe-sub">MediaPipe / TF.js<br>WebGL Acceleration</div>
+      </div>
+      <div class="pipe-arrow">→</div>
+      <div class="pipe-step">
+        <span class="pipe-icon">📐</span>
+        <div class="pipe-label">Post-Processing</div>
+        <div class="pipe-sub">Landmark Analysis<br>Pixel Clustering</div>
+      </div>
+      <div class="pipe-arrow">→</div>
+      <div class="pipe-step">
+        <span class="pipe-icon">🎯</span>
+        <div class="pipe-label">Visualization</div>
+        <div class="pipe-sub">Canvas 2D API<br>CSS Animations</div>
+      </div>
+    </div>
+
+    <!-- TECH + GESTURES -->
+    <div class="two-col">
+      <div>
+        <div class="section-title">Technology Stack</div>
+        <div class="tech-list">
+          <div class="tech-item">
+            <div class="tech-dot" style="background:#7c3aed"></div>
+            <div>
+              <div class="tech-name">MediaPipe Hands v0.4</div>
+              <div class="tech-role">21-point hand landmark detection · WASM/WebGL</div>
+            </div>
+          </div>
+          <div class="tech-item">
+            <div class="tech-dot" style="background:#06b6d4"></div>
+            <div>
+              <div class="tech-name">face-api.js (@vladmandic)</div>
+              <div class="tech-role">TinyFaceDetector · AgeGenderNet · ExpressionNet</div>
+            </div>
+          </div>
+          <div class="tech-item">
+            <div class="tech-dot" style="background:#10b981"></div>
+            <div>
+              <div class="tech-name">Canvas 2D API + WebGL</div>
+              <div class="tech-role">Pixel extraction · Color quantization · Drawing</div>
+            </div>
+          </div>
+          <div class="tech-item">
+            <div class="tech-dot" style="background:#f59e0b"></div>
+            <div>
+              <div class="tech-name">Vanilla JS + HTML5/CSS3</div>
+              <div class="tech-role">Zero frameworks · requestAnimationFrame loop</div>
+            </div>
+          </div>
+          <div class="tech-item">
+            <div class="tech-dot" style="background:#ef4444"></div>
+            <div>
+              <div class="tech-name">WebAssembly (WASM)</div>
+              <div class="tech-role">Native-speed ML inference in browser sandbox</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="section-title">Recognized Gestures</div>
+        <div class="gesture-grid">
+          <div class="gest-row"><span>👍</span> Thumbs Up</div>
+          <div class="gest-row"><span>👎</span> Thumbs Down</div>
+          <div class="gest-row"><span>✌️</span> Peace / V Sign</div>
+          <div class="gest-row"><span>🤟</span> Rock On</div>
+          <div class="gest-row"><span>✊</span> Fist</div>
+          <div class="gest-row"><span>🖐️</span> Open Hand</div>
+          <div class="gest-row"><span>👆</span> Point Up</div>
+          <div class="gest-row"><span>🤙</span> Shaka</div>
+          <div class="gest-row"><span>👌</span> OK Sign</div>
+          <div class="gest-row"><span>🤞</span> Fingers Crossed</div>
+          <div class="gest-row"><span>🖖</span> Vulcan Salute</div>
+          <div class="gest-row"><span>🤌</span> Chef's Kiss</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DIP CONCEPTS USED -->
+    <div class="section-title">DIP Concepts Applied</div>
+    <div class="dip-grid">
+      <div class="dip-item">
+        <span class="dip-num">01</span>
+        <div class="dip-label">Spatial Filtering<br>Landmark Smoothing</div>
+      </div>
+      <div class="dip-item">
+        <span class="dip-num">02</span>
+        <div class="dip-label">Color Space Conversion<br>RGB → HSL → Perception</div>
+      </div>
+      <div class="dip-item">
+        <span class="dip-num">03</span>
+        <div class="dip-label">Image Segmentation<br>Region Classification</div>
+      </div>
+      <div class="dip-item">
+        <span class="dip-num">04</span>
+        <div class="dip-label">Feature Extraction<br>Keypoint Detection</div>
+      </div>
+      <div class="dip-item">
+        <span class="dip-num">05</span>
+        <div class="dip-label">Pixel Quantization<br>Color Clustering</div>
+      </div>
+      <div class="dip-item">
+        <span class="dip-num">06</span>
+        <div class="dip-label">CNN Inference<br>Deep Learning Detection</div>
+      </div>
+    </div>
+
+    <!-- TEAM -->
+    <div class="section-title">Team Members</div>
+    <div class="team-row">
+      <div class="member">
+        <div class="avatar">👨‍💻</div>
+        <div class="m-name">Student Name 1</div>
+        <div class="m-id">Roll No: XXXXXXX</div>
+        <div class="m-role">Lead Developer · Gesture Module</div>
+      </div>
+      <div class="member">
+        <div class="avatar">👩‍💻</div>
+        <div class="m-name">Student Name 2</div>
+        <div class="m-id">Roll No: XXXXXXX</div>
+        <div class="m-role">Color Analysis · UI Design</div>
+      </div>
+      <div class="member">
+        <div class="avatar">🧑‍💻</div>
+        <div class="m-name">Student Name 3</div>
+        <div class="m-id">Roll No: XXXXXXX</div>
+        <div class="m-role">Face Analysis · Presentation</div>
+      </div>
+    </div>
+
+    <!-- FOOTER -->
+    <div class="footer">
+      <div class="footer-left">
+        <strong>Supervised by:</strong> Prof. [Instructor Name] &nbsp;·&nbsp;
+        <strong>Department of Computer Science</strong> &nbsp;·&nbsp;
+        Submitted: Fall 2025
+      </div>
+      <div class="qr-placeholder">
+        <div class="qr-icon">⬛</div>
+        <div>Scan to Demo</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+</body>
+</html>
