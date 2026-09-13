@@ -1,0 +1,174 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>About Us | Evoke Design & Build</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Barlow+Condensed:wght@700;800;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --bg:#080c10;--bg2:#0d1520;--bg3:#111d2b;
+  --border:rgba(255,255,255,.07);--border2:rgba(0,171,220,.3);
+  --text:rgba(255,255,255,.72);--head:#ffffff;
+  --gold:#00abdc;--gold2:#94ba33;
+  --nav-bg:rgba(8,12,16,.97);
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden}
+#prog{position:fixed;top:0;left:0;height:2px;background:linear-gradient(90deg,var(--gold),var(--gold2));z-index:9998;width:0%}
+nav{position:fixed;top:0;left:0;right:0;z-index:997;display:flex;align-items:center;justify-content:space-between;padding:0 5%;height:74px;background:var(--nav-bg);border-bottom:1px solid var(--border);backdrop-filter:blur(16px)}
+.logo{display:flex;align-items:center;text-decoration:none}
+.nav-links{display:flex;gap:2.2rem;list-style:none;align-items:center}
+.nav-links a{color:var(--text);font-size:.78rem;font-weight:500;letter-spacing:1.5px;text-transform:uppercase;text-decoration:none;transition:color .2s}
+.nav-links a:hover{color:var(--gold)}
+.nav-item{position:relative}
+.nav-item>a{display:flex;align-items:center;gap:.25rem}
+.drop-arrow{font-size:.55rem;opacity:.5;transition:transform .2s;display:inline-block}
+.nav-item:hover .drop-arrow{transform:rotate(180deg)}
+.nav-dropdown{position:absolute;top:calc(100% + 14px);left:50%;transform:translateX(-50%) translateY(-6px);background:#ffffff;border-radius:8px;box-shadow:0 16px 48px rgba(0,0,0,.3);padding:.5rem 0;min-width:220px;opacity:0;visibility:hidden;transition:opacity .22s,transform .22s;z-index:9999;pointer-events:none}
+.nav-item:hover .nav-dropdown{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0);pointer-events:auto}
+.nav-dropdown::before{content:'';position:absolute;top:-6px;left:50%;transform:translateX(-50%);border:6px solid transparent;border-bottom-color:#fff;border-top:none}
+.nav-dropdown a{display:block;padding:.72rem 1.4rem;color:#003f66 !important;font-size:.78rem;font-weight:600;letter-spacing:.3px;text-decoration:none;transition:background .15s;text-transform:none;white-space:nowrap}
+.nav-dropdown a:hover{background:#e8f5ea;color:#003f66 !important}
+.nav-right a{border:1px solid var(--gold);color:var(--gold);padding:.55rem 1.4rem;font-size:.75rem;font-weight:600;letter-spacing:2px;text-transform:uppercase;text-decoration:none;transition:.25s}
+.nav-right a:hover{background:var(--gold);color:var(--bg)}
+/* PAGE HERO */
+.page-hero{padding:140px 5% 80px;background:linear-gradient(135deg,var(--bg3) 0%,var(--bg2) 100%);border-bottom:1px solid var(--border);position:relative;overflow:hidden}
+.page-hero::before{content:'';position:absolute;inset:0;background:url('https://evoke.london/wp-content/uploads/2026/02/Sutherland-house-001-2.jpg') center/cover;opacity:.06}
+.eyebrow{display:flex;align-items:center;gap:.8rem;margin-bottom:1rem}
+.eyebrow-line{width:28px;height:2px;background:var(--gold2)}
+.eyebrow-text{font-size:.65rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gold2)}
+.page-hero h1{font-family:'Barlow Condensed',sans-serif;font-size:clamp(2.8rem,6vw,5rem);font-weight:900;text-transform:uppercase;color:var(--head);line-height:1}
+.page-hero h1 em{color:var(--gold);font-style:normal}
+.page-hero p{margin-top:1.2rem;font-size:1rem;max-width:560px;line-height:1.75}
+/* CONTENT */
+.sec{padding:6rem 5%}
+.sec-title{font-family:'Barlow Condensed',sans-serif;font-size:clamp(2rem,4vw,3rem);font-weight:800;text-transform:uppercase;color:var(--head);line-height:1.05;margin-bottom:1.5rem}
+.sec-title em{color:var(--gold);font-style:normal}
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center}
+.about-img-wrap{position:relative;border-radius:2px;overflow:hidden}
+.about-img-wrap img{width:100%;height:420px;object-fit:cover;display:block}
+.about-badge{position:absolute;bottom:1.5rem;right:-1rem;background:var(--gold2);color:#fff;font-family:'Barlow Condensed',sans-serif;font-size:2.2rem;font-weight:900;padding:1rem 1.5rem;line-height:1;text-align:center}
+.about-badge small{display:block;font-size:.55rem;letter-spacing:2px;font-weight:600;text-transform:uppercase;opacity:.85;margin-top:.2rem}
+.body-text{line-height:1.8;font-size:.95rem;margin-bottom:1.2rem}
+.stat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;margin:3rem 0;padding:2.5rem 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.stat-num{font-family:'Barlow Condensed',sans-serif;font-size:3rem;font-weight:900;color:var(--gold2);line-height:1}
+.stat-label{font-size:.7rem;letter-spacing:2px;text-transform:uppercase;color:var(--text);margin-top:.3rem}
+.story-grid{display:grid;grid-template-columns:1fr 1fr;gap:3rem;margin-top:3rem}
+.story-card{background:var(--bg2);border:1px solid var(--border);padding:2rem;border-top:3px solid var(--gold2)}
+.story-card h3{font-family:'Barlow Condensed',sans-serif;font-size:1.4rem;font-weight:800;color:var(--head);text-transform:uppercase;margin-bottom:.8rem}
+.story-card p{font-size:.9rem;line-height:1.7}
+.btn-gold{display:inline-flex;background:var(--gold2);color:#fff;padding:.75rem 2rem;font-size:.78rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;text-decoration:none;transition:.25s;margin-top:2rem}
+.btn-gold:hover{background:#7da02a}
+/* FOOTER */
+footer{background:var(--bg2);border-top:1px solid var(--border);padding:4rem 5% 2rem}
+.foot-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:3rem;margin-bottom:3rem}
+.foot-h{font-size:.65rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:1.2rem}
+.foot-links{list-style:none}
+.foot-links li{margin-bottom:.6rem}
+.foot-links a{color:var(--text);font-size:.85rem;text-decoration:none;transition:color .2s}
+.foot-links a:hover{color:var(--gold2)}
+.foot-desc{font-size:.82rem;line-height:1.7;margin-top:1rem;color:var(--text)}
+.foot-bottom{border-top:1px solid var(--border);padding-top:1.5rem;display:flex;justify-content:space-between;font-size:.72rem;color:rgba(255,255,255,.35)}
+@media(max-width:768px){.about-grid,.story-grid{grid-template-columns:1fr}.foot-grid{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+<div id="prog"></div>
+<nav id="nav">
+  <a class="logo" href="index.html">
+    <img src="https://evoke.london/wp-content/uploads/2026/01/Evoke_Logo.svg" alt="Evoke Logo" style="height:48px;width:auto;display:block"/>
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="about.html">About Us</a></li>
+    <li><a href="accreditations.html">Accreditations</a></li>
+    <li><a href="team.html">Our Team</a></li>
+    <li><a href="core-values.html">Core Values</a></li>
+    <li><a href="index.html#services">Services</a></li>
+    <li><a href="index.html#projects">Projects</a></li>
+    <li><a href="index.html#journal">News</a></li>
+  </ul>
+  <div class="nav-right">
+    <a href="index.html#contact">Get In Touch</a>
+  </div>
+</nav>
+
+<div class="page-hero">
+  <div class="eyebrow"><div class="eyebrow-line"></div><div class="eyebrow-text">Who We Are</div></div>
+  <h1>About <em>Evoke</em><br/>Design &amp; Build</h1>
+  <p>London's trusted construction partner â€” delivering exceptional commercial, residential and hospitality projects since 2013. Real experience. Real quality.</p>
+</div>
+
+<section class="sec" style="background:var(--bg)">
+  <div class="about-grid">
+    <div class="about-img-wrap">
+      <img src="https://evoke.london/wp-content/uploads/2026/02/Sutherland-house-001-2.jpg" alt="Evoke Construction"/>
+      <div class="about-badge">12+<small>Years Active</small></div>
+    </div>
+    <div>
+      <div class="eyebrow"><div class="eyebrow-line"></div><div class="eyebrow-text">Our Story</div></div>
+      <h2 class="sec-title">Building <em>Extraordinary</em><br/>Spaces Since 2013</h2>
+      <p class="body-text">Evoke Design &amp; Build was founded in 2013 with a simple ambition: to deliver construction projects with the precision, transparency and quality that clients in London deserve. Over the past decade, we have grown from a specialist trades outfit into one of the capital's most trusted full-service construction companies.</p>
+      <p class="body-text">Today, our experienced team handles everything from initial design and planning through to construction, fit-out and handover â€” managing every detail so our clients don't have to. We work across the commercial, residential and hospitality sectors, delivering projects that are always on time, on brief and within budget.</p>
+      <p class="body-text">Our leadership team brings together decades of hands-on construction experience, backed by rigorous ISO-certified quality and environmental management systems. Every project benefits from our fixed-price contracts and transparent reporting â€” no hidden costs, no surprises.</p>
+      <a href="team.html" class="btn-gold">Meet Our Team</a>
+    </div>
+  </div>
+
+  <div class="stat-row">
+    <div><div class="stat-num">12+</div><div class="stat-label">Years Experience</div></div>
+    <div><div class="stat-num">200+</div><div class="stat-label">Projects Completed</div></div>
+    <div><div class="stat-num">Â£50M+</div><div class="stat-label">Project Value Delivered</div></div>
+  </div>
+
+  <div class="story-grid">
+    <div class="story-card">
+      <h3>Our Approach</h3>
+      <p>We combine technical expertise with a genuinely client-first mindset. From the moment we receive a brief, our team works collaboratively with architects, engineers and clients to plan every phase of the build â€” removing uncertainty before a single spade breaks ground.</p>
+    </div>
+    <div class="story-card">
+      <h3>Our People</h3>
+      <p>Our team is made up of highly skilled tradespeople, project managers, designers and support staff who share the same commitment to quality. We invest in our people through continuous training, safety accreditation and professional development.</p>
+    </div>
+    <div class="story-card">
+      <h3>Our Reach</h3>
+      <p>While London is our home, our project portfolio spans the UK â€” from residential schemes in Kensington and Chelsea to hotel refurbishments in Cumbria. Wherever you build, Evoke delivers the same standard of excellence.</p>
+    </div>
+    <div class="story-card">
+      <h3>Our Promise</h3>
+      <p>Fixed-price contracts. Transparent communication. Zero hidden costs. We stand behind every project we deliver â€” and our long list of returning clients is the proof. Quality isn't a checkbox for us; it's the foundation of everything we do.</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="foot-grid">
+    <div>
+      <a class="logo" href="index.html" style="text-decoration:none;display:inline-flex">
+        <img src="https://evoke.london/wp-content/uploads/2026/01/Evoke_Logo.svg" alt="Evoke Logo" style="height:48px;width:auto;display:block"/>
+      </a>
+      <p class="foot-desc">London's premier construction partner â€” delivering exceptional commercial, residential and hospitality projects since 2013.</p>
+    </div>
+    <div><div class="foot-h">Who We Are</div><ul class="foot-links"><li><a href="about.html">About Us</a></li><li><a href="team.html">Our Team</a></li><li><a href="accreditations.html">Accreditations</a></li><li><a href="core-values.html">Core Values</a></li></ul></div>
+    <div><div class="foot-h">Services</div><ul class="foot-links"><li><a href="index.html#services">Construction</a></li><li><a href="index.html#services">Design &amp; Build</a></li><li><a href="index.html#services">Refurbishment</a></li><li><a href="index.html#services">Project Management</a></li></ul></div>
+    <div><div class="foot-h">Contact</div><ul class="foot-links"><li><a href="tel:02081677800">020 8167 7800</a></li><li><a href="mailto:info@evoke.london">info@evoke.london</a></li><li><a href="index.html#contact">Get a Quote</a></li></ul></div>
+  </div>
+  <div class="foot-bottom">
+    <div>&copy; 2025 Evoke Design &amp; Build Ltd. All rights reserved.</div>
+    <div>Company No. 08453476 | Registered in England &amp; Wales</div>
+  </div>
+</footer>
+<script>
+window.addEventListener('scroll',()=>{
+  const s=document.documentElement.scrollTop;
+  const h=document.documentElement.scrollHeight-window.innerHeight;
+  document.getElementById('prog').style.width=(s/h*100)+'%';
+},{passive:true});
+</script>
+</body>
+</html>
+

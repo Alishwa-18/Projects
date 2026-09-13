@@ -1,0 +1,218 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Our Accreditations | Evoke Design & Build</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Barlow+Condensed:wght@700;800;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+:root{--bg:#080c10;--bg2:#0d1520;--bg3:#111d2b;--border:rgba(255,255,255,.07);--text:rgba(255,255,255,.72);--head:#ffffff;--gold:#00abdc;--gold2:#94ba33;--nav-bg:rgba(8,12,16,.97)}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden}
+#prog{position:fixed;top:0;left:0;height:2px;background:linear-gradient(90deg,var(--gold),var(--gold2));z-index:9998;width:0%}
+nav{position:fixed;top:0;left:0;right:0;z-index:997;display:flex;align-items:center;justify-content:space-between;padding:0 5%;height:74px;background:var(--nav-bg);border-bottom:1px solid var(--border);backdrop-filter:blur(16px)}
+.logo{display:flex;align-items:center;text-decoration:none}
+.nav-links{display:flex;gap:2.2rem;list-style:none;align-items:center}
+.nav-links a{color:var(--text);font-size:.78rem;font-weight:500;letter-spacing:1.5px;text-transform:uppercase;text-decoration:none;transition:color .2s}
+.nav-links a:hover{color:var(--gold)}
+.nav-item{position:relative}
+.nav-item>a{display:flex;align-items:center;gap:.25rem}
+.drop-arrow{font-size:.55rem;opacity:.5;transition:transform .2s;display:inline-block}
+.nav-item:hover .drop-arrow{transform:rotate(180deg)}
+.nav-dropdown{position:absolute;top:calc(100% + 14px);left:50%;transform:translateX(-50%) translateY(-6px);background:#fff;border-radius:8px;box-shadow:0 16px 48px rgba(0,0,0,.3);padding:.5rem 0;min-width:220px;opacity:0;visibility:hidden;transition:opacity .22s,transform .22s;z-index:9999;pointer-events:none}
+.nav-item:hover .nav-dropdown{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0);pointer-events:auto}
+.nav-dropdown::before{content:'';position:absolute;top:-6px;left:50%;transform:translateX(-50%);border:6px solid transparent;border-bottom-color:#fff;border-top:none}
+.nav-dropdown a{display:block;padding:.72rem 1.4rem;color:#003f66 !important;font-size:.78rem;font-weight:600;text-decoration:none;transition:background .15s;text-transform:none;white-space:nowrap}
+.nav-dropdown a:hover{background:#e8f5ea}
+.nav-right a{border:1px solid var(--gold);color:var(--gold);padding:.55rem 1.4rem;font-size:.75rem;font-weight:600;letter-spacing:2px;text-transform:uppercase;text-decoration:none;transition:.25s}
+.nav-right a:hover{background:var(--gold);color:var(--bg)}
+.page-hero{padding:140px 5% 80px;background:linear-gradient(135deg,var(--bg3) 0%,var(--bg2) 100%);border-bottom:1px solid var(--border);position:relative;overflow:hidden}
+.page-hero::before{content:'';position:absolute;inset:0;background:url('https://evoke.london/wp-content/uploads/2026/01/Gilsland-001.jpg') center/cover;opacity:.06}
+.eyebrow{display:flex;align-items:center;gap:.8rem;margin-bottom:1rem}
+.eyebrow-line{width:28px;height:2px;background:var(--gold2)}
+.eyebrow-text{font-size:.65rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gold2)}
+.page-hero h1{font-family:'Barlow Condensed',sans-serif;font-size:clamp(2.8rem,6vw,5rem);font-weight:900;text-transform:uppercase;color:var(--head);line-height:1}
+.page-hero h1 em{color:var(--gold);font-style:normal}
+.page-hero p{margin-top:1.2rem;font-size:1rem;max-width:560px;line-height:1.75}
+.sec{padding:6rem 5%}
+.sec-title{font-family:'Barlow Condensed',sans-serif;font-size:clamp(2rem,4vw,3rem);font-weight:800;text-transform:uppercase;color:var(--head);line-height:1.05;margin-bottom:.5rem}
+.sec-title em{color:var(--gold);font-style:normal}
+.sec-sub{font-size:.9rem;line-height:1.7;max-width:620px;margin-bottom:3rem}
+.certs-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+.cert-card{background:var(--bg2);border:1px solid var(--border);padding:2rem;transition:border-color .2s,transform .2s;border-top:3px solid var(--gold2)}
+.cert-card:hover{border-color:rgba(148,186,51,.4);transform:translateY(-4px)}
+.cert-header{display:flex;align-items:center;gap:1rem;margin-bottom:1rem}
+.cert-icon{width:44px;height:44px;background:rgba(148,186,51,.12);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.cert-icon svg{width:20px;height:20px;stroke:var(--gold2);fill:none;stroke-width:1.5}
+.cert-name{font-family:'Barlow Condensed',sans-serif;font-size:1.2rem;font-weight:800;color:var(--head);text-transform:uppercase}
+.cert-full{font-size:.7rem;color:var(--text);letter-spacing:.5px;margin-top:.1rem}
+.cert-id{font-size:.72rem;color:var(--gold);letter-spacing:1px;margin-bottom:.8rem;font-weight:600}
+.cert-desc{font-size:.85rem;line-height:1.65}
+.cert-badge{display:inline-block;background:rgba(148,186,51,.12);color:var(--gold2);font-size:.62rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:.3rem .8rem;border-radius:2px;margin-top:1rem;border:1px solid rgba(148,186,51,.3)}
+.iso-strip{background:var(--bg3);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:4rem 5%}
+.iso-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2rem}
+.iso-card{text-align:center;padding:2rem 1rem}
+.iso-num{font-family:'Barlow Condensed',sans-serif;font-size:2rem;font-weight:900;color:var(--gold2)}
+.iso-name{font-size:.75rem;letter-spacing:1px;text-transform:uppercase;color:var(--text);margin-top:.3rem}
+.iso-desc{font-size:.8rem;margin-top:.5rem;line-height:1.5}
+footer{background:var(--bg2);border-top:1px solid var(--border);padding:4rem 5% 2rem}
+.foot-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:3rem;margin-bottom:3rem}
+.foot-h{font-size:.65rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:1.2rem}
+.foot-links{list-style:none}
+.foot-links li{margin-bottom:.6rem}
+.foot-links a{color:var(--text);font-size:.85rem;text-decoration:none;transition:color .2s}
+.foot-links a:hover{color:var(--gold2)}
+.foot-desc{font-size:.82rem;line-height:1.7;margin-top:1rem}
+.foot-bottom{border-top:1px solid var(--border);padding-top:1.5rem;display:flex;justify-content:space-between;font-size:.72rem;color:rgba(255,255,255,.35)}
+@media(max-width:900px){.certs-grid{grid-template-columns:1fr 1fr}.iso-grid{grid-template-columns:1fr 1fr}.foot-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:540px){.certs-grid{grid-template-columns:1fr}.iso-grid{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+<div id="prog"></div>
+<nav>
+  <a class="logo" href="index.html">
+    <img src="https://evoke.london/wp-content/uploads/2026/01/Evoke_Logo.svg" alt="Evoke Logo" style="height:48px;width:auto;display:block"/>
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="about.html">About Us</a></li>
+    <li><a href="accreditations.html">Accreditations</a></li>
+    <li><a href="team.html">Our Team</a></li>
+    <li><a href="core-values.html">Core Values</a></li>
+    <li><a href="index.html#services">Services</a></li>
+    <li><a href="index.html#projects">Projects</a></li>
+    <li><a href="index.html#journal">News</a></li>
+  </ul>
+  <div class="nav-right"><a href="index.html#contact">Get In Touch</a></div>
+</nav>
+
+<div class="page-hero">
+  <div class="eyebrow"><div class="eyebrow-line"></div><div class="eyebrow-text">Standards &amp; Quality</div></div>
+  <h1>Our <em>Accreditations</em></h1>
+  <p>All accreditations independently verified â€” giving clients complete confidence in Evoke's quality, safety and environmental commitments.</p>
+</div>
+
+<section class="sec" style="background:var(--bg)">
+  <div class="eyebrow"><div class="eyebrow-line"></div><div class="eyebrow-text">Certifications</div></div>
+  <h2 class="sec-title">Trusted <em>Standards</em></h2>
+  <p class="sec-sub">Evoke Design &amp; Build holds the highest industry accreditations â€” each independently audited to confirm our commitment to quality, safety and environmental responsibility.</p>
+
+  <div class="certs-grid">
+    <div class="cert-card">
+      <div class="cert-header">
+        <div class="cert-icon"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div>
+        <div><div class="cert-name">TrustMark</div><div class="cert-full">Government Endorsed Quality</div></div>
+      </div>
+      <div class="cert-id">Membership Number: 789001</div>
+      <div class="cert-desc">TrustMark is the UK government-endorsed quality scheme, confirming Evoke meets required standards of technical competence, customer service and fair trading practices. It provides homeowners and clients with the assurance that they are working with a trustworthy and reliable contractor.</div>
+      <div class="cert-badge">Registered Member</div>
+    </div>
+
+    <div class="cert-card">
+      <div class="cert-header">
+        <div class="cert-icon"><svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="1"/><path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/></svg></div>
+        <div><div class="cert-name">ConstructionLine</div><div class="cert-full">Silver Member</div></div>
+      </div>
+      <div class="cert-id">Membership No: 188657</div>
+      <div class="cert-desc">ConstructionLine Silver status confirms Evoke's compliance with enhanced health &amp; safety, environmental management and corporate social responsibility standards. This pre-qualification scheme is widely used by public sector clients and large contractors to vet supply chains.</div>
+      <div class="cert-badge">Silver Status</div>
+    </div>
+
+    <div class="cert-card">
+      <div class="cert-header">
+        <div class="cert-icon"><svg viewBox="0 0 24 24"><path d="M1 3h15v13H1z"/><path d="M16 8l4 2v6h-4"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg></div>
+        <div><div class="cert-name">FORS</div><div class="cert-full">Fleet Operator Recognition Scheme</div></div>
+      </div>
+      <div class="cert-id">ID: 013208</div>
+      <div class="cert-desc">FORS Bronze accreditation confirms Evoke's fleet operations meet rigorous standards for safety, efficiency, environmental performance and driver conduct. The scheme is mandatory for many London construction sites under Transport for London requirements.</div>
+      <div class="cert-badge">Bronze Accredited</div>
+    </div>
+
+    <div class="cert-card">
+      <div class="cert-header">
+        <div class="cert-icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg></div>
+        <div><div class="cert-name">FMB</div><div class="cert-full">Federation of Master Builders</div></div>
+      </div>
+      <div class="cert-id">Membership No: 75445</div>
+      <div class="cert-desc">Federation of Master Builders membership requires Evoke to pass a rigorous independent inspection process and uphold the FMB Code of Practice. Members must demonstrate they can complete work to a professional standard and treat customers fairly.</div>
+      <div class="cert-badge">Full Member</div>
+    </div>
+
+    <div class="cert-card">
+      <div class="cert-header">
+        <div class="cert-icon"><svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg></div>
+        <div><div class="cert-name">ISO 9001</div><div class="cert-full">Quality Management System</div></div>
+      </div>
+      <div class="cert-id">Certified Quality Management</div>
+      <div class="cert-desc">ISO 9001 certification demonstrates that Evoke operates a robust Quality Management System covering all project phases. This internationally recognised standard ensures consistent delivery, continuous improvement and full client satisfaction monitoring.</div>
+      <div class="cert-badge">ISO Certified</div>
+    </div>
+
+    <div class="cert-card">
+      <div class="cert-header">
+        <div class="cert-icon"><svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 100 20A10 10 0 0012 2z"/><path d="M12 8v4l3 3"/></svg></div>
+        <div><div class="cert-name">ISO 14001</div><div class="cert-full">Environmental Management System</div></div>
+      </div>
+      <div class="cert-id">Certified Environmental Management</div>
+      <div class="cert-desc">ISO 14001 certification confirms Evoke's commitment to minimising the environmental impact of construction activities. Our Environmental Management System governs waste reduction, resource efficiency and compliance with environmental regulations on every project.</div>
+      <div class="cert-badge">ISO Certified</div>
+    </div>
+  </div>
+</section>
+
+<div class="iso-strip">
+  <div class="iso-grid">
+    <div class="iso-card">
+      <div class="iso-num">ISO 9001</div>
+      <div class="iso-name">Quality Management</div>
+      <div class="iso-desc">Internationally recognised quality management standard</div>
+    </div>
+    <div class="iso-card">
+      <div class="iso-num">ISO 14001</div>
+      <div class="iso-name">Environmental</div>
+      <div class="iso-desc">Environmental management and sustainability standard</div>
+    </div>
+    <div class="iso-card">
+      <div class="iso-num">TrustMark</div>
+      <div class="iso-name">Gov. Endorsed</div>
+      <div class="iso-desc">UK government-backed contractor quality scheme</div>
+    </div>
+    <div class="iso-card">
+      <div class="iso-num">Silver</div>
+      <div class="iso-name">ConstructionLine</div>
+      <div class="iso-desc">Enhanced pre-qualification for public sector works</div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="foot-grid">
+    <div>
+      <a class="logo" href="index.html" style="text-decoration:none;display:inline-flex">
+        <img src="https://evoke.london/wp-content/uploads/2026/01/Evoke_Logo.svg" alt="Evoke Logo" style="height:48px;width:auto;display:block"/>
+      </a>
+      <p class="foot-desc">London's premier construction partner â€” delivering exceptional commercial, residential and hospitality projects since 2013.</p>
+    </div>
+    <div><div class="foot-h">Who We Are</div><ul class="foot-links"><li><a href="about.html">About Us</a></li><li><a href="team.html">Our Team</a></li><li><a href="accreditations.html">Accreditations</a></li><li><a href="core-values.html">Core Values</a></li></ul></div>
+    <div><div class="foot-h">Services</div><ul class="foot-links"><li><a href="index.html#services">Construction</a></li><li><a href="index.html#services">Design &amp; Build</a></li><li><a href="index.html#services">Refurbishment</a></li><li><a href="index.html#services">Project Management</a></li></ul></div>
+    <div><div class="foot-h">Contact</div><ul class="foot-links"><li><a href="tel:02081677800">020 8167 7800</a></li><li><a href="mailto:info@evoke.london">info@evoke.london</a></li><li><a href="index.html#contact">Get a Quote</a></li></ul></div>
+  </div>
+  <div class="foot-bottom">
+    <div>&copy; 2025 Evoke Design &amp; Build Ltd. All rights reserved.</div>
+    <div>Company No. 08453476 | Registered in England &amp; Wales</div>
+  </div>
+</footer>
+<script>
+window.addEventListener('scroll',()=>{
+  const s=document.documentElement.scrollTop;
+  const h=document.documentElement.scrollHeight-window.innerHeight;
+  document.getElementById('prog').style.width=(s/h*100)+'%';
+},{passive:true});
+</script>
+</body>
+</html>
+

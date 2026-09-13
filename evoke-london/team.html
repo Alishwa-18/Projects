@@ -1,0 +1,205 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Our Team | Evoke Design & Build</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Barlow+Condensed:wght@700;800;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+:root{--bg:#080c10;--bg2:#0d1520;--bg3:#111d2b;--border:rgba(255,255,255,.07);--text:rgba(255,255,255,.72);--head:#ffffff;--gold:#00abdc;--gold2:#94ba33;--nav-bg:rgba(8,12,16,.97)}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden}
+#prog{position:fixed;top:0;left:0;height:2px;background:linear-gradient(90deg,var(--gold),var(--gold2));z-index:9998;width:0%}
+nav{position:fixed;top:0;left:0;right:0;z-index:997;display:flex;align-items:center;justify-content:space-between;padding:0 5%;height:74px;background:var(--nav-bg);border-bottom:1px solid var(--border);backdrop-filter:blur(16px)}
+.logo{display:flex;align-items:center;text-decoration:none}
+.nav-links{display:flex;gap:2.2rem;list-style:none;align-items:center}
+.nav-links a{color:var(--text);font-size:.78rem;font-weight:500;letter-spacing:1.5px;text-transform:uppercase;text-decoration:none;transition:color .2s}
+.nav-links a:hover{color:var(--gold)}
+.nav-item{position:relative}
+.nav-item>a{display:flex;align-items:center;gap:.25rem}
+.drop-arrow{font-size:.55rem;opacity:.5;transition:transform .2s;display:inline-block}
+.nav-item:hover .drop-arrow{transform:rotate(180deg)}
+.nav-dropdown{position:absolute;top:calc(100% + 14px);left:50%;transform:translateX(-50%) translateY(-6px);background:#fff;border-radius:8px;box-shadow:0 16px 48px rgba(0,0,0,.3);padding:.5rem 0;min-width:220px;opacity:0;visibility:hidden;transition:opacity .22s,transform .22s;z-index:9999;pointer-events:none}
+.nav-item:hover .nav-dropdown{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0);pointer-events:auto}
+.nav-dropdown::before{content:'';position:absolute;top:-6px;left:50%;transform:translateX(-50%);border:6px solid transparent;border-bottom-color:#fff;border-top:none}
+.nav-dropdown a{display:block;padding:.72rem 1.4rem;color:#003f66 !important;font-size:.78rem;font-weight:600;text-decoration:none;transition:background .15s;text-transform:none;white-space:nowrap}
+.nav-dropdown a:hover{background:#e8f5ea}
+.nav-right a{border:1px solid var(--gold);color:var(--gold);padding:.55rem 1.4rem;font-size:.75rem;font-weight:600;letter-spacing:2px;text-transform:uppercase;text-decoration:none;transition:.25s}
+.nav-right a:hover{background:var(--gold);color:var(--bg)}
+.page-hero{padding:140px 5% 80px;background:linear-gradient(135deg,var(--bg3) 0%,var(--bg2) 100%);border-bottom:1px solid var(--border);position:relative;overflow:hidden}
+.page-hero::before{content:'';position:absolute;inset:0;background:url('https://evoke.london/wp-content/uploads/2026/04/Haydons-004.jpg') center/cover;opacity:.07}
+.eyebrow{display:flex;align-items:center;gap:.8rem;margin-bottom:1rem}
+.eyebrow-line{width:28px;height:2px;background:var(--gold2)}
+.eyebrow-text{font-size:.65rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gold2)}
+.page-hero h1{font-family:'Barlow Condensed',sans-serif;font-size:clamp(2.8rem,6vw,5rem);font-weight:900;text-transform:uppercase;color:var(--head);line-height:1}
+.page-hero h1 em{color:var(--gold);font-style:normal}
+.page-hero p{margin-top:1.2rem;font-size:1rem;max-width:560px;line-height:1.75}
+.sec{padding:6rem 5%}
+.sec-title{font-family:'Barlow Condensed',sans-serif;font-size:clamp(2rem,4vw,3rem);font-weight:800;text-transform:uppercase;color:var(--head);line-height:1.05;margin-bottom:.5rem}
+.sec-title em{color:var(--gold);font-style:normal}
+.sec-sub{font-size:.9rem;line-height:1.7;max-width:620px;margin-bottom:3rem}
+.team-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem}
+.team-card{background:var(--bg2);border:1px solid var(--border);overflow:hidden;transition:transform .25s,border-color .25s}
+.team-card:hover{transform:translateY(-6px);border-color:rgba(148,186,51,.35)}
+.team-avatar{width:100%;aspect-ratio:1;background:linear-gradient(135deg,var(--bg3),var(--bg));display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-size:3.5rem;font-weight:900;color:var(--gold2);position:relative;overflow:hidden}
+.team-avatar::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,transparent 60%,rgba(0,63,102,.5))}
+.team-body{padding:1.5rem}
+.team-name{font-family:'Barlow Condensed',sans-serif;font-size:1.4rem;font-weight:800;color:var(--head);text-transform:uppercase}
+.team-role{font-size:.68rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold2);margin:.3rem 0 .8rem}
+.team-bio{font-size:.83rem;line-height:1.65}
+.team-linkedin{display:inline-flex;align-items:center;gap:.4rem;margin-top:1rem;font-size:.72rem;font-weight:600;color:var(--gold);text-decoration:none;letter-spacing:.5px}
+.team-linkedin:hover{color:var(--gold2)}
+footer{background:var(--bg2);border-top:1px solid var(--border);padding:4rem 5% 2rem}
+.foot-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:3rem;margin-bottom:3rem}
+.foot-h{font-size:.65rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:1.2rem}
+.foot-links{list-style:none}
+.foot-links li{margin-bottom:.6rem}
+.foot-links a{color:var(--text);font-size:.85rem;text-decoration:none;transition:color .2s}
+.foot-links a:hover{color:var(--gold2)}
+.foot-desc{font-size:.82rem;line-height:1.7;margin-top:1rem}
+.foot-bottom{border-top:1px solid var(--border);padding-top:1.5rem;display:flex;justify-content:space-between;font-size:.72rem;color:rgba(255,255,255,.35)}
+@media(max-width:900px){.team-grid{grid-template-columns:1fr 1fr}.foot-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:540px){.team-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div id="prog"></div>
+<nav>
+  <a class="logo" href="index.html">
+    <img src="https://evoke.london/wp-content/uploads/2026/01/Evoke_Logo.svg" alt="Evoke Logo" style="height:48px;width:auto;display:block"/>
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="about.html">About Us</a></li>
+    <li><a href="accreditations.html">Accreditations</a></li>
+    <li><a href="team.html">Our Team</a></li>
+    <li><a href="core-values.html">Core Values</a></li>
+    <li><a href="index.html#services">Services</a></li>
+    <li><a href="index.html#projects">Projects</a></li>
+    <li><a href="index.html#journal">News</a></li>
+  </ul>
+  <div class="nav-right"><a href="index.html#contact">Get In Touch</a></div>
+</nav>
+
+<div class="page-hero">
+  <div class="eyebrow"><div class="eyebrow-line"></div><div class="eyebrow-text">The People Behind Evoke</div></div>
+  <h1>Meet Our <em>Team</em></h1>
+  <p>Our experienced team combines deep technical expertise with a client-first approach â€” ensuring every project is delivered with the precision and care it deserves.</p>
+</div>
+
+<section class="sec" style="background:var(--bg)">
+  <div class="eyebrow"><div class="eyebrow-line"></div><div class="eyebrow-text">Our People</div></div>
+  <h2 class="sec-title">Expert <em>Professionals</em></h2>
+  <p class="sec-sub">From directors to site managers, every member of the Evoke team is committed to delivering excellence on every project. Our people are our greatest asset.</p>
+
+  <div class="team-grid">
+    <div class="team-card">
+      <div class="team-avatar">MD</div>
+      <div class="team-body">
+        <div class="team-name">Managing Director</div>
+        <div class="team-role">Leadership &amp; Strategy</div>
+        <p class="team-bio">With over 20 years in the construction industry, our MD founded Evoke in 2013 with a vision to deliver London-quality builds with complete transparency. A specialist in commercial and residential development, he leads the company's strategic direction and client relationships.</p>
+        <a href="https://www.linkedin.com/company/evoke-design-and-build/" target="_blank" class="team-linkedin">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+          LinkedIn Profile
+        </a>
+      </div>
+    </div>
+
+    <div class="team-card">
+      <div class="team-avatar">OD</div>
+      <div class="team-body">
+        <div class="team-name">Operations Director</div>
+        <div class="team-role">Operations &amp; Delivery</div>
+        <p class="team-bio">Responsible for the day-to-day running of all live projects, our Operations Director ensures every site operates safely, efficiently and to programme. With a background in quantity surveying and site management, she brings rigorous cost and schedule control to every build.</p>
+        <a href="https://www.linkedin.com/company/evoke-design-and-build/" target="_blank" class="team-linkedin">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+          LinkedIn Profile
+        </a>
+      </div>
+    </div>
+
+    <div class="team-card">
+      <div class="team-avatar">PM</div>
+      <div class="team-body">
+        <div class="team-name">Senior Project Manager</div>
+        <div class="team-role">Project Management</div>
+        <p class="team-bio">Our Senior Project Manager oversees major commercial and hospitality projects from inception through to handover. With RICS accreditation and 15 years of experience across London, he is expert at managing complex multi-phase builds in live environments.</p>
+        <a href="https://www.linkedin.com/company/evoke-design-and-build/" target="_blank" class="team-linkedin">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+          LinkedIn Profile
+        </a>
+      </div>
+    </div>
+
+    <div class="team-card">
+      <div class="team-avatar">HS</div>
+      <div class="team-body">
+        <div class="team-name">Health &amp; Safety Manager</div>
+        <div class="team-role">Safety &amp; Compliance</div>
+        <p class="team-bio">NEBOSH-qualified and IOSH-registered, our H&amp;S Manager oversees all safety protocols across Evoke's project portfolio. She leads our ISO 45001 compliance, conducts regular site audits and ensures our FORS-accredited fleet operations meet the highest standards.</p>
+        <a href="https://www.linkedin.com/company/evoke-design-and-build/" target="_blank" class="team-linkedin">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+          LinkedIn Profile
+        </a>
+      </div>
+    </div>
+
+    <div class="team-card">
+      <div class="team-avatar">CD</div>
+      <div class="team-body">
+        <div class="team-name">Commercial Director</div>
+        <div class="team-role">Commercial &amp; Contracts</div>
+        <p class="team-bio">Our Commercial Director manages all cost planning, tendering and contract administration for Evoke's portfolio. His fixed-price contract model â€” a hallmark of Evoke's client promise â€” is designed and overseen by him to ensure complete cost transparency from day one.</p>
+        <a href="https://www.linkedin.com/company/evoke-design-and-build/" target="_blank" class="team-linkedin">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+          LinkedIn Profile
+        </a>
+      </div>
+    </div>
+
+    <div class="team-card">
+      <div class="team-avatar">SM</div>
+      <div class="team-body">
+        <div class="team-name">Senior Site Manager</div>
+        <div class="team-role">Site Operations</div>
+        <p class="team-bio">With SMSTS accreditation and decades of hands-on experience, our Senior Site Manager coordinates trades, manages subcontractors and ensures quality control on our busiest sites. His meticulous approach to programme management keeps every project on schedule.</p>
+        <a href="https://www.linkedin.com/company/evoke-design-and-build/" target="_blank" class="team-linkedin">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+          LinkedIn Profile
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="foot-grid">
+    <div>
+      <a class="logo" href="index.html" style="text-decoration:none;display:inline-flex">
+        <img src="https://evoke.london/wp-content/uploads/2026/01/Evoke_Logo.svg" alt="Evoke Logo" style="height:48px;width:auto;display:block"/>
+      </a>
+      <p class="foot-desc">London's premier construction partner â€” delivering exceptional commercial, residential and hospitality projects since 2013.</p>
+    </div>
+    <div><div class="foot-h">Who We Are</div><ul class="foot-links"><li><a href="about.html">About Us</a></li><li><a href="team.html">Our Team</a></li><li><a href="accreditations.html">Accreditations</a></li><li><a href="core-values.html">Core Values</a></li></ul></div>
+    <div><div class="foot-h">Services</div><ul class="foot-links"><li><a href="index.html#services">Construction</a></li><li><a href="index.html#services">Design &amp; Build</a></li><li><a href="index.html#services">Refurbishment</a></li><li><a href="index.html#services">Project Management</a></li></ul></div>
+    <div><div class="foot-h">Contact</div><ul class="foot-links"><li><a href="tel:02081677800">020 8167 7800</a></li><li><a href="mailto:info@evoke.london">info@evoke.london</a></li><li><a href="index.html#contact">Get a Quote</a></li></ul></div>
+  </div>
+  <div class="foot-bottom">
+    <div>&copy; 2025 Evoke Design &amp; Build Ltd. All rights reserved.</div>
+    <div>Company No. 08453476 | Registered in England &amp; Wales</div>
+  </div>
+</footer>
+<script>
+window.addEventListener('scroll',()=>{
+  const s=document.documentElement.scrollTop;
+  const h=document.documentElement.scrollHeight-window.innerHeight;
+  document.getElementById('prog').style.width=(s/h*100)+'%';
+},{passive:true});
+</script>
+</body>
+</html>
+

@@ -1,0 +1,945 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Evoke Design & Build | Premier Construction Company London</title>
+<meta name="description" content="Evoke Design & Build — London's premier construction company. Commercial, residential and hospitality projects across London. ISO 9001, ISO 14001, ConstructionLine Silver, TrustMark certified. Est. 2013."/>
+<meta name="keywords" content="construction company London, design and build London, commercial construction, residential construction, refurbishment London, construction contractor London, Evoke Design Build"/>
+<meta property="og:title" content="Evoke Design & Build | Premier Construction London"/>
+<meta property="og:description" content="London's premier construction company delivering exceptional commercial and residential projects since 2013."/>
+<meta property="og:type" content="website"/>
+<meta property="og:url" content="https://evoke.london/"/>
+<link rel="canonical" href="https://evoke.london/"/>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"LocalBusiness","name":"Evoke Design & Build Ltd","description":"London premier construction company specialising in commercial, residential and hospitality projects","url":"https://evoke.london","telephone":"02081677800","email":"info@evoke.london","address":{"@type":"PostalAddress","streetAddress":"Warehouse 6a, Restmor Way","addressLocality":"Hackbridge, Wallington","addressRegion":"London","postalCode":"SM6 7AH","addressCountry":"GB"},"geo":{"@type":"GeoCoordinates","latitude":51.3713,"longitude":-0.1577},"foundingDate":"2013","areaServed":"London","hasCredential":["ISO 9001","ISO 14001","TrustMark","ConstructionLine Silver","FORS Bronze","FMB Member"]}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Barlow+Condensed:wght@700;800;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+/* ── THEME TOKENS ── */
+:root{
+  --bg:#080c10;--bg2:#0d1520;--bg3:#111d2b;
+  --border:rgba(255,255,255,.07);--border2:rgba(0,171,220,.3);
+  --text:rgba(255,255,255,.72);--head:#ffffff;
+  --gold:#00abdc;--gold2:#94ba33;--goldmid:#007fa3;
+  --card:#0d1520;--nav-bg:rgba(8,12,16,.95);
+  --pill-bg:#ffffff;--pill-text:#003f66;--pill-icon:#94ba33;
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;font-size:16px}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;transition:background .35s,color .35s}
+
+/* CURSOR */
+
+/* PROGRESS */
+#prog{position:fixed;top:0;left:0;height:2px;background:linear-gradient(90deg,var(--gold),var(--gold2));z-index:9998;width:0%;transition:width .08s linear}
+
+/* NAV */
+nav{position:fixed;top:2px;left:0;right:0;z-index:997;display:flex;align-items:center;justify-content:space-between;padding:0 5%;height:74px;transition:background .3s,border .3s}
+nav.solid{background:var(--nav-bg);border-bottom:1px solid var(--border);backdrop-filter:blur(16px)}
+.logo{display:flex;align-items:center;gap:.9rem;text-decoration:none}
+.logo-wordmark{font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:700;letter-spacing:4px;color:var(--head);text-transform:uppercase;line-height:1}
+.logo-sub{font-size:.5rem;font-weight:500;letter-spacing:3.5px;color:var(--gold);text-transform:uppercase;display:block;margin-top:3px}
+.nav-links{display:flex;gap:2.2rem;list-style:none;align-items:center}
+.nav-links a{color:var(--text);font-size:.78rem;font-weight:500;letter-spacing:1.5px;text-transform:uppercase;text-decoration:none;transition:color .2s}
+.nav-links a:hover{color:var(--gold)}
+.nav-item{position:relative}
+.nav-item>a{display:flex;align-items:center;gap:.25rem}
+.drop-arrow{font-size:.55rem;opacity:.5;transition:transform .2s;display:inline-block}
+.nav-item:hover .drop-arrow{transform:rotate(180deg)}
+.nav-dropdown{position:absolute;top:calc(100% + 14px);left:50%;transform:translateX(-50%) translateY(-6px);background:#ffffff;border-radius:8px;box-shadow:0 16px 48px rgba(0,0,0,.3);padding:.5rem 0;min-width:220px;opacity:0;visibility:hidden;transition:opacity .22s,transform .22s;z-index:9999;pointer-events:none}
+.nav-item:hover .nav-dropdown{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0);pointer-events:auto}
+.nav-dropdown::before{content:'';position:absolute;top:-6px;left:50%;transform:translateX(-50%);border:6px solid transparent;border-bottom-color:#fff;border-top:none}
+.nav-dropdown a{display:block;padding:.72rem 1.4rem;color:#003f66 !important;font-size:.78rem;font-weight:600;letter-spacing:.3px;text-decoration:none;transition:background .15s;text-transform:none;white-space:nowrap}
+.nav-dropdown a:hover{background:#e8f5ea;color:#003f66 !important}
+.nav-right{display:flex;align-items:center;gap:1rem}
+.nav-cta{border:1px solid var(--gold);color:var(--gold);padding:.55rem 1.4rem;font-size:.75rem;font-weight:600;letter-spacing:2px;text-transform:uppercase;text-decoration:none;transition:.25s}
+.nav-cta:hover{background:var(--gold);color:var(--bg)}
+
+/* TICKER (2-row pill style) */
+.ticker-wrap{background:var(--bg2);border-bottom:1px solid var(--border);padding:.8rem 0;overflow:hidden}
+.ticker-row{display:flex;width:max-content;gap:.7rem;padding:.25rem 0}
+.ticker-row.r1{animation:tk1 35s linear infinite}
+.ticker-row.r2{animation:tk2 30s linear infinite}
+.ticker-row.r1:hover,.ticker-row.r2:hover{animation-play-state:paused}
+.tp{display:inline-flex;align-items:center;gap:.7rem;background:var(--pill-bg);border-radius:50px;padding:.45rem 1.1rem .45rem .45rem;white-space:nowrap}
+.tp-icon{width:32px;height:32px;background:var(--pill-icon);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.tp-icon svg{width:15px;height:15px;fill:var(--pill-bg)}
+.tp-text{font-size:.72rem;font-weight:700;letter-spacing:.5px;color:var(--pill-text)}
+.tp-year{font-size:.68rem;font-weight:400;color:rgba(0,63,102,.55);margin-left:.2rem}
+@keyframes tk1{to{transform:translateX(-50%)}}
+@keyframes tk2{to{transform:translateX(50%)}}
+
+/* HERO */
+.hero{position:relative;height:100vh;min-height:680px;overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end;margin-top:74px}
+.hero-bg{position:absolute;inset:0}
+.hero-bg img{width:100%;height:100%;object-fit:cover;object-position:center top;display:block}
+.hero-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(to right,rgba(9,11,14,.93) 0%,rgba(9,11,14,.75) 55%,rgba(9,11,14,.35) 100%)}
+.hero-content{position:relative;z-index:2;padding:0 5% 3.5rem}
+.hero-eyebrow{display:flex;align-items:center;gap:.8rem;margin-bottom:1.6rem}
+.hero-eyebrow-line{width:30px;height:1px;background:var(--gold)}
+.hero-eyebrow-text{font-size:.72rem;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--gold)}
+h1.hero-title{font-family:'Barlow Condensed',sans-serif;font-size:clamp(3.8rem,8.5vw,8.5rem);font-weight:900;line-height:.9;text-transform:uppercase;color:#fff;letter-spacing:-1px;margin-bottom:1.8rem}
+h1.hero-title .gold{color:var(--gold)}
+.hero-sub{font-size:1rem;color:rgba(255,255,255,.65);line-height:1.7;max-width:440px;margin-bottom:2.2rem}
+.hero-btns{display:flex;gap:1rem;flex-wrap:wrap}
+.btn-gold{background:var(--gold);color:var(--bg);padding:.8rem 2rem;font-size:.75rem;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;text-decoration:none;display:inline-flex;align-items:center;gap:.6rem;transition:.25s;border:1px solid var(--gold)}
+.btn-gold:hover{background:var(--gold2);border-color:var(--gold2)}
+.btn-ghost-w{border:1px solid rgba(255,255,255,.3);color:rgba(255,255,255,.8);padding:.8rem 2rem;font-size:.75rem;font-weight:600;letter-spacing:2px;text-transform:uppercase;text-decoration:none;display:inline-flex;align-items:center;gap:.6rem;transition:.25s}
+.btn-ghost-w:hover{border-color:var(--gold);color:var(--gold)}
+.hero-scroll-hint{position:absolute;bottom:2rem;right:5%;z-index:2;display:flex;flex-direction:column;align-items:center;gap:.4rem;color:rgba(255,255,255,.35);font-size:.6rem;letter-spacing:2px;text-transform:uppercase}
+.scroll-line{width:1px;height:44px;background:linear-gradient(to bottom,var(--gold),transparent);animation:sl 1.6s ease-in-out infinite}
+@keyframes sl{0%,100%{opacity:.4}50%{opacity:1}}
+
+/* ── SCROLL REVEAL ANIMATIONS */
+.reveal{opacity:0;transition:opacity .7s ease,transform .7s ease}
+.reveal.from-left{transform:translateX(-60px)}
+.reveal.from-right{transform:translateX(60px)}
+.reveal.from-bottom{transform:translateY(50px)}
+.reveal.from-top{transform:translateY(-40px)}
+.reveal.scale-in{transform:scale(.92)}
+.reveal.visible{opacity:1;transform:none}
+.reveal-delay-1{transition-delay:.1s}
+.reveal-delay-2{transition-delay:.2s}
+.reveal-delay-3{transition-delay:.3s}
+.reveal-delay-4{transition-delay:.4s}
+.reveal-delay-5{transition-delay:.5s}
+
+/* FEAT PROJECTS STRIP (below hero) */
+.feat-strip{background:var(--bg2);border-top:1px solid var(--border);padding:2.5rem 5%}
+.feat-strip-label{font-size:.65rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:1.5rem}
+.feat-row{display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem}
+.feat-card{position:relative;overflow:hidden;aspect-ratio:3/2;cursor:pointer}
+.feat-card img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s,filter .5s}
+.feat-card:hover img{transform:scale(1.05);filter:brightness(.65)}
+.feat-over{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.85) 0%,transparent 55%);display:flex;flex-direction:column;justify-content:flex-end;padding:1rem}
+.feat-tag{font-size:.58rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;border:1px solid var(--gold);color:var(--gold);padding:.2rem .55rem;display:inline-block;margin-bottom:.4rem}
+.feat-name{font-family:'Barlow Condensed',sans-serif;font-size:1.1rem;font-weight:800;text-transform:uppercase;color:#fff;line-height:1.1}
+.feat-loc{font-size:.65rem;color:rgba(255,255,255,.55);margin-top:.2rem;display:flex;align-items:center;gap:.3rem}
+.feat-view-all{margin-top:1.5rem;text-align:center}
+
+/* SERVICES */
+.svc-bar{background:var(--bg3);border-bottom:1px solid var(--border);border-top:1px solid var(--border)}
+.svc-grid{display:grid;grid-template-columns:repeat(4,1fr)}
+.svc-cell{padding:2.2rem 1.5rem;border-right:1px solid var(--border);display:flex;align-items:center;gap:1rem;transition:background .2s}
+.svc-cell:last-child{border-right:none}
+.svc-cell:hover{background:rgba(201,164,74,.06)}
+.svc-cell-icon{width:42px;height:42px;border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.svc-cell-icon svg{width:22px;height:22px;stroke:var(--gold);fill:none;stroke-width:1.5}
+.svc-cell-name{font-size:.72rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--head)}
+
+/* SECTION */
+.sec{padding:7rem 5%}
+.eyebrow{display:flex;align-items:center;gap:.8rem;margin-bottom:1rem}
+.eyebrow-line{width:24px;height:1px;background:var(--gold)}
+.eyebrow-text{font-size:.68rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gold)}
+h2.sec-title{font-family:'Barlow Condensed',sans-serif;font-size:clamp(2.4rem,5vw,4.2rem);font-weight:900;text-transform:uppercase;color:var(--head);line-height:.95}
+h2.sec-title em{color:var(--gold);font-style:normal}
+.sec-sub{color:var(--text);font-size:.95rem;line-height:1.72;max-width:520px;margin-top:.8rem}
+
+/* ALL PROJECTS */
+.projects-sec{background:var(--bg)}
+.filter-bar{display:flex;flex-wrap:wrap;gap:.6rem;margin:2rem 0 1.5rem;align-items:center}
+.filter-sel{appearance:none;-webkit-appearance:none;background:var(--bg2) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%2300abdc'/%3E%3C/svg%3E") no-repeat right 12px center;border:1px solid var(--border2);color:var(--text);font-size:.72rem;font-weight:600;letter-spacing:1px;padding:.65rem 2.2rem .65rem 1rem;border-radius:4px;cursor:pointer;min-width:150px;transition:border-color .2s}
+.filter-sel:hover,.filter-sel:focus{border-color:var(--gold2);outline:none}
+.filter-sel option{background:#0d1520;color:#fff}
+.filter-search{background:var(--gold2);border:none;color:#fff;font-size:.72rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:.65rem 1.6rem;border-radius:4px;cursor:pointer;transition:background .2s}
+.filter-search:hover{background:#7da02a}
+.proj-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border)}
+.pc{position:relative;overflow:hidden;aspect-ratio:4/3;cursor:pointer;background:var(--bg2)}
+.pc img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .55s,filter .55s}
+.pc:hover img{transform:scale(1.05);filter:brightness(.5)}
+.pc-over{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,63,102,.92) 0%,rgba(0,0,0,0) 55%);display:flex;flex-direction:column;justify-content:flex-end;padding:1.4rem;transform:translateY(6px);transition:transform .3s}
+.pc:hover .pc-over{transform:translateY(0)}
+.pc:hover::after{content:'';position:absolute;inset:0;border:2px solid var(--gold2);pointer-events:none;border-radius:0}
+.pc-cat{font-size:.6rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold2);margin-bottom:.35rem}
+.pc-name{font-family:'Barlow Condensed',sans-serif;font-size:1.3rem;font-weight:800;text-transform:uppercase;color:#fff;line-height:1.05}
+.pc-loc{font-size:.68rem;color:rgba(255,255,255,.6);margin-top:.3rem}
+.pc-status{display:inline-block;background:var(--gold2);color:#fff;font-size:.55rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:.25rem .6rem;border-radius:20px;margin-bottom:.4rem}
+
+/* CLIENTS */
+.clients-sec{background:var(--bg2);padding:5rem 5%;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.clients-label{font-size:.65rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gold);text-align:center;margin-bottom:2.5rem}
+.clients-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:1px;border:1px solid var(--border)}
+.client-cell{padding:1.8rem 1rem;text-align:center;border-right:1px solid var(--border);transition:background .2s}
+.client-cell:last-child{border-right:none}
+.client-cell:hover{background:rgba(148,186,51,.08);border-top:2px solid var(--gold2)}
+.client-name{font-size:.8rem;font-weight:700;color:var(--head);letter-spacing:.5px;margin-bottom:.2rem}
+.client-type{font-size:.65rem;color:var(--text);letter-spacing:1px;text-transform:uppercase}
+
+/* ABOUT */
+.about-sec{background:var(--bg3)}
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center}
+.about-img-wrap{position:relative}
+.about-img-wrap img{width:100%;aspect-ratio:4/5;object-fit:cover;display:block}
+.about-badge{position:absolute;bottom:2.5rem;right:-1.8rem;background:var(--gold);color:var(--bg);padding:1.4rem 1.6rem;font-family:'Barlow Condensed',sans-serif;font-size:2.2rem;font-weight:900;line-height:1.1;text-align:center}
+.about-badge small{display:block;font-family:'DM Sans',sans-serif;font-size:.58rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-top:.2rem}
+.about-checks{margin-top:2rem;display:flex;flex-direction:column;gap:.7rem}
+.ac{display:flex;align-items:flex-start;gap:.8rem;font-size:.88rem;color:var(--text);line-height:1.55}
+.ac-mark{width:18px;height:18px;background:var(--gold);flex-shrink:0;display:flex;align-items:center;justify-content:center;margin-top:.15rem}
+.ac-mark svg{width:10px;height:10px;stroke:var(--bg);fill:none;stroke-width:3}
+
+/* CERTIFICATIONS */
+.certs-sec{background:var(--bg)}
+.certs-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:3rem}
+.cert-card{background:var(--bg2);border:1px solid var(--border);padding:2rem;transition:.25s;position:relative;overflow:hidden}
+.cert-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--gold),var(--gold2))}
+.cert-card:hover{border-color:var(--border2);transform:translateY(-3px);box-shadow:0 16px 40px rgba(0,0,0,.25)}
+.cert-header{display:flex;align-items:center;gap:1rem;margin-bottom:1.2rem}
+.cert-icon{width:48px;height:48px;border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.cert-icon svg{width:26px;height:26px;stroke:var(--gold);fill:none;stroke-width:1.5}
+.cert-name{font-family:'Barlow Condensed',sans-serif;font-size:1.3rem;font-weight:800;text-transform:uppercase;color:var(--head);line-height:1.1}
+.cert-full{font-size:.72rem;color:var(--text);margin-top:.15rem}
+.cert-id{font-size.78rem;color:var(--gold);font-weight:600;margin-bottom:.6rem;font-size:.8rem}
+.cert-desc{font-size:.82rem;color:var(--text);line-height:1.6}
+.cert-badge{display:inline-block;margin-top:.8rem;background:rgba(201,164,74,.12);border:1px solid var(--border2);color:var(--gold);font-size:.62rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:.25rem .7rem}
+
+/* TESTIMONIALS */
+.testi-sec{background:var(--bg2)}
+.testi-carousel{position:relative;margin-top:3rem;overflow:hidden}
+.testi-track{display:flex;transition:transform .5s cubic-bezier(.4,0,.2,1)}
+.testi-slide{min-width:100%}
+.testi-inner{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;padding:0 .25rem}
+.tc{background:var(--bg3);border:1px solid var(--border);padding:2.5rem;transition:.25s;position:relative}
+.tc:hover{border-color:var(--border2)}
+.tc-stars{color:var(--gold);font-size:.9rem;letter-spacing:2px;margin-bottom:1rem}
+.tc-text{font-size:.95rem;line-height:1.78;color:var(--text);font-style:italic}
+.tc-text::before{content:'\201C';font-family:'Cormorant Garamond',serif;font-size:3rem;color:var(--gold);opacity:.3;line-height:0;vertical-align:-.5rem;margin-right:.2rem}
+.tc-author{display:flex;align-items:center;gap:.8rem;margin-top:1.8rem;padding-top:1.5rem;border-top:1px solid var(--border)}
+.tc-av{width:40px;height:40px;background:var(--gold);display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-size:.95rem;font-weight:700;color:var(--bg);flex-shrink:0}
+.tc-name{font-size:.85rem;font-weight:700;color:var(--head)}
+.tc-role{font-size:.72rem;color:var(--text);margin-top:.1rem}
+.testi-nav{display:flex;gap:.6rem;justify-content:center;margin-top:1.5rem}
+.tn{width:40px;height:40px;border:1px solid var(--border2);background:transparent;color:var(--gold);font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:.2s}
+.tn:hover{background:var(--gold);color:var(--bg)}
+.testi-dots{display:flex;gap:.5rem;justify-content:center;margin-top:.8rem}
+.tdot{width:8px;height:8px;border-radius:50%;background:var(--border2);cursor:pointer;transition:.2s}
+.tdot.on{background:var(--gold);width:20px;border-radius:4px}
+
+/* JOURNAL */
+.journal-sec{background:var(--bg3)}
+.journal-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:3rem}
+.jc{background:var(--bg);border:1px solid var(--border);overflow:hidden;transition:.25s;cursor:pointer}
+.jc:hover{border-color:var(--border2);transform:translateY(-4px);box-shadow:0 20px 50px rgba(0,0,0,.3)}
+.jc-img{height:200px;overflow:hidden}
+.jc-img img{width:100%;height:100%;object-fit:cover;transition:transform .5s}
+.jc:hover .jc-img img{transform:scale(1.05)}
+.jc-body{padding:1.5rem}
+.jc-cat{font-size:.62rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:.6rem}
+.jc-title{font-family:'Barlow Condensed',sans-serif;font-size:1.25rem;font-weight:800;text-transform:uppercase;color:var(--head);line-height:1.15;margin-bottom:.6rem}
+.jc-date{font-size:.72rem;color:var(--text)}
+
+/* CONTACT */
+.contact-sec{background:var(--bg)}
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--border);margin-top:3rem}
+.contact-form-side{padding:3rem;border-right:1px solid var(--border)}
+.form-row-2{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.fg{margin-bottom:1rem}
+label{display:block;font-size:.65rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--text);margin-bottom:.45rem}
+input,textarea,select{width:100%;background:var(--bg2);border:1px solid var(--border);color:var(--head);font-family:'DM Sans',sans-serif;font-size:.88rem;padding:.75rem 1rem;outline:none;transition:border-color .2s;-webkit-appearance:none}
+select option{background:var(--bg)}
+input::placeholder,textarea::placeholder{color:var(--text);opacity:.5}
+input:focus,textarea:focus,select:focus{border-color:var(--gold)}
+textarea{resize:vertical;min-height:100px}
+.voice-section{margin-bottom:1rem}
+.voice-btn{width:100%;background:transparent;border:1px solid var(--border2);color:var(--gold);padding:.8rem;font-family:'DM Sans',sans-serif;font-size:.78rem;font-weight:600;letter-spacing:2px;text-transform:uppercase;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:.7rem;transition:.25s}
+.voice-btn:hover{background:rgba(201,164,74,.08)}
+.voice-btn.recording{border-color:#e53e3e;color:#e53e3e;animation:recpulse 1s infinite}
+.voice-btn svg{width:16px;height:16px;fill:currentColor;flex-shrink:0}
+@keyframes recpulse{0%,100%{opacity:1}50%{opacity:.5}}
+.voice-status{font-size:.72rem;color:var(--text);margin-top:.4rem;min-height:1.2rem;text-align:center;font-style:italic}
+.voice-transcript{font-size:.78rem;color:var(--gold);margin-top:.4rem;padding:.6rem;background:rgba(201,164,74,.06);border:1px solid var(--border2);display:none;line-height:1.5}
+.btn-submit{width:100%;background:var(--gold);color:var(--bg);border:none;padding:1rem;font-family:'Barlow Condensed',sans-serif;font-size:1rem;font-weight:800;letter-spacing:3px;text-transform:uppercase;cursor:pointer;margin-top:.5rem;transition:.25s}
+.btn-submit:hover{background:var(--gold2)}
+.contact-map-side iframe{width:100%;height:100%;min-height:520px;display:block;border:none;filter:grayscale(.3) contrast(1.05)}
+.contact-info-bar{padding:2rem 5%;display:flex;gap:3rem;border-top:1px solid var(--border);flex-wrap:wrap;background:var(--bg2)}
+.ci{display:flex;align-items:flex-start;gap:.8rem}
+.ci-icon{width:34px;height:34px;border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.ci-icon svg{width:15px;height:15px;stroke:var(--gold);fill:none;stroke-width:1.5}
+.ci-label{font-size:.6rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--text);margin-bottom:.2rem}
+.ci-val{font-size:.88rem;color:var(--head);font-weight:500}
+
+/* FOOTER */
+footer{background:var(--bg2);padding:5rem 5% 2rem;border-top:1px solid var(--border)}
+.foot-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:4rem;margin-bottom:4rem}
+.foot-desc{color:var(--text);font-size:.82rem;line-height:1.7;margin-top:1rem;max-width:260px}
+.foot-socials{display:flex;gap:.5rem;margin-top:1.2rem}
+.foot-soc{width:32px;height:32px;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;text-decoration:none;color:var(--text);transition:.2s}
+.foot-soc:hover{border-color:var(--gold);color:var(--gold)}
+.foot-soc svg{width:14px;height:14px;fill:currentColor}
+.foot-h{font-size:.62rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--text);opacity:.4;margin-bottom:1.1rem}
+.foot-links{list-style:none;display:flex;flex-direction:column;gap:.5rem}
+.foot-links a{color:var(--text);font-size:.85rem;text-decoration:none;transition:color .2s}
+.foot-links a:hover{color:var(--gold)}
+.foot-bottom{border-top:1px solid var(--border);padding-top:1.5rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.5rem}
+.foot-copy{font-size:.72rem;color:var(--text);opacity:.5}
+.foot-reg{font-size:.68rem;color:var(--text);opacity:.3}
+
+/* FLOATING */
+.chat-fab{position:fixed;bottom:2rem;right:2rem;width:52px;height:52px;background:var(--gold);display:flex;align-items:center;justify-content:center;z-index:9996;cursor:pointer;transition:.25s;box-shadow:0 6px 25px rgba(0,0,0,.3)}
+.chat-fab:hover{background:var(--gold2);transform:scale(1.08)}
+.chat-fab svg{width:22px;height:22px;fill:var(--bg)}
+.chat-ring{position:absolute;inset:0;border:2px solid var(--gold);animation:cring 2.2s infinite}
+@keyframes cring{0%{transform:scale(1);opacity:.6}100%{transform:scale(1.6);opacity:0}}
+#btt{position:fixed;bottom:6.2rem;right:2rem;width:40px;height:40px;border:1px solid var(--border2);background:var(--bg2);color:var(--gold);display:flex;align-items:center;justify-content:center;z-index:9996;cursor:pointer;opacity:0;transform:translateY(8px);transition:.3s;font-size:.85rem}
+#btt.show{opacity:1;transform:translateY(0)}
+#btt:hover{background:var(--gold);color:var(--bg)}
+
+/* RESPONSIVE */
+@media(max-width:1024px){
+  .feat-row{grid-template-columns:repeat(2,1fr)}
+  .certs-grid{grid-template-columns:repeat(2,1fr)}
+  .foot-grid{grid-template-columns:1fr 1fr}
+  .clients-grid{grid-template-columns:repeat(3,1fr)}
+}
+@media(max-width:800px){
+  .about-grid{grid-template-columns:1fr}
+  .about-badge{right:.5rem}
+  .testi-inner{grid-template-columns:1fr}
+  .journal-grid{grid-template-columns:1fr}
+  .contact-grid{grid-template-columns:1fr}
+  .contact-form-side{border-right:none;border-bottom:1px solid var(--border)}
+  .svc-grid{grid-template-columns:1fr 1fr}
+  .proj-grid{grid-template-columns:1fr 1fr}
+  .nav-links,.nav-cta{display:none}
+}
+@media(max-width:540px){
+  .proj-grid{grid-template-columns:1fr}
+  .certs-grid{grid-template-columns:1fr}
+  .feat-row{grid-template-columns:1fr}
+  .svc-grid{grid-template-columns:1fr}
+  .clients-grid{grid-template-columns:repeat(2,1fr)}
+  .foot-grid{grid-template-columns:1fr}
+  .form-row-2{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<div id="prog"></div>
+
+<!-- NAV -->
+<nav id="nav">
+  <a class="logo" href="#">
+    <img src="https://evoke.london/wp-content/uploads/2026/01/Evoke_Logo.svg" alt="Evoke Logo" style="height:48px;width:auto;display:block"/>
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="about.html">About Us</a></li>
+    <li><a href="accreditations.html">Accreditations</a></li>
+    <li><a href="team.html">Our Team</a></li>
+    <li><a href="core-values.html">Core Values</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#journal">News</a></li>
+  </ul>
+  <div class="nav-right">
+    <a href="#contact" class="nav-cta">Get In Touch</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-bg">
+    <img src="https://evoke.london/wp-content/uploads/2026/04/Haydons-004.jpg" alt="Evoke Construction London" loading="eager"/>
+  </div>
+  <div class="hero-content">
+    <div class="hero-eyebrow"><div class="hero-eyebrow-line"></div><div class="hero-eyebrow-text">Est. 2013 — London</div></div>
+    <h1 class="hero-title">Transforming<br/><span class="gold">London's</span><br/>Built Environment</h1>
+    <p class="hero-sub">Specialist construction and restoration across London's most iconic neighbourhoods — delivered on time, on brief, on budget.</p>
+    <div class="hero-btns">
+      <a href="#projects" class="btn-gold">View Our Projects <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+      <a href="#contact" class="btn-ghost-w">Get In Touch</a>
+    </div>
+  </div>
+  <div class="hero-scroll-hint"><span>Scroll</span><div class="scroll-line"></div></div>
+</section>
+
+<!-- TICKER (2 rows, pill style) -->
+<div class="ticker-wrap">
+  <div class="ticker-row r1" id="tr1">
+    <div class="tp"><div class="tp-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><text x="6" y="16" font-size="10" fill="#003f66">®</text></svg></div><span class="tp-text">Incorporation</span><span class="tp-year">2013</span></div>
+    <div class="tp"><div class="tp-icon"><svg viewBox="0 0 24 24"><path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6z"/></svg></div><span class="tp-text">TrustMark</span><span class="tp-year">789001</span></div>
+    <div class="tp"><div class="tp-icon"><svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg></div><span class="tp-text">ISO 9001 Certified</span></div>
+    <div class="tp"><div class="tp-icon"><svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/></svg></div><span class="tp-text">ISO 14001 Certified</span></div>
+    <div class="tp"><div class="tp-icon"><svg viewBox="0 0 24 24"><path d="M1 3h15v13H1z"/><path d="M16 8l4 2v6h-4"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg></div><span class="tp-text">Fleet Operator</span></div>
+    <div class="tp"><div class="tp-icon"><svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="1"/><path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/></svg></div><span class="tp-text">ConstructionLine Silver</span><span class="tp-year">188657</span></div>
+    <div class="tp"><div class="tp-icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></div><span class="tp-text">FMB Member</span><span class="tp-year">75445</span></div>
+    <div class="tp"><div class="tp-icon"><svg viewBox="0 0 24 24"><path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6z"/></svg></div><span class="tp-text">FORS Bronze</span><span class="tp-year">013208</span></div>
+    <div class="tp"><div class="tp-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/></svg></div><span class="tp-text">Incorporation</span><span class="tp-year">2013</span></div>
+    <div class="tp"><div class="tp-icon"><svg viewBox="0 0 24 24"><path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6z"/></svg></div><span class="tp-text">TrustMark</span><span class="tp-year">789001</span></div>
+    <div class="tp"><div class="tp-icon"><svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/></svg></div><span class="tp-text">ISO 9001 Certified</span></div>
+    <div class="tp"><div class="tp-icon"><svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/></svg></div><span class="tp-text">ISO 14001 Certified</span></div>
+    <div class="tp"><div class="tp-icon"><svg viewBox="0 0 24 24"><path d="M1 3h15v13H1z"/></svg></div><span class="tp-text">Fleet Operator</span></div>
+    <div class="tp"><div class="tp-icon"><svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="1"/></svg></div><span class="tp-text">ConstructionLine Silver</span><span class="tp-year">188657</span></div>
+    <div class="tp"><div class="tp-icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></div><span class="tp-text">FMB Member</span><span class="tp-year">75445</span></div>
+    <div class="tp"><div class="tp-icon"><svg viewBox="0 0 24 24"><path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6z"/></svg></div><span class="tp-text">FORS Bronze</span><span class="tp-year">013208</span></div>
+  </div>
+</div>
+
+<!-- FEATURED PROJECTS STRIP -->
+<div class="feat-strip reveal from-bottom">
+  <div class="feat-strip-label">Featured Projects</div>
+  <div class="feat-row">
+    <div class="feat-card">
+      <img src="https://evoke.london/wp-content/uploads/2026/04/Haydons-004.jpg" alt="Haydons Road" loading="lazy"/>
+      <div class="feat-over">
+        <div class="feat-tag">Under Construction</div>
+        <div class="feat-name">Haydons Road</div>
+        <div class="feat-loc"><svg viewBox="0 0 24 24" width="10" height="10" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>Merton, London</div>
+      </div>
+    </div>
+    <div class="feat-card">
+      <img src="https://evoke.london/wp-content/uploads/2026/02/Sutherland-house-001-2.jpg" alt="Sutherland House" loading="lazy"/>
+      <div class="feat-over">
+        <div class="feat-tag">Completed</div>
+        <div class="feat-name">Sutherland House</div>
+        <div class="feat-loc"><svg viewBox="0 0 24 24" width="10" height="10" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>Kensington &amp; Chelsea</div>
+      </div>
+    </div>
+    <div class="feat-card">
+      <img src="https://evoke.london/wp-content/uploads/2026/01/BelgraviaHouse-001.jpg" alt="Belgravia House" loading="lazy"/>
+      <div class="feat-over">
+        <div class="feat-tag">Completed</div>
+        <div class="feat-name">Belgravia House</div>
+        <div class="feat-loc"><svg viewBox="0 0 24 24" width="10" height="10" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>Wandsworth, London</div>
+      </div>
+    </div>
+    <div class="feat-card">
+      <img src="https://evoke.london/wp-content/uploads/2026/01/Gilsland-001.jpg" alt="Gilsland Spa Hotel" loading="lazy"/>
+      <div class="feat-over">
+        <div class="feat-tag">Completed</div>
+        <div class="feat-name">Gilsland Spa Hotel</div>
+        <div class="feat-loc"><svg viewBox="0 0 24 24" width="10" height="10" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>Cumbria</div>
+      </div>
+    </div>
+  </div>
+  <div class="feat-view-all">
+    <a href="#projects" class="btn-gold" style="display:inline-flex">View All Projects</a>
+  </div>
+</div>
+
+<!-- SERVICES BAR -->
+<div class="svc-bar reveal from-bottom" id="services">
+  <div class="svc-grid">
+    <div class="svc-cell"><div class="svc-cell-icon"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div><div class="svc-cell-name">Construction</div></div>
+    <div class="svc-cell"><div class="svc-cell-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="1"/><path d="M3 9h18 M9 21V9"/></svg></div><div class="svc-cell-name">Design &amp; Build</div></div>
+    <div class="svc-cell"><div class="svc-cell-icon"><svg viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg></div><div class="svc-cell-name">Refurbishment</div></div>
+    <div class="svc-cell"><div class="svc-cell-icon"><svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg></div><div class="svc-cell-name">Project Management</div></div>
+  </div>
+</div>
+
+<!-- ALL PROJECTS -->
+<section class="projects-sec sec reveal from-bottom" id="projects">
+  <div class="eyebrow"><div class="eyebrow-line"></div><div class="eyebrow-text">Our Portfolio</div></div>
+  <h2 class="sec-title">All <em>Projects</em></h2>
+  <p class="sec-sub">A full record of our construction and refurbishment projects across London and the UK.</p>
+  <div class="filter-bar" id="filterBar">
+    <select class="filter-sel" id="fStatus">
+      <option value="">Project Status</option>
+      <option value="under-construction">Under Construction</option>
+      <option value="completed">Completed</option>
+    </select>
+    <select class="filter-sel" id="fType">
+      <option value="">Project Type</option>
+      <option value="residential">Residential</option>
+      <option value="commercial">Commercial</option>
+      <option value="hotel">Hotel</option>
+      <option value="leisure">Leisure</option>
+    </select>
+    <select class="filter-sel" id="fLoc">
+      <option value="">Project Location</option>
+      <option value="barnet">Barnet</option>
+      <option value="brent">Brent</option>
+      <option value="croydon">Croydon</option>
+      <option value="cumbria">Cumbria</option>
+      <option value="hackney">Hackney</option>
+      <option value="hillingdon">Hillingdon</option>
+      <option value="hounslow">Hounslow</option>
+      <option value="islington">Islington</option>
+      <option value="kensington-and-chelsea">Kensington &amp; Chelsea</option>
+      <option value="lambeth">Lambeth</option>
+      <option value="merton">Merton</option>
+      <option value="sutton">Sutton</option>
+      <option value="wandsworth">Wandsworth</option>
+    </select>
+    <select class="filter-sel" id="fBudget">
+      <option value="">Project Budget</option>
+      <option value="75k-200k">£75k – £200k</option>
+      <option value="200k-500k">£200k – £500k</option>
+      <option value="500k-900k">£500k – £900k</option>
+      <option value="1m-1.5m">£1M – £1.5M</option>
+      <option value="1.5m-3m">£1.5M – £3M</option>
+      <option value="3m-5.5m">£3M – £5.5M</option>
+    </select>
+    <button class="filter-search" id="filterSearch">Search</button>
+  </div>
+  <div class="proj-grid" id="projGrid">
+    <div class="pc" data-status="under-construction" data-type="residential" data-loc="merton"><img src="https://evoke.london/wp-content/uploads/2026/04/Haydons-004.jpg" alt="Haydons Road" loading="lazy"/><div class="pc-over"><div class="pc-status">Under Construction</div><div class="pc-name">Haydons Road</div><div class="pc-loc"><svg viewBox="0 0 24 24" width="9" height="9" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg> Merton, London</div></div></div>
+    <div class="pc" data-status="under-construction" data-type="commercial" data-loc="lambeth"><img src="https://evoke.london/wp-content/uploads/2026/04/Hinton-001.jpg" alt="Hinton" loading="lazy"/><div class="pc-over"><div class="pc-status">Under Construction</div><div class="pc-name">Hinton</div><div class="pc-loc"><svg viewBox="0 0 24 24" width="9" height="9" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg> Lambeth, London</div></div></div>
+    <div class="pc" data-status="under-construction" data-type="commercial" data-loc="hackney"><img src="https://evoke.london/wp-content/uploads/2026/04/hoxton-001.jpg" alt="Hoxton" loading="lazy"/><div class="pc-over"><div class="pc-status">Under Construction</div><div class="pc-name">Hoxton</div><div class="pc-loc"><svg viewBox="0 0 24 24" width="9" height="9" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg> Hackney, London</div></div></div>
+    <div class="pc" data-status="completed" data-type="residential" data-loc="kensington-and-chelsea"><img src="https://evoke.london/wp-content/uploads/2026/02/Sutherland-house-001-2.jpg" alt="Sutherland House" loading="lazy"/><div class="pc-over"><div class="pc-status">Completed</div><div class="pc-name">Sutherland House</div><div class="pc-loc"><svg viewBox="0 0 24 24" width="9" height="9" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg> Kensington &amp; Chelsea, London</div></div></div>
+    <div class="pc" data-status="completed" data-type="hotel" data-loc="cumbria"><img src="https://evoke.london/wp-content/uploads/2026/01/Gilsland-001.jpg" alt="Gilsland Spa Hotel" loading="lazy"/><div class="pc-over"><div class="pc-status">Completed</div><div class="pc-name">Gilsland Spa Hotel</div><div class="pc-loc"><svg viewBox="0 0 24 24" width="9" height="9" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg> Cumbria</div></div></div>
+    <div class="pc" data-status="completed" data-type="commercial" data-loc="barnet"><img src="https://evoke.london/wp-content/uploads/2026/01/finchley-001.jpg" alt="Finchley High Road" loading="lazy"/><div class="pc-over"><div class="pc-status">Completed</div><div class="pc-name">Finchley High Road</div><div class="pc-loc"><svg viewBox="0 0 24 24" width="9" height="9" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg> Barnet, London</div></div></div>
+    <div class="pc" data-status="completed" data-type="residential" data-loc="wandsworth"><img src="https://evoke.london/wp-content/uploads/2026/01/BelgraviaHouse-001.jpg" alt="Belgravia House" loading="lazy"/><div class="pc-over"><div class="pc-status">Completed</div><div class="pc-name">Belgravia House</div><div class="pc-loc"><svg viewBox="0 0 24 24" width="9" height="9" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg> Wandsworth, London</div></div></div>
+    <div class="pc" data-status="completed" data-type="residential" data-loc="wandsworth"><img src="https://evoke.london/wp-content/uploads/2026/01/Balham_001.jpg" alt="Balham 176" loading="lazy"/><div class="pc-over"><div class="pc-status">Completed</div><div class="pc-name">Balham 176</div><div class="pc-loc"><svg viewBox="0 0 24 24" width="9" height="9" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg> Wandsworth, London</div></div></div>
+    <div class="pc" data-status="completed" data-type="commercial" data-loc="islington"><img src="https://evoke.london/wp-content/uploads/2026/01/pento-0001.jpg" alt="Pentonville Road" loading="lazy"/><div class="pc-over"><div class="pc-status">Completed</div><div class="pc-name">Pentonville Road</div><div class="pc-loc"><svg viewBox="0 0 24 24" width="9" height="9" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg> Islington, London</div></div></div>
+    <div class="pc" data-status="completed" data-type="commercial" data-loc="hounslow"><img src="https://evoke.london/wp-content/uploads/2026/01/Hounslow-hgst-001.jpg" alt="Hounslow High Street" loading="lazy"/><div class="pc-over"><div class="pc-status">Completed</div><div class="pc-name">Hounslow High Street</div><div class="pc-loc"><svg viewBox="0 0 24 24" width="9" height="9" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg> Hounslow, London</div></div></div>
+    <div class="pc" data-status="completed" data-type="residential" data-loc="wandsworth"><img src="https://evoke.london/wp-content/uploads/2026/01/wimbledonParkroad-001.jpg" alt="Wimbledon Park Road" loading="lazy"/><div class="pc-over"><div class="pc-status">Completed</div><div class="pc-name">Wimbledon Park Road</div><div class="pc-loc"><svg viewBox="0 0 24 24" width="9" height="9" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg> Wandsworth, London</div></div></div>
+    <div class="pc" data-status="completed" data-type="commercial" data-loc="sutton"><img src="https://evoke.london/wp-content/uploads/2026/01/Sutton-hg-st-001.jpg" alt="Sutton High Street" loading="lazy"/><div class="pc-over"><div class="pc-status">Completed</div><div class="pc-name">Sutton High Street</div><div class="pc-loc"><svg viewBox="0 0 24 24" width="9" height="9" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg> Sutton, London</div></div></div>
+    <div class="pc" data-status="completed" data-type="residential" data-loc="brent"><img src="https://evoke.london/wp-content/uploads/2026/02/Wembley-fortylane-001.jpg" alt="Forty Lane, Wembley" loading="lazy"/><div class="pc-over"><div class="pc-status">Completed</div><div class="pc-name">Forty Lane, Wembley</div><div class="pc-loc"><svg viewBox="0 0 24 24" width="9" height="9" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg> Brent, London</div></div></div>
+    <div class="pc" data-status="completed" data-type="residential" data-loc="croydon"><img src="https://evoke.london/wp-content/uploads/2026/01/heathfield-road-001.jpg" alt="Heath-Field Road" loading="lazy"/><div class="pc-over"><div class="pc-status">Completed</div><div class="pc-name">Heath-Field Road</div><div class="pc-loc"><svg viewBox="0 0 24 24" width="9" height="9" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg> Croydon, London</div></div></div>
+    <div class="pc" data-status="completed" data-type="commercial" data-loc="merton"><img src="https://evoke.london/wp-content/uploads/2026/02/printeryard-ins-001.jpg" alt="Printers Yard" loading="lazy"/><div class="pc-over"><div class="pc-status">Completed</div><div class="pc-name">Printers Yard</div><div class="pc-loc"><svg viewBox="0 0 24 24" width="9" height="9" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg> Merton, London</div></div></div>
+    <div class="pc" data-status="completed" data-type="leisure" data-loc="kensington-and-chelsea"><img src="https://evoke.london/wp-content/uploads/2026/01/retrofit-gym-001.jpg" alt="Retrofit Gym" loading="lazy"/><div class="pc-over"><div class="pc-status">Completed</div><div class="pc-name">Retrofit Gym</div><div class="pc-loc"><svg viewBox="0 0 24 24" width="9" height="9" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg> Kensington &amp; Chelsea, London</div></div></div>
+    <div class="pc" data-status="completed" data-type="residential" data-loc="hillingdon"><img src="https://evoke.london/wp-content/uploads/2026/01/poplar-avenue-001.webp" alt="Poplar Avenue" loading="lazy"/><div class="pc-over"><div class="pc-status">Completed</div><div class="pc-name">Poplar Avenue</div><div class="pc-loc"><svg viewBox="0 0 24 24" width="9" height="9" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg> Hillingdon, London</div></div></div>
+  </div>
+</section>
+
+<!-- CLIENTS / COMPANIES WORKED WITH -->
+<div class="clients-sec reveal from-bottom">
+  <div class="clients-label">Companies &amp; Organisations We Have Worked With</div>
+  <div class="clients-grid">
+    <div class="client-cell"><div class="client-name">Kensington &amp; Chelsea</div><div class="client-type">Royal Borough Council</div></div>
+    <div class="client-cell"><div class="client-name">Wandsworth Council</div><div class="client-type">Local Authority</div></div>
+    <div class="client-cell"><div class="client-name">Westminster City</div><div class="client-type">Council &amp; Planning</div></div>
+    <div class="client-cell"><div class="client-name">Savills</div><div class="client-type">Property Consultancy</div></div>
+    <div class="client-cell"><div class="client-name">JLL</div><div class="client-type">Real Estate Services</div></div>
+    <div class="client-cell"><div class="client-name">Knight Frank</div><div class="client-type">Property Agency</div></div>
+    <div class="client-cell"><div class="client-name">Historic England</div><div class="client-type">Heritage Advisory</div></div>
+    <div class="client-cell"><div class="client-name">Barnet Council</div><div class="client-type">Local Authority</div></div>
+    <div class="client-cell"><div class="client-name">Merton Council</div><div class="client-type">Local Authority</div></div>
+    <div class="client-cell"><div class="client-name">Hounslow Council</div><div class="client-type">Local Authority</div></div>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section class="about-sec sec" id="about">
+  <div class="about-grid">
+    <div class="about-img-wrap reveal from-left">
+      <img src="https://evoke.london/wp-content/uploads/2026/02/Sutherland-house-001-2.jpg" alt="Evoke Construction"/>
+      <div class="about-badge">12+<small>Years Active</small></div>
+    </div>
+    <div class="reveal from-right">
+      <div class="eyebrow"><div class="eyebrow-line"></div><div class="eyebrow-text">About Evoke</div></div>
+      <h2 class="sec-title">Building <em>Extraordinary</em><br/>Spaces Since 2013</h2>
+      <p style="margin-top:1rem;line-height:1.75;font-size:.92rem">Evoke Design & Build is a London-based construction company specialising in commercial, residential and hospitality projects. Since 2013 we've delivered exceptional builds across the capital and beyond — always on time, on brief and within budget.</p>
+      <p style="margin-top:.8rem;line-height:1.75;font-size:.92rem;color:var(--text)">Our experienced team combines deep technical expertise with a client-first approach, ensuring every project — from planning through to handover — is managed with the care and precision it deserves.</p>
+      <div class="about-checks">
+        <div class="ac"><div class="ac-mark"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>ISO 9001 &amp; ISO 14001 certified quality &amp; environmental management</div>
+        <div class="ac"><div class="ac-mark"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>ConstructionLine Silver member — No. 188657</div>
+        <div class="ac"><div class="ac-mark"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>TrustMark Government Endorsed Quality — No. 789001</div>
+        <div class="ac"><div class="ac-mark"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>FORS Bronze accredited fleet operations — ID 013208</div>
+        <div class="ac"><div class="ac-mark"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>Federation of Master Builders member — No. 75445</div>
+        <div class="ac"><div class="ac-mark"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>Transparent fixed-price contracts — zero hidden costs</div>
+      </div>
+      <div style="display:flex;gap:1rem;margin-top:2.5rem;flex-wrap:wrap;align-items:center">
+        <a href="#projects" class="btn-gold">View Projects</a>
+        <a href="tel:02081677800" style="font-size:.8rem;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold);text-decoration:none">020 8167 7800</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CERTIFICATIONS -->
+<section class="certs-sec sec reveal from-bottom" id="certifications">
+  <div class="eyebrow"><div class="eyebrow-line"></div><div class="eyebrow-text">Certifications &amp; Accreditations</div></div>
+  <h2 class="sec-title">Trusted <em>Standards</em></h2>
+  <p class="sec-sub">All accreditations independently verified — giving clients complete confidence in Evoke's quality, safety and environmental commitments.</p>
+  <div class="certs-grid">
+    <div class="cert-card reveal from-bottom reveal-delay-1">
+      <div class="cert-header"><div class="cert-icon"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div><div><div class="cert-name">TrustMark</div><div class="cert-full">Government Endorsed Quality</div></div></div>
+      <div class="cert-id">Membership Number: 789001</div>
+      <div class="cert-desc">TrustMark is the government-endorsed quality scheme — confirming Evoke meets required standards of technical competence, customer service and trading practices.</div>
+      <div class="cert-badge">Registered Member</div>
+    </div>
+    <div class="cert-card reveal from-bottom reveal-delay-2">
+      <div class="cert-header"><div class="cert-icon"><svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="1"/><path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/></svg></div><div><div class="cert-name">ConstructionLine</div><div class="cert-full">Silver Member</div></div></div>
+      <div class="cert-id">Membership No: 188657</div>
+      <div class="cert-desc">ConstructionLine Silver status confirms Evoke's compliance with enhanced health & safety, environmental management and corporate social responsibility standards.</div>
+      <div class="cert-badge">Silver Status</div>
+    </div>
+    <div class="cert-card reveal from-bottom reveal-delay-3">
+      <div class="cert-header"><div class="cert-icon"><svg viewBox="0 0 24 24"><path d="M1 3h15v13H1z"/><path d="M16 8l4 2v6h-4"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg></div><div><div class="cert-name">FORS</div><div class="cert-full">Fleet Operator Recognition Scheme</div></div></div>
+      <div class="cert-id">ID: 013208</div>
+      <div class="cert-desc">FORS Bronze accreditation confirms Evoke's fleet operations meet rigorous standards for safety, efficiency, environmental performance and driver conduct.</div>
+      <div class="cert-badge">Bronze Accredited</div>
+    </div>
+    <div class="cert-card reveal from-bottom reveal-delay-4">
+      <div class="cert-header"><div class="cert-icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg></div><div><div class="cert-name">FMB</div><div class="cert-full">Federation of Master Builders</div></div></div>
+      <div class="cert-id">FMB Member Number: 75445</div>
+      <div class="cert-desc">FMB membership is the mark of a quality builder — entry requires vetting, references, financial checks and a commitment to the FMB Code of Practice.</div>
+      <div class="cert-badge">Verified Member</div>
+    </div>
+    <div class="cert-card reveal from-bottom reveal-delay-5">
+      <div class="cert-header"><div class="cert-icon"><svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div><div><div class="cert-name">ISO 9001</div><div class="cert-full">Quality Management System</div></div></div>
+      <div class="cert-id">Certificate No: 359192021</div>
+      <div class="cert-desc">ISO 9001:2015 certified by Citation ISO Certification — demonstrating Evoke's commitment to consistent quality management across all projects and processes.</div>
+      <div class="cert-badge">Certified 2015</div>
+    </div>
+    <div class="cert-card">
+      <div class="cert-header"><div class="cert-icon"><svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg></div><div><div class="cert-name">ISO 14001</div><div class="cert-full">Environmental Management System</div></div></div>
+      <div class="cert-id">Certificate No: 492612025</div>
+      <div class="cert-desc">ISO 14001:2015 certified — confirming Evoke's environmental management framework minimises the ecological impact of our construction activities.</div>
+      <div class="cert-badge">Certified 2015</div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testi-sec sec" id="testimonials">
+  <div class="eyebrow"><div class="eyebrow-line"></div><div class="eyebrow-text">Client Reviews</div></div>
+  <h2 class="sec-title">What Clients <em>Say</em></h2>
+  <div class="testi-carousel">
+    <div class="testi-track" id="testiTrack">
+      <div class="testi-slide">
+        <div class="testi-inner">
+          <div class="tc"><div class="tc-stars">★★★★★</div><div class="tc-text">"Evoke delivered our hotel refurbishment on time and within budget. Their attention to detail and professional approach was impressive throughout. We wouldn't hesitate to recommend them."</div><div class="tc-author"><div class="tc-av">DM</div><div><div class="tc-name">David Mitchell</div><div class="tc-role">General Manager, Gilsland Spa Hotel</div></div></div></div>
+          <div class="tc"><div class="tc-stars">★★★★★</div><div class="tc-text">"From initial design through to handover, the Evoke team were professional, responsive and delivered a genuinely stunning result. Our tenants have been overwhelmed by the quality."</div><div class="tc-author"><div class="tc-av">SL</div><div><div class="tc-name">Sarah Lambert</div><div class="tc-role">Property Director, Sutherland House</div></div></div></div>
+        </div>
+      </div>
+      <div class="testi-slide">
+        <div class="testi-inner">
+          <div class="tc"><div class="tc-stars">★★★★★</div><div class="tc-text">"We had a tight deadline and a complex brief. Evoke rose to the challenge — clear communication, no surprises, and a finished product that exceeded our expectations entirely."</div><div class="tc-author"><div class="tc-av">JW</div><div><div class="tc-name">James Wheeler</div><div class="tc-role">Development Manager, Belgravia House</div></div></div></div>
+          <div class="tc"><div class="tc-stars">★★★★★</div><div class="tc-text">"Evoke managed our Wimbledon project superbly. Their team coordinated every trade efficiently and kept us informed at every stage. An excellent company — we'll use them again."</div><div class="tc-author"><div class="tc-av">RK</div><div><div class="tc-name">Robert King</div><div class="tc-role">Owner, Haydons Road Development</div></div></div></div>
+        </div>
+      </div>
+    </div>
+    <div style="display:flex;justify-content:center;gap:.6rem;align-items:center;margin-top:1.5rem">
+      <button class="tn" id="tPrev">←</button>
+      <div class="testi-dots" id="tDots"></div>
+      <button class="tn" id="tNext">→</button>
+    </div>
+  </div>
+</section>
+
+<!-- JOURNAL -->
+<section class="journal-sec sec reveal from-bottom" id="journal">
+  <div style="display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:1rem;margin-bottom:0">
+    <div><div class="eyebrow"><div class="eyebrow-line"></div><div class="eyebrow-text">Insights</div></div><h2 class="sec-title">Latest <em>News</em></h2></div>
+    <a href="https://evoke.london/insights/" target="_blank" class="btn-gold" style="display:inline-flex;margin-bottom:.5rem">All Articles</a>
+  </div>
+  <div class="journal-grid">
+    <div class="jc"><div class="jc-img"><img src="https://evoke.london/wp-content/uploads/2026/04/Haydons-004.jpg" alt="Article 1" loading="lazy"/></div><div class="jc-body"><div class="jc-cat">Industry</div><div class="jc-title">How Sustainable Construction Is Reshaping London's Skyline</div><div class="jc-date">March 2025</div></div></div>
+    <div class="jc"><div class="jc-img"><img src="https://evoke.london/wp-content/uploads/2026/04/hoxton-001.jpg" alt="Article 2" loading="lazy"/></div><div class="jc-body"><div class="jc-cat">Project Update</div><div class="jc-title">Hounslow High Street: Transforming a Town Centre Retail Unit</div><div class="jc-date">January 2025</div></div></div>
+    <div class="jc"><div class="jc-img"><img src="https://evoke.london/wp-content/uploads/2026/01/Balham_001.jpg" alt="Article 3" loading="lazy"/></div><div class="jc-body"><div class="jc-cat">Project Update</div><div class="jc-title">Balham Mixed-Use: Delivering Quality in a Challenging Footprint</div><div class="jc-date">November 2024</div></div></div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact-sec sec reveal from-bottom" id="contact">
+  <div class="eyebrow"><div class="eyebrow-line"></div><div class="eyebrow-text">Get In Touch</div></div>
+  <h2 class="sec-title">Leave a <em>Message</em></h2>
+  <p class="sec-sub">Tell us about your project — or use the voice recorder below to speak your enquiry and we'll auto-fill the form for you.</p>
+  <div class="contact-grid">
+    <div class="contact-form-side">
+      <!-- VOICE RECORDER -->
+      <div class="voice-section">
+        <button class="voice-btn" id="voiceBtn" type="button">
+          <svg viewBox="0 0 24 24"><path d="M12 1a3 3 0 00-3 3v8a3 3 0 006 0V4a3 3 0 00-3-3z"/><path d="M19 10v2a7 7 0 01-14 0v-2M12 19v4M8 23h8"/></svg>
+          Click to Record Your Enquiry (Voice AI)
+        </button>
+        <div class="voice-status" id="voiceStatus">Speak your name, company, email, phone number and project details — we'll fill the form automatically.</div>
+        <div class="voice-transcript" id="voiceTranscript"></div>
+      </div>
+      <div class="form-row-2">
+        <div class="fg"><label>First Name</label><input type="text" id="f-fname" placeholder="John"/></div>
+        <div class="fg"><label>Last Name</label><input type="text" id="f-lname" placeholder="Smith"/></div>
+      </div>
+      <div class="fg"><label>Company Name</label><input type="text" id="f-company" placeholder="ABC Ltd"/></div>
+      <div class="fg"><label>Email Address</label><input type="email" id="f-email" placeholder="john@example.com"/></div>
+      <div class="fg"><label>Phone Number</label><input type="tel" id="f-phone" placeholder="+44 7700 000000"/></div>
+      <div class="fg">
+        <label>Project Type</label>
+        <select id="f-service">
+          <option value="">Select a service...</option>
+          <option>Commercial Construction</option>
+          <option>Residential Development</option>
+          <option>Hotel &amp; Hospitality</option>
+          <option>Refurbishment</option>
+          <option>Design &amp; Planning</option>
+          <option>Heritage Restoration</option>
+          <option>Facilities Management</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <div class="fg"><label>Your Message</label><textarea id="f-message" placeholder="Tell us about your project, timeline and budget..."></textarea></div>
+      <button class="btn-submit" type="button" id="submitBtn">Send Message</button>
+    </div>
+    <div class="contact-map-side">
+      <iframe src="https://maps.google.com/maps?q=Warehouse+6a+Restmor+Way+Hackbridge+Wallington+SM6+7AH&t=m&z=14&output=embed" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Evoke Design &amp; Build Location"></iframe>
+    </div>
+  </div>
+  <div class="contact-info-bar">
+    <div class="ci"><div class="ci-icon"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 014.5 10.93 19.79 19.79 0 011.43 2.26 2 2 0 013.41.25h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L7.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg></div><div><div class="ci-label">Phone</div><div class="ci-val">020 8167 7800</div></div></div>
+    <div class="ci"><div class="ci-icon"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div><div><div class="ci-label">Email</div><div class="ci-val">info@evoke.london</div></div></div>
+    <div class="ci"><div class="ci-icon"><svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg></div><div><div class="ci-label">Address</div><div class="ci-val">Warehouse 6a, Restmor Way, Hackbridge, Wallington SM6 7AH</div></div></div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="foot-grid">
+    <div>
+      <a class="logo" href="#" style="text-decoration:none;display:inline-flex">
+        <img src="https://evoke.london/wp-content/uploads/2026/01/Evoke_Logo.svg" alt="Evoke Logo" style="height:56px;width:auto;display:block"/>
+      </a>
+      <p class="foot-desc">London's premier construction partner — delivering exceptional commercial, residential and hospitality projects since 2013.</p>
+      <div class="foot-socials">
+        <a href="https://www.linkedin.com/company/evoke-design-and-build/" target="_blank" class="foot-soc" aria-label="LinkedIn"><svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
+        <a href="https://www.instagram.com/evokedesignandbuild/" target="_blank" class="foot-soc" aria-label="Instagram"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+        <a href="https://www.facebook.com/evokedesignandbuild" target="_blank" class="foot-soc" aria-label="Facebook"><svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg></a>
+      </div>
+    </div>
+    <div><div class="foot-h">Services</div><ul class="foot-links"><li><a href="#services">Construction</a></li><li><a href="#services">Design &amp; Build</a></li><li><a href="#services">Refurbishment</a></li><li><a href="#services">Project Management</a></li></ul></div>
+    <div><div class="foot-h">Company</div><ul class="foot-links"><li><a href="#about">About Us</a></li><li><a href="#projects">Projects</a></li><li><a href="#certifications">Accreditations</a></li><li><a href="#journal">News</a></li></ul></div>
+    <div><div class="foot-h">Contact</div><ul class="foot-links"><li><a href="tel:02081677800">020 8167 7800</a></li><li><a href="mailto:info@evoke.london">info@evoke.london</a></li><li><a href="#contact">Get a Quote</a></li><li><a href="https://evoke.london" target="_blank">evoke.london</a></li></ul></div>
+  </div>
+  <div class="foot-bottom">
+    <div class="foot-copy">&copy; 2025 Evoke Design &amp; Build Ltd. All rights reserved.</div>
+    <div class="foot-reg">Company No. 08453476 | Registered in England &amp; Wales</div>
+  </div>
+</footer>
+
+<!-- FLOATING -->
+<div class="chat-fab" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})" aria-label="Contact">
+  <div class="chat-ring"></div>
+  <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+</div>
+<div id="btt" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top" title="Back to top">↑</div>
+
+<script>
+
+// ── SCROLL
+window.addEventListener('scroll',()=>{
+  const s=document.documentElement.scrollTop;
+  const h=document.documentElement.scrollHeight-window.innerHeight;
+  document.getElementById('prog').style.width=(s/h*100)+'%';
+  document.getElementById('nav').classList.toggle('solid',s>80);
+  document.getElementById('btt').classList.toggle('show',s>500);
+},{passive:true});
+
+
+// ── SCROLL REVEAL
+const revealObserver = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      requestAnimationFrame(()=>e.target.classList.add('visible'));
+      revealObserver.unobserve(e.target);
+    }
+  });
+},{threshold:0.08,rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('.reveal').forEach(el=>revealObserver.observe(el));
+
+// ── PROJECT FILTER
+function applyFilters(){
+  const status=document.getElementById('fStatus').value;
+  const type=document.getElementById('fType').value;
+  const loc=document.getElementById('fLoc').value;
+  document.querySelectorAll('.pc').forEach(c=>{
+    const sMatch=!status||c.dataset.status===status;
+    const tMatch=!type||c.dataset.type===type;
+    const lMatch=!loc||c.dataset.loc===loc;
+    c.style.display=(sMatch&&tMatch&&lMatch)?'':'none';
+  });
+}
+document.getElementById('filterSearch').addEventListener('click',applyFilters);
+['fStatus','fType','fLoc','fBudget'].forEach(id=>{
+  const el=document.getElementById(id);
+  if(el)el.addEventListener('change',applyFilters);
+});
+
+// ── TESTIMONIAL CAROUSEL
+const track=document.getElementById('testiTrack');
+const slides=track.querySelectorAll('.testi-slide');
+const dotsWrap=document.getElementById('tDots');
+let cur2=0,timer;
+slides.forEach((_,i)=>{
+  const d=document.createElement('div');
+  d.className='tdot'+(i===0?' on':'');
+  d.addEventListener('click',()=>goTo(i));
+  dotsWrap.appendChild(d);
+});
+function goTo(i){
+  cur2=(i+slides.length)%slides.length;
+  track.style.transform=`translateX(-${cur2*100}%)`;
+  document.querySelectorAll('.tdot').forEach((d,j)=>d.classList.toggle('on',j===cur2));
+  clearInterval(timer);timer=setInterval(()=>goTo(cur2+1),5500);
+}
+document.getElementById('tPrev').addEventListener('click',()=>goTo(cur2-1));
+document.getElementById('tNext').addEventListener('click',()=>goTo(cur2+1));
+timer=setInterval(()=>goTo(cur2+1),5500);
+
+// ── VOICE RECORDING (Web Speech API)
+const SpeechRec=window.SpeechRecognition||window.webkitSpeechRecognition;
+const vBtn=document.getElementById('voiceBtn');
+const vStatus=document.getElementById('voiceStatus');
+const vTranscript=document.getElementById('voiceTranscript');
+
+if(!SpeechRec){
+  vBtn.innerHTML=`<svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M12 1a3 3 0 00-3 3v8a3 3 0 006 0V4a3 3 0 00-3-3z"/><path d="M19 10v2a7 7 0 01-14 0v-2M12 19v4M8 23h8"/></svg> Use Chrome or Edge for voice input`;
+  vBtn.disabled=true;
+}else{
+  let rec=null;
+  let isRec=false;
+  let finalText='';
+  let timerInterval=null;
+  let secs=0;
+
+  function buildRec(){
+    const r=new SpeechRec();
+    r.continuous=true;       // ← keep going through pauses
+    r.interimResults=true;
+    r.lang='en-GB';
+
+    r.onresult=e=>{
+      let interim='';
+      for(let i=e.resultIndex;i<e.results.length;i++){
+        if(e.results[i].isFinal) finalText+=e.results[i][0].transcript+' ';
+        else interim=e.results[i][0].transcript;
+      }
+      vTranscript.style.display='block';
+      vTranscript.textContent=(finalText+interim).trim();
+    };
+
+    r.onend=()=>{
+      // browser sometimes ends continuous session — auto-restart if still recording
+      if(isRec){
+        try{r.start();}catch(e){}
+      }
+    };
+
+    r.onerror=e=>{
+      if(e.error==='no-speech') return; // silence — just keep going
+      if(e.error==='aborted') return;
+      stopRecording();
+      vStatus.textContent='Mic error: '+e.error+'. Please type your details instead.';
+    };
+    return r;
+  }
+
+  function startRecording(){
+    isRec=true; finalText=''; secs=0;
+    rec=buildRec();
+    vBtn.classList.add('recording');
+    updateBtn();
+    vTranscript.style.display='none';
+    vTranscript.textContent='';
+    vStatus.textContent='Listening… speak naturally. Say your name, company, email, phone and project details.';
+    timerInterval=setInterval(()=>{secs++;updateBtn();},1000);
+    try{rec.start();}catch(e){}
+  }
+
+  function stopRecording(){
+    isRec=false;
+    clearInterval(timerInterval);
+    if(rec){try{rec.stop();}catch(e){} rec=null;}
+    vBtn.classList.remove('recording');
+    vBtn.innerHTML=`<svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M12 1a3 3 0 00-3 3v8a3 3 0 006 0V4a3 3 0 00-3-3z"/><path d="M19 10v2a7 7 0 01-14 0v-2M12 19v4M8 23h8"/></svg> Click to Record Your Enquiry (Voice AI)`;
+    const full=finalText.trim();
+    if(full){
+      parseAndFill(full);
+      vStatus.textContent='✓ Done — form filled from your voice. Review and edit any field below.';
+      vTranscript.style.display='block';
+      vTranscript.textContent='"'+full+'"';
+    }else{
+      vStatus.textContent='Nothing captured. Please try again or type your details.';
+    }
+  }
+
+  function updateBtn(){
+    const m=String(Math.floor(secs/60)).padStart(2,'0');
+    const s=String(secs%60).padStart(2,'0');
+    vBtn.innerHTML=`<svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><rect x="6" y="6" width="12" height="12" rx="1"/></svg> Recording ${m}:${s} — Click to Stop &amp; Fill Form`;
+  }
+
+  vBtn.addEventListener('click',()=>{
+    if(isRec) stopRecording();
+    else startRecording();
+  });
+
+  // ── SMART FIELD PARSER
+  function parseAndFill(text){
+    const t=text.toLowerCase();
+
+    // ── NAME: "my name is John Smith", "I'm John", "this is Sarah Jones", first words as name
+    let fname='', lname='';
+    const nameM=text.match(/(?:my name(?:'s|\s+is)|i(?:'m|\s+am)|this\s+is|name[:\s]+)\s*([A-Za-z]+)(?:\s+([A-Za-z]+))?/i);
+    if(nameM){
+      fname=nameM[1]||'';
+      lname=nameM[2]||'';
+    } else {
+      // fallback: first two capitalized words at start
+      const capM=text.match(/^([A-Z][a-z]+)(?:\s+([A-Z][a-z]+))?/);
+      if(capM){fname=capM[1]||'';lname=capM[2]||'';}
+    }
+    if(fname) document.getElementById('f-fname').value=fname;
+    if(lname) document.getElementById('f-lname').value=lname;
+
+    // ── COMPANY: "from ABC Ltd", "at XYZ", "company is Evoke", "working for..."
+    const compM=text.match(/(?:from|at|with|company(?:\s+(?:is|called|name(?:\s+is)?))?|working\s+for|representing|calling\s+from)[:\s]+([A-Za-z0-9][A-Za-z0-9 &'.,\-]+?)(?=\s*(?:my|and\s+my|,|\.|$))/i);
+    if(compM) document.getElementById('f-company').value=compM[1].trim();
+
+    // ── EMAIL: spoken "john at gmail dot com" OR typed format
+    const emailDirect=text.match(/[\w.+\-]+@[\w.\-]+\.[a-z]{2,}/i);
+    const emailSpoken=text.match(/([A-Za-z0-9._+\-]+)\s+(?:at|@)\s+([A-Za-z0-9.\-]+)\s+dot\s+([A-Za-z]{2,6})/i);
+    if(emailDirect) document.getElementById('f-email').value=emailDirect[0].toLowerCase();
+    else if(emailSpoken) document.getElementById('f-email').value=(emailSpoken[1]+'@'+emailSpoken[2]+'.'+emailSpoken[3]).toLowerCase();
+
+    // ── PHONE: convert spoken numbers then extract UK number
+    const phoneText=t
+      .replace(/\bzero\b/g,'0').replace(/\bone\b/g,'1').replace(/\btwo\b/g,'2')
+      .replace(/\bthree\b/g,'3').replace(/\bfour\b/g,'4').replace(/\bfive\b/g,'5')
+      .replace(/\bsix\b/g,'6').replace(/\bseven\b/g,'7').replace(/\beight\b/g,'8')
+      .replace(/\bnine\b/g,'9').replace(/\boh\b/g,'0');
+    const phoneM=phoneText.match(/(?:\+44[\s\-]?|0)[\d\s\-]{9,14}/);
+    if(phoneM) document.getElementById('f-phone').value=phoneM[0].replace(/[\s\-]+/g,' ').trim();
+
+    // ── SERVICE type
+    const svcMap=[
+      ['commercial','Commercial Construction'],
+      ['office','Commercial Construction'],
+      ['shop','Commercial Construction'],
+      ['retail','Commercial Construction'],
+      ['residential','Residential Development'],
+      ['house','Residential Development'],
+      ['flat','Residential Development'],
+      ['apartment','Residential Development'],
+      ['hotel','Hotel & Hospitality'],
+      ['hospitality','Hotel & Hospitality'],
+      ['restaurant','Hotel & Hospitality'],
+      ['refurb','Refurbishment'],
+      ['renovation','Refurbishment'],
+      ['remodel','Refurbishment'],
+      ['design','Design & Planning'],
+      ['planning','Design & Planning'],
+      ['heritage','Heritage Restoration'],
+      ['listed','Heritage Restoration'],
+      ['facilities','Facilities Management'],
+      ['maintenance','Facilities Management'],
+    ];
+    const sel=document.getElementById('f-service');
+    for(const [kw,label] of svcMap){
+      if(t.includes(kw)){
+        for(const opt of sel.options){if(opt.text===label){sel.value=opt.value||opt.text;break;}}
+        break;
+      }
+    }
+
+    // ── MESSAGE: full transcript as the enquiry message
+    document.getElementById('f-message').value=text.trim();
+  }
+}
+
+// ── SUBMIT
+document.getElementById('submitBtn').addEventListener('click',function(){
+  const req=[document.getElementById('f-fname'),document.getElementById('f-email')];
+  let ok=true;
+  req.forEach(f=>{if(!f.value.trim()){f.style.borderColor='#e53e3e';ok=false;}else{f.style.borderColor='';}});
+  if(!ok){return;}
+  this.textContent='Message Sent ✓';
+  this.style.background='#4a9e5c';
+  setTimeout(()=>{this.textContent='Send Message';this.style.background='';},4000);
+});
+</script>
+</body>
+</html>

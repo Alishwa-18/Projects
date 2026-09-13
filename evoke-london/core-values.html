@@ -1,0 +1,207 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Our Core Values | Evoke Design & Build</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Barlow+Condensed:wght@700;800;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+:root{--bg:#080c10;--bg2:#0d1520;--bg3:#111d2b;--border:rgba(255,255,255,.07);--text:rgba(255,255,255,.72);--head:#ffffff;--gold:#00abdc;--gold2:#94ba33;--nav-bg:rgba(8,12,16,.97)}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden}
+#prog{position:fixed;top:0;left:0;height:2px;background:linear-gradient(90deg,var(--gold),var(--gold2));z-index:9998;width:0%}
+nav{position:fixed;top:0;left:0;right:0;z-index:997;display:flex;align-items:center;justify-content:space-between;padding:0 5%;height:74px;background:var(--nav-bg);border-bottom:1px solid var(--border);backdrop-filter:blur(16px)}
+.logo{display:flex;align-items:center;text-decoration:none}
+.nav-links{display:flex;gap:2.2rem;list-style:none;align-items:center}
+.nav-links a{color:var(--text);font-size:.78rem;font-weight:500;letter-spacing:1.5px;text-transform:uppercase;text-decoration:none;transition:color .2s}
+.nav-links a:hover{color:var(--gold)}
+.nav-item{position:relative}
+.nav-item>a{display:flex;align-items:center;gap:.25rem}
+.drop-arrow{font-size:.55rem;opacity:.5;transition:transform .2s;display:inline-block}
+.nav-item:hover .drop-arrow{transform:rotate(180deg)}
+.nav-dropdown{position:absolute;top:calc(100% + 14px);left:50%;transform:translateX(-50%) translateY(-6px);background:#fff;border-radius:8px;box-shadow:0 16px 48px rgba(0,0,0,.3);padding:.5rem 0;min-width:220px;opacity:0;visibility:hidden;transition:opacity .22s,transform .22s;z-index:9999;pointer-events:none}
+.nav-item:hover .nav-dropdown{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0);pointer-events:auto}
+.nav-dropdown::before{content:'';position:absolute;top:-6px;left:50%;transform:translateX(-50%);border:6px solid transparent;border-bottom-color:#fff;border-top:none}
+.nav-dropdown a{display:block;padding:.72rem 1.4rem;color:#003f66 !important;font-size:.78rem;font-weight:600;text-decoration:none;transition:background .15s;text-transform:none;white-space:nowrap}
+.nav-dropdown a:hover{background:#e8f5ea}
+.nav-right a{border:1px solid var(--gold);color:var(--gold);padding:.55rem 1.4rem;font-size:.75rem;font-weight:600;letter-spacing:2px;text-transform:uppercase;text-decoration:none;transition:.25s}
+.nav-right a:hover{background:var(--gold);color:var(--bg)}
+.page-hero{padding:140px 5% 80px;background:linear-gradient(135deg,var(--bg3) 0%,var(--bg2) 100%);border-bottom:1px solid var(--border);position:relative;overflow:hidden}
+.page-hero::before{content:'';position:absolute;inset:0;background:url('https://evoke.london/wp-content/uploads/2026/01/Balham_001.jpg') center/cover;opacity:.07}
+.eyebrow{display:flex;align-items:center;gap:.8rem;margin-bottom:1rem}
+.eyebrow-line{width:28px;height:2px;background:var(--gold2)}
+.eyebrow-text{font-size:.65rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gold2)}
+.page-hero h1{font-family:'Barlow Condensed',sans-serif;font-size:clamp(2.8rem,6vw,5rem);font-weight:900;text-transform:uppercase;color:var(--head);line-height:1}
+.page-hero h1 em{color:var(--gold);font-style:normal}
+.page-hero p{margin-top:1.2rem;font-size:1rem;max-width:560px;line-height:1.75}
+.sec{padding:6rem 5%}
+.sec-title{font-family:'Barlow Condensed',sans-serif;font-size:clamp(2rem,4vw,3rem);font-weight:800;text-transform:uppercase;color:var(--head);line-height:1.05;margin-bottom:.5rem}
+.sec-title em{color:var(--gold);font-style:normal}
+.sec-sub{font-size:.9rem;line-height:1.7;max-width:620px;margin-bottom:3rem}
+.values-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:2px;background:var(--border)}
+.val-card{background:var(--bg2);padding:3rem;position:relative;overflow:hidden;transition:background .25s}
+.val-card:hover{background:var(--bg3)}
+.val-card::before{content:'';position:absolute;top:0;left:0;width:3px;height:100%;background:var(--gold2)}
+.val-num{font-family:'Barlow Condensed',sans-serif;font-size:5rem;font-weight:900;color:rgba(148,186,51,.08);position:absolute;top:1rem;right:1.5rem;line-height:1}
+.val-icon{width:48px;height:48px;background:rgba(148,186,51,.1);border-radius:50%;display:flex;align-items:center;justify-content:center;margin-bottom:1.5rem}
+.val-icon svg{width:22px;height:22px;stroke:var(--gold2);fill:none;stroke-width:1.5}
+.val-title{font-family:'Barlow Condensed',sans-serif;font-size:2rem;font-weight:800;text-transform:uppercase;color:var(--head);margin-bottom:.8rem}
+.val-desc{font-size:.9rem;line-height:1.75}
+.val-points{list-style:none;margin-top:1.2rem}
+.val-points li{font-size:.85rem;padding:.3rem 0 .3rem 1.2rem;position:relative;color:var(--text)}
+.val-points li::before{content:'â†’';position:absolute;left:0;color:var(--gold2);font-weight:700}
+.mission-strip{background:linear-gradient(135deg,var(--bg3),var(--bg2));border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:5rem 5%;text-align:center}
+.mission-strip blockquote{font-family:'Cormorant Garamond',serif;font-size:clamp(1.4rem,3vw,2.2rem);font-weight:600;color:var(--head);line-height:1.4;max-width:800px;margin:0 auto;font-style:italic}
+.mission-strip cite{display:block;margin-top:1.5rem;font-size:.72rem;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--gold2);font-style:normal}
+footer{background:var(--bg2);border-top:1px solid var(--border);padding:4rem 5% 2rem}
+.foot-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:3rem;margin-bottom:3rem}
+.foot-h{font-size:.65rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:1.2rem}
+.foot-links{list-style:none}
+.foot-links li{margin-bottom:.6rem}
+.foot-links a{color:var(--text);font-size:.85rem;text-decoration:none;transition:color .2s}
+.foot-links a:hover{color:var(--gold2)}
+.foot-desc{font-size:.82rem;line-height:1.7;margin-top:1rem}
+.foot-bottom{border-top:1px solid var(--border);padding-top:1.5rem;display:flex;justify-content:space-between;font-size:.72rem;color:rgba(255,255,255,.35)}
+@media(max-width:768px){.values-grid{grid-template-columns:1fr}.foot-grid{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+<div id="prog"></div>
+<nav>
+  <a class="logo" href="index.html">
+    <img src="https://evoke.london/wp-content/uploads/2026/01/Evoke_Logo.svg" alt="Evoke Logo" style="height:48px;width:auto;display:block"/>
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="about.html">About Us</a></li>
+    <li><a href="accreditations.html">Accreditations</a></li>
+    <li><a href="team.html">Our Team</a></li>
+    <li><a href="core-values.html">Core Values</a></li>
+    <li><a href="index.html#services">Services</a></li>
+    <li><a href="index.html#projects">Projects</a></li>
+    <li><a href="index.html#journal">News</a></li>
+  </ul>
+  <div class="nav-right"><a href="index.html#contact">Get In Touch</a></div>
+</nav>
+
+<div class="page-hero">
+  <div class="eyebrow"><div class="eyebrow-line"></div><div class="eyebrow-text">What We Stand For</div></div>
+  <h1>Our <em>Core Values</em></h1>
+  <p>The principles that guide every decision we make, every project we deliver, and every relationship we build â€” from first brief to final handover.</p>
+</div>
+
+<section class="sec" style="background:var(--bg)">
+  <div class="eyebrow"><div class="eyebrow-line"></div><div class="eyebrow-text">Principles</div></div>
+  <h2 class="sec-title">Built on <em>Integrity</em></h2>
+  <p class="sec-sub">Our core values aren't a statement on a wall â€” they're the standards we hold ourselves to on every project, every day. They define how we work, how we communicate, and the results we deliver.</p>
+
+  <div class="values-grid">
+    <div class="val-card">
+      <div class="val-num">01</div>
+      <div class="val-icon"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div>
+      <div class="val-title">Quality</div>
+      <p class="val-desc">We never compromise on quality. Every material, every method, every finish is held to the highest standard â€” regardless of project size or budget. Our ISO 9001 Quality Management System ensures this is embedded in everything we do.</p>
+      <ul class="val-points">
+        <li>ISO 9001 certified quality management</li>
+        <li>Independent quality inspections at every stage</li>
+        <li>Fixed-price contracts with zero hidden costs</li>
+      </ul>
+    </div>
+
+    <div class="val-card">
+      <div class="val-num">02</div>
+      <div class="val-icon"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+      <div class="val-title">Safety</div>
+      <p class="val-desc">Safety is non-negotiable at Evoke. We operate to the highest health and safety standards across all our sites, with NEBOSH-qualified managers, regular audits and a zero-tolerance approach to unsafe practices. Our people go home safely â€” every day.</p>
+      <ul class="val-points">
+        <li>NEBOSH-qualified health &amp; safety management</li>
+        <li>FORS Bronze fleet accreditation</li>
+        <li>Zero-tolerance unsafe practices policy</li>
+      </ul>
+    </div>
+
+    <div class="val-card">
+      <div class="val-num">03</div>
+      <div class="val-icon"><svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg></div>
+      <div class="val-title">Integrity</div>
+      <p class="val-desc">We say what we mean and deliver what we promise. From the first conversation to final handover, we operate with complete honesty and transparency â€” no hidden costs, no excuses, no surprises. Our reputation is built on trust built over 12 years.</p>
+      <ul class="val-points">
+        <li>Transparent fixed-price contracts</li>
+        <li>Regular client reporting at every stage</li>
+        <li>TrustMark Government Endorsed Quality</li>
+      </ul>
+    </div>
+
+    <div class="val-card">
+      <div class="val-num">04</div>
+      <div class="val-icon"><svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 100 20A10 10 0 0012 2z"/><path d="M12 8v4l3 3"/></svg></div>
+      <div class="val-title">Sustainability</div>
+      <p class="val-desc">We take our environmental responsibilities seriously. Our ISO 14001 Environmental Management System governs how we minimise waste, reduce carbon and manage resources responsibly on every project. Sustainable construction isn't optional â€” it's standard.</p>
+      <ul class="val-points">
+        <li>ISO 14001 environmental certification</li>
+        <li>Active waste reduction on all sites</li>
+        <li>Commitment to low-carbon construction methods</li>
+      </ul>
+    </div>
+
+    <div class="val-card">
+      <div class="val-num">05</div>
+      <div class="val-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg></div>
+      <div class="val-title">Innovation</div>
+      <p class="val-desc">We are always looking for better ways to build. From modern construction methods and digital project management to sustainable materials and smart site technology, we invest in innovation to deliver better outcomes for our clients and the environment.</p>
+      <ul class="val-points">
+        <li>Digital project management and reporting</li>
+        <li>Modern methods of construction</li>
+        <li>Continuous improvement culture</li>
+      </ul>
+    </div>
+
+    <div class="val-card">
+      <div class="val-num">06</div>
+      <div class="val-icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg></div>
+      <div class="val-title">Client Focus</div>
+      <p class="val-desc">Our clients are at the centre of everything we do. We listen carefully, communicate clearly and tailor our approach to each client's needs. Our high rate of repeat business and referrals is the clearest measure of how seriously we take client satisfaction.</p>
+      <ul class="val-points">
+        <li>Dedicated client relationship management</li>
+        <li>Regular progress updates and site access</li>
+        <li>Post-completion support and aftercare</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<div class="mission-strip">
+  <blockquote>"Real experience. Real quality. London's trusted construction partner."</blockquote>
+  <cite>Evoke Design &amp; Build â€” Est. 2013</cite>
+</div>
+
+<footer>
+  <div class="foot-grid">
+    <div>
+      <a class="logo" href="index.html" style="text-decoration:none;display:inline-flex">
+        <img src="https://evoke.london/wp-content/uploads/2026/01/Evoke_Logo.svg" alt="Evoke Logo" style="height:48px;width:auto;display:block"/>
+      </a>
+      <p class="foot-desc">London's premier construction partner â€” delivering exceptional commercial, residential and hospitality projects since 2013.</p>
+    </div>
+    <div><div class="foot-h">Who We Are</div><ul class="foot-links"><li><a href="about.html">About Us</a></li><li><a href="team.html">Our Team</a></li><li><a href="accreditations.html">Accreditations</a></li><li><a href="core-values.html">Core Values</a></li></ul></div>
+    <div><div class="foot-h">Services</div><ul class="foot-links"><li><a href="index.html#services">Construction</a></li><li><a href="index.html#services">Design &amp; Build</a></li><li><a href="index.html#services">Refurbishment</a></li><li><a href="index.html#services">Project Management</a></li></ul></div>
+    <div><div class="foot-h">Contact</div><ul class="foot-links"><li><a href="tel:02081677800">020 8167 7800</a></li><li><a href="mailto:info@evoke.london">info@evoke.london</a></li><li><a href="index.html#contact">Get a Quote</a></li></ul></div>
+  </div>
+  <div class="foot-bottom">
+    <div>&copy; 2025 Evoke Design &amp; Build Ltd. All rights reserved.</div>
+    <div>Company No. 08453476 | Registered in England &amp; Wales</div>
+  </div>
+</footer>
+<script>
+window.addEventListener('scroll',()=>{
+  const s=document.documentElement.scrollTop;
+  const h=document.documentElement.scrollHeight-window.innerHeight;
+  document.getElementById('prog').style.width=(s/h*100)+'%';
+},{passive:true});
+</script>
+</body>
+</html>
+
